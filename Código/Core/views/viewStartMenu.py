@@ -1,4 +1,4 @@
-from guizero import Box, Text, PushButton
+from guizero import *
 from .view import View
 
 class ViewStartMenu(View):
@@ -46,5 +46,12 @@ class ViewStartMenu(View):
         logoutBtn.text_color = "white"
         logoutBtn.text_size = 14 
 
-        self.display()
+    def createWindow(self):
+        window = Window(self.app)
+        return window
 
+    
+
+
+
+    

@@ -1,4 +1,5 @@
-from guizero import App
+from guizero import *
+
 
 class View:
     def __init__(self, title="view", width=700, height=700, layout="auto", bg="white", visible=True):
@@ -17,9 +18,5 @@ class View:
         x = (screen_width/2) - (self.width/2)
         y = (screen_height/2) - (self.height/2)
         self.app.tk.geometry('%dx%d+%d+%d' % (self.width, self.height, x, y))
-        
 
-        
-
-    def display(self):
-        self.app.display()
+    

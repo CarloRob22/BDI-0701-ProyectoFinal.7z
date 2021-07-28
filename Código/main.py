@@ -1,9 +1,14 @@
-from Core.views.viewStartMenu import ViewStartMenu
-from Core.views.viewAdmin import ViewAdmin
+from Core.views.screenSplash import ScreenSplash
 
 def main():
-    viewStartMenu = ViewStartMenu("Start Menu")
-    #viewModuloAdmin = ViewAdmin("Modulo del administrador")
+    
+    screenSplash = ScreenSplash("screen splash")
+    
+    
+
+    screenSplash.app.tk.mainloop()
+    
+
 
 if __name__ == "__main__":
     main()

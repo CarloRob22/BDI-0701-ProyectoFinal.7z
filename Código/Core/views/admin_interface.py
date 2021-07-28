@@ -58,6 +58,3 @@ class AdminInterface:
         pass
         #agregar aquí código para iniciar módulo de registro de bitácora.
     
-interf_Usuario = AdminInterface()
-interf_Usuario.start()
-interf_Usuario.getName("Roberto")
