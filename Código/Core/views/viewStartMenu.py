@@ -1,6 +1,7 @@
 from guizero import *
 from .view import View
 from .viewDestroyDots import ViewDestroyDots
+from .viewFloodIt import ViewFloodIt
 
 class ViewStartMenu(View):
     def __init__(self, title="view", width=700, height=700, layout="auto", bg="white", visible=True):
@@ -14,26 +15,22 @@ class ViewStartMenu(View):
 
         buttonsBox = Box(self.app)
         buttonsBox.resize(self.width, (70*self.height)/100)
-        
 
-        newGameBox = Box(buttonsBox)
-        newGameBox.resize(self.width, (33.333333333*((70*self.height)/100))/100)
-        
+        newFloodItBox = Box(buttonsBox)
+        newFloodItBox.resize(self.width, (25*((70*self.height)/100))/100)
+        newFloodItButton = PushButton(newFloodItBox, text="Iniciar juego Flood It", height=4, width=40, command=self.newFloodIt)
 
-        newGameButton = PushButton(newGameBox, text="Iniciar juego", height=5, width=40, command=self.newGame)
-       
+        newDestroyDotsBox = Box(buttonsBox)
+        newDestroyDotsBox.resize(self.width, (25*((70*self.height)/100))/100)
+        newDestroyDotsButton = PushButton(newDestroyDotsBox, text="Iniciar juego Destroy the dots", height=4, width=40, command=self.newDestroyDots)
 
         resumeGameBox = Box(buttonsBox)
-        resumeGameBox.resize(self.width, (33.333333333*((70*self.height)/100))/100)
-        
-
-        resumeGameButton = PushButton(resumeGameBox, text="Reanudar juego", height=5, width=40)
+        resumeGameBox.resize(self.width, (25*((70*self.height)/100))/100)
+        resumeGameButton = PushButton(resumeGameBox, text="Reanudar juego", height=4, width=40)
 
         scoreUserBox = Box(buttonsBox)
-        scoreUserBox.resize(self.width, (33.333333333*((70*self.height)/100))/100)
-        
-
-        scoreUserButton = PushButton(scoreUserBox, text="Mostrar tabla de puntuaciones", height=5, width=40)
+        scoreUserBox.resize(self.width, (25*((70*self.height)/100))/100)
+        scoreUserButton = PushButton(scoreUserBox, text="Mostrar tabla de puntuaciones", height=4, width=40)
 
         sectionExitBox = Box(self.app)
         sectionExitBox.resize(self.width, (15*self.height)/100)
@@ -43,11 +40,16 @@ class ViewStartMenu(View):
         logoutBox.resize((30*self.width)/100, (15*self.height)/100)
         logoutBox.bg = "red"
 
-        logoutBtn = PushButton(logoutBox, text="Salir de la sesion", width=20, height=2)
+        logoutBtn = PushButton(logoutBox, text="Salir de la sesion", width=20, height=2, command=self.app.destroy)
         logoutBtn.text_color = "white"
         logoutBtn.text_size = 14 
 
-    def newGame(self):
+    def newFloodIt(self):
+        self.app.destroy()
+        destroyDots = ViewFloodIt()
+
+    def newDestroyDots(self):
+        self.app.destroy()
         destroyDots = ViewDestroyDots()
 
     
