@@ -1,5 +1,6 @@
 from guizero import *
 from .view import View
+from .viewDestroyDots import ViewDestroyDots
 
 class ViewStartMenu(View):
     def __init__(self, title="view", width=700, height=700, layout="auto", bg="white", visible=True):
@@ -19,7 +20,7 @@ class ViewStartMenu(View):
         newGameBox.resize(self.width, (33.333333333*((70*self.height)/100))/100)
         
 
-        newGameButton = PushButton(newGameBox, text="Iniciar juego", height=5, width=40)
+        newGameButton = PushButton(newGameBox, text="Iniciar juego", height=5, width=40, command=self.newGame)
        
 
         resumeGameBox = Box(buttonsBox)
@@ -46,9 +47,8 @@ class ViewStartMenu(View):
         logoutBtn.text_color = "white"
         logoutBtn.text_size = 14 
 
-    def createWindow(self):
-        window = Window(self.app)
-        return window
+    def newGame(self):
+        destroyDots = ViewDestroyDots()
 
     
 
