@@ -27,18 +27,25 @@ class ViewLogin(View):
 
 #------------
         def open_window():
-            window.info(title="Agradecimientos A: ", text="https://lawsie.github.io/guizero/")
+            window.show()
+            windowtext = Text(window, text="Agradecimientos a la pagina https://lawsie.github.io/guizero/")
+            windowButton = PushButton(window, text="Close",command=close_window)
 
+
+        def close_window():
+            window.hide()
 
         authorBox = Box(self.app)
         authorBox.resize(self.width, (7*self.height)/100)
 
-        window = Window(self.app, title = "Autores", height=250, width=250)
+        window = Window(self.app, title = "Autores", height=150, width=840)
         window.hide()
     
         autorPop = Window(self.app)
         autorPop.hide()
         authorButton = PushButton(authorBox, text="Author's",command=open_window)
+
+
 
     def openPlayer(self):
         self.app.destroy()
