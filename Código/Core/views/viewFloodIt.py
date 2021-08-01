@@ -99,6 +99,7 @@ class ViewFloodIt(View):
         target = self.board.get_pixel(0,0)
         self.flood(0, 0, target, flood_colour)
         self.win_check()
+        self.lastMove()
       
     #mediante la siguiente función se obtiene la hora de inicio del juego en formato HH:MM:SS.  
     def startTime(self):
@@ -134,9 +135,6 @@ class ViewFloodIt(View):
         self.timer.tk.config(text="{}:{}:{}".format(str(self.aux_hour).zfill(2),str(self.aux_min).zfill(2),str(self.aux_sec).zfill(2)))
                
         self.timer.tk.after(1000, self.gameTime)
-                    
-                    
-       
         
     #Mediante la siguiente función se pausa el tiempo del juego. La función es llamada desde el botón "pause"
     def pause(self):
@@ -150,6 +148,9 @@ class ViewFloodIt(View):
     def declareDefeat(self):
         pass
     
+    #mediante la siguiente función se obtiene el ultimo moviento realizado.
+    def lastMove(self):
+        return self.board.get_all()
         
 #instancia para pruebas :
 pr = ViewFloodIt()

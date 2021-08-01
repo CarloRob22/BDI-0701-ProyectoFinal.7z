@@ -73,6 +73,8 @@ class ViewDestroyDots(View):
             self.board.set_pixel(x, y, "white")
             self.score += 1
             self.score_display.value = "Your score is " + str(self.score)
+        self.lastMove()
+    
             
     #mediante la siguiente función se obtiene la hora de inicio del juego en formato HH:MM:SS.  
     def startTime(self):
@@ -117,6 +119,11 @@ class ViewDestroyDots(View):
     #Mediante la siguiente función se declara el juego en estado de derrota. La función es llamada desde el botón "Declare Defeat" 
     def declareDefeat(self):
         pass
+    
+    #mediante la siguiente función se obtiene el ultimo moviento realizado.
+    def lastMove(self):
+        #print(self.board.get_all())
+        return self.board.get_all()
 
 #instancia para hacer pruebas
 p = ViewDestroyDots()
