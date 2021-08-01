@@ -4,10 +4,11 @@ from .viewStartMenu import ViewStartMenu
 from .admin_interface import AdminInterface
 
 class ViewLogin(View):   
-    def __init__(self, title="view", width=840, height=620, layout="auto", bg="white", visible=True):
+    def __init__(self, gEngine, title="view", width=840, height=620, layout="auto", bg="white", visible=True):
         super().__init__(title, width, height, layout, bg, visible)
+        self.gEngine = gEngine
 
- 
+
         titleBox = Box(self.app)
         titleBox.resize(self.width, (15*self.height)/100)
         title = Text(titleBox, text="Bienvenido", height=150, size=15)
@@ -15,15 +16,15 @@ class ViewLogin(View):
         buttonsBox = Box(self.app)
         buttonsBox.resize(self.width, (2*self.height)/100)
 
-        nickname = Text(self.app, text="Nickname") 
-        nickname = TextBox(self.app, text="******")
-        password = Text(self.app, text="Password") 
-        password = TextBox(self.app, text="******")
+        self.Lnickname = Text(self.app, text="Nickname") 
+        self.nickname = TextBox(self.app)
+        self.Lpassword = Text(self.app, text="Password") 
+        self.password = TextBox(self.app)
 
         submitBox = Box(self.app)
         submitBox.resize(self.width, (15*self.height)/100)
 
-        submitButton = PushButton(submitBox, text="Submit", command=self.openPlayer)
+        submitButton = PushButton(submitBox, text="Submit", command=self.openUser)
 
 #------------
         def open_window():
@@ -46,6 +47,18 @@ class ViewLogin(View):
         authorButton = PushButton(authorBox, text="Author's",command=open_window)
 
 
+    
+    def openUser(self):
+        usuario = self.nickname.value
+        contra = self.password.value
+        role = self.gEngine.auth(usuario, contra)
+        if role==2:
+            self.openAdmin()
+        elif role==1:
+            self.openPlayer()
+        else:
+            print("Usuario no existente")
+        
 
     def openPlayer(self):
         self.app.destroy()

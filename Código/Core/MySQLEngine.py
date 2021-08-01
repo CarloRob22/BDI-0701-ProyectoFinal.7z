@@ -46,3 +46,9 @@ class MySQLEngine:
 
     def insert(self, query):
         pass
+
+    def update(self, query):
+        pass
+
+    def auth():
+        pass

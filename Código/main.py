@@ -1,10 +1,22 @@
+from Core.MySQLEngine import MySQLEngine
+from Core.ConfigConnection import ConfigConnection
+from Core.classes.gameEngine import MyGameEngine
 from Core.views.screenSplash import ScreenSplash
 
 def main():
     
-    screenSplash = ScreenSplash("screen splash")
-    
-    
+    config = ConfigConnection(
+        "localhost",
+        "3306",
+        "root",
+        "paladino123",
+        "GameManager2"
+    ) 
+
+    mEngine = MySQLEngine(config)
+    gEngine = MyGameEngine(mEngine)
+
+    screenSplash = ScreenSplash(gEngine, "screen splash")
 
     screenSplash.app.tk.mainloop()
     
