@@ -1,5 +1,5 @@
 from guizero import *
-from .view import View
+from view import View
 from random import randint
 
 class ViewDestroyDots(View):   
@@ -9,16 +9,17 @@ class ViewDestroyDots(View):
         self.GRID_SIZE = 5
         self.score = 0
         self.instructions = Text(self.app, text="Click the dots to destroy them")
-        self.board = Waffle(self.app, width=self.GRID_SIZE, height=self.GRID_SIZE, command=self.destroy_dot)
+        self.board = Waffle(self.app, width=self.GRID_SIZE, height=self.GRID_SIZE, command=self.destroy_dot, dim = 80)
         self.board.after(1000, self.add_dot)
         self.score_display = Text(self.app, text="Your score is " + str(self.score))
+        
+        self.app.display()
 
     def add_dot(self):
         x, y = randint(0,self.GRID_SIZE-1), randint(0,self.GRID_SIZE-1)
 
         while self.board[x, y].dotty == True:
             x, y = randint(0,self.GRID_SIZE-1), randint(0,self.GRID_SIZE-1)
-
 
         self.board[x, y].dotty = True
         self.board.set_pixel(x, y, "red")
@@ -52,3 +53,6 @@ class ViewDestroyDots(View):
             self.board.set_pixel(x, y, "white")
             self.score += 1
             self.score_display.value = "Your score is " + str(self.score)
+
+#instancia para hacer pruebas
+#p = ViewDestroyDots()
