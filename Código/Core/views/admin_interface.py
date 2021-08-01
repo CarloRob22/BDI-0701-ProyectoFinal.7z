@@ -2,7 +2,7 @@
 # Imports
 # ------------------------------
 
-from guizero import App, Waffle, Text, PushButton, info, Box
+from guizero import *
 import random
 
 class AdminInterface:    

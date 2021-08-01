@@ -8,7 +8,7 @@ class ScreenSplash(View):
         super().__init__(title, width, height, layout, bg, visible)
         
 
-        self.app.after(6000, self.openLogin, args="")
+        self.app.after(2000, self.openLogin, args="")
         p=Picture(self.app,image="Código/wait.gif")
         text=Text(self.app,text="Cargando...",size=28,height=5,font="Haettenschweiler",align="bottom")
 
