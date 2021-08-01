@@ -19,6 +19,10 @@ class MySQLEngine:
 
         self.link = self.mydb.cursor()
 
+    def obtainDDS(self, query):
+        result= self.link.execute(query)
+        return result
+
     def select(self,query):
         self.link.execute(query)
         return self.link.fetchall()
@@ -31,7 +35,6 @@ class MySQLEngine:
             print (tabulate(result, headers=headers))
         
     def saveAsTable(self, fileName, result, headers=[]):
-
         content = ""
         if not headers:
             content = tabulate(result)

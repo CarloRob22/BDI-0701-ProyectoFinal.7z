@@ -1,10 +1,11 @@
 from Core.views.screenSplash import ScreenSplash
 
-
 def main():
+    
+    screenSplash = ScreenSplash("screen splash")
+    
+    
 
-
-    screenSplash = ScreenSplash("screen splash") 
     screenSplash.app.tk.mainloop()
     
 
