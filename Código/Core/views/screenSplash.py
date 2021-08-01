@@ -1,18 +1,17 @@
 from guizero import *
 from .view import View
 from .viewLogin import ViewLogin
-import os
+
 
 class ScreenSplash(View):   
     def __init__(self, gEngine, title="view", width=840, height=620, layout="auto", bg="white", visible=True):
         super().__init__(title, width, height, layout, bg, visible)
         self.gEngine = gEngine
         
-        path = os.getcwd()
 
-        print(path)
-
-        self.app.after(3000, self.openLogin, args="")
+        self.app.after(6000, self.openLogin, args="")
+        p=Picture(self.app,image="Código/wait.gif")
+        text=Text(self.app,text="Cargando...",size=28,height=5,font="Haettenschweiler",align="bottom")
 
     def openLogin(self):
         

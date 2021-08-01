@@ -52,6 +52,7 @@ class ViewStartMenu(View):
         self.app.destroy()
         destroyDots = ViewDestroyDots()
 
+
     
 
 
