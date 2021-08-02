@@ -5,7 +5,7 @@ class MyGameEngine:
     
     def __init__(self, db):
         self.db = db
-        self.user = ""
+        self.user = None
         self.games = []
         self.gameStates = []
 
@@ -19,12 +19,16 @@ class MyGameEngine:
         else:
             return 0
     
-    def addUsers(self):
-        pass
+    def addUser(self, id, firstName, lastName, email, nickName, role):
+        if role == 2:
+            self.user = UserAdministrator(id, firstName, lastName, email, nickName, role)
+        else:
+            self.user = UserPlayer(id, firstName, lastName, email, nickName, role)
 
-    def verifyRoleUser(self):
-        pass
-
+    def sesionInJournal(self):
+        action = "Usuario %s inicio sesión con exíto"%(self.user.nickname)
+        
+            
     def addGame(self):
         pass
 

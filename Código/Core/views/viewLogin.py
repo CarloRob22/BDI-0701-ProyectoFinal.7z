@@ -2,6 +2,7 @@ from guizero import *
 from .view import View
 from .viewStartMenu import ViewStartMenu
 from .admin_interface import AdminInterface
+import json
 
 class ViewLogin(View):   
     def __init__(self, gEngine, title="view", width=840, height=620, layout="auto", bg="white", visible=True):
@@ -51,13 +52,16 @@ class ViewLogin(View):
     def openUser(self):
         usuario = self.nickname.value
         contra = self.password.value
-        role = self.gEngine.auth(usuario, contra)
-        if role==2:
-            self.openAdmin()
-        elif role==1:
-            self.openPlayer()
+        user = self.gEngine.auth(usuario, contra)
+        if user is not None:            
+            user = json.loads(user)        
+            self.gEngine.addUser(user["id"],user["firstName"],user["lastName"],user["email"],user["nickname"],user["tin_role"])
+            if user["tin_role"] == 1:
+                self.openPlayer()                
+            else:
+                self.openAdmin()
         else:
-            print("Usuario no existente")
+            print("Credenciales no validas")
         
 
     def openPlayer(self):
@@ -70,3 +74,5 @@ class ViewLogin(View):
 
     def verifyRole():
         pass
+    
+    

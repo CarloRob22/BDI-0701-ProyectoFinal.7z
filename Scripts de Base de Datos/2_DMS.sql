@@ -1,4 +1,4 @@
-USE GameManager2;
+USE GameManager3;
 
 INSERT INTO UserRole (var_name) VALUES 
     ("player"),

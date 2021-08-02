@@ -8,9 +8,9 @@ def main():
     config = ConfigConnection(
         "localhost",
         "3306",
-        "root",
-        "paladino123",
-        "GameManager2"
+        "admin",
+        "admin",
+        "GameManager3"
     ) 
 
     mEngine = MySQLEngine(config)
