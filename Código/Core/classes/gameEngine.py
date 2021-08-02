@@ -5,7 +5,7 @@ class MyGameEngine:
     
     def __init__(self, db):
         self.db = db
-        self.user
+        self.user = ""
         self.games = []
         self.gameStates = []
 

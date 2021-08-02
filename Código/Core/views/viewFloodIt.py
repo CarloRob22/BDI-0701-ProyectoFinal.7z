@@ -1,7 +1,7 @@
 from genericpath import getatime
 from tkinter.constants import TOP
 from guizero import *
-from view import View
+from .view import View
 import random
 import time
 import json
@@ -153,4 +153,3 @@ class ViewFloodIt(View):
         return self.board.get_all()
         
 #instancia para pruebas :
-pr = ViewFloodIt()

@@ -1,5 +1,5 @@
 from guizero import *
-from view import View
+from .view import View
 from random import randint
 import time
 import json
@@ -126,4 +126,3 @@ class ViewDestroyDots(View):
         return self.board.get_all()
 
 #instancia para hacer pruebas
-p = ViewDestroyDots()
