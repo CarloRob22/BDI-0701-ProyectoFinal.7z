@@ -9,9 +9,9 @@ class ScreenSplash(View):
         self.gEngine = gEngine
         
 
-        self.app.after(6000, self.openLogin, args="")
+        self.app.after(1000, self.openLogin, args="")
         #p=Picture(self.app,image="Código/wait.gif")
-        #text=Text(self.app,text="Cargando...",size=28,height=5,font="Haettenschweiler",align="bottom")
+        text=Text(self.app,text="Cargando...",size=28,height=5,font="Haettenschweiler",align="bottom")
 
     def openLogin(self):
         

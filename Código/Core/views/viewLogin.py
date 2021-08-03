@@ -20,19 +20,18 @@ class ViewLogin(View):
         self.Lnickname = Text(self.app, text="Nickname") 
         self.nickname = TextBox(self.app)
         self.Lpassword = Text(self.app, text="Password") 
-        self.password = TextBox(self.app)
+        self.password = TextBox(self.app,hide_text=True)
 
         submitBox = Box(self.app)
         submitBox.resize(self.width, (15*self.height)/100)
 
         submitButton = PushButton(submitBox, text="Submit", command=self.openUser)
 
-#------------
+#------------Authores
         def open_window():
             window.show()
             windowtext = Text(window, text="Agradecimientos a la pagina https://lawsie.github.io/guizero/")
             windowButton = PushButton(window, text="Close",command=close_window)
-
 
         def close_window():
             window.hide()
