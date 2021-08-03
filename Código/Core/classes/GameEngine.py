@@ -1,5 +1,4 @@
-from Core.classes.UserAdministrator import UserAdministrator
-from Core.classes.UserPlayer import UserPlayer
+from Core.classes.Auth import Auth
 
 class MyGameEngine:
     
@@ -8,30 +7,13 @@ class MyGameEngine:
         self.view = None
         self.user = None
 
-    def auth(self, email, password):
-        
-        self.db.select("CALL sp_auth('%s','%s',@res)" % (email, password))
-        response = self.db.select("SELECT @res;")
+    def authUser(self, email, password):
+        self.user = Auth(self.db).auth(email, password)
+        return self.user
     
-        if len(response) > 0:
-            return response[0][0]
-        else:
-            return 0
-    
-    def addUser(self, id, firstName, lastName, email, nickName, role):        
-        if role == 2:
-            self.user = UserAdministrator(id, firstName, lastName, email, nickName, role)
-        else:
-            self.user = UserPlayer(id, firstName, lastName, email, nickName, role)
 
-    def sessionInJournal(self):
-        action = "Usuario %s inicio sesión con exíto"%(self.user.nickName)
-        self.db.insert("CALL sp_sessionJournal(%s, '%s');" %(self.user.id, action))
+    
                     
-    def addGame(self):
-        pass
 
-    def addGameState(self):
-        pass
 
     

@@ -69,12 +69,18 @@ los juegos disponibles en la aplicacion";
 
 CREATE TABLE IF NOT EXISTS GameMatch(
     int_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "Corresponde al identificador de cada partida de juego",
+    tim_lastTime TIME NOT NULL DEFAULT "00:00:00"
+        COMMENT "Corresponde al ultimo tiempo de juego registrado, el cual se actualiza cada vez que un jugador hace un cambio de estado
+        en el juego",
     tin_game_FK TINYINT UNSIGNED NOT NULL
         COMMENT "Esta llave foranea indica el juego al cual pertenece la partida",
     int_user_FK INT UNSIGNED NOT NULL
         COMMENT "Esta llave foranea indica el jugador que inicio la partida",
+    tin_gameState_FK TINYINT UNSIGNED NOT NULL
+        COMMENT "Esta llave foranea indica el estado en el que se encuentra el juego",
     CONSTRAINT tin_game_FK1 FOREIGN KEY(tin_game_FK) REFERENCES Game(tin_id),
-    CONSTRAINT int_user_FK3 FOREIGN KEY(int_user_FK) REFERENCES User(int_id)
+    CONSTRAINT int_user_FK3 FOREIGN KEY(int_user_FK) REFERENCES User(int_id),
+    CONSTRAINT tin_gameState_FK1 FOREIGN KEY(tin_game_FK) REFERENCES GameState(tin_id)
 ) COMMENT "Esta relacion corresponde al tipo de entidad Partida, en la cual se
 crea un nuevo registro, cada vez que se inicia un juego nuevo";
 

@@ -4,8 +4,8 @@
 
 from guizero import *
 import random
-from .viewDestroyDots import ViewDestroyDots
-from .viewFloodIt import ViewFloodIt
+from .DestroyDotsView import DestroyDotsView
+from .FloodItView import FloodItView
 
 class StartAdminView:    
     def __init__(self):        
@@ -43,12 +43,12 @@ class StartAdminView:
     #Mediante la siguiente función se inicia el juego Floodit cuando el usuario da click en el boton "Jugar Flood It".
     def startFloodit(self):
         self.window.destroy()
-        flood = ViewFloodIt()
+        flood = FloodItView()
             
         #Mediante la siguiente función se inicia el juego Destroy The Dots cuando el usuario da click el el boton "Jugar Destroy The Dots".
     def startDestroy(self):
         self.window.destroy()
-        destroyDots = ViewDestroyDots()
+        destroyDots = DestroyDotsView()
             
     #Mediante la siguiente función el usuario inicia el módulo de gestión de la información de los usuarios al dar click en el boton "Gestionar Usuarios".
     #crear, eliminar y editar los datos de autenticación de usuarios (jugadores).
