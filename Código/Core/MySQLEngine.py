@@ -45,10 +45,12 @@ class MySQLEngine:
         return True
 
     def insert(self, query):
-        pass
+        self.link.execute(query)
+        self.mydb.commit()
 
     def update(self, query):
         pass
 
     def auth():
         pass
+    

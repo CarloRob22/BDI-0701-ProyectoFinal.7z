@@ -6,7 +6,6 @@ DELIMITER $$
 CREATE TRIGGER tg_sesion
     AFTER INSERT 
     ON 
-BEGIN
-    
+BEGIN   
 
 END$$

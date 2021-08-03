@@ -1,6 +1,5 @@
+from .user import User
 
-class UserPlayer:
-
-    def __init__(self):
-       def __init__(self, id, firstName, lastName, email, nickName, role):
+class UserPlayer(User):
+    def __init__(self, id, firstName, lastName, email, nickName, role):
         super().__init__(id, firstName, lastName, email, nickName, role)

@@ -19,16 +19,16 @@ class MyGameEngine:
         else:
             return 0
     
-    def addUser(self, id, firstName, lastName, email, nickName, role):
+    def addUser(self, id, firstName, lastName, email, nickName, role):        
         if role == 2:
             self.user = UserAdministrator(id, firstName, lastName, email, nickName, role)
         else:
             self.user = UserPlayer(id, firstName, lastName, email, nickName, role)
 
-    def sesionInJournal(self):
-        action = "Usuario %s inicio sesión con exíto"%(self.user.nickname)
-        
-            
+    def sessionInJournal(self):
+        action = "Usuario %s inicio sesión con exíto"%(self.user.nickName)
+        self.db.insert("CALL sp_sessionJournal(%s, '%s');" %(self.user.id, action))
+                    
     def addGame(self):
         pass
 

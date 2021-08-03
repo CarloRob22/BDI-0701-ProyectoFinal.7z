@@ -56,6 +56,7 @@ class ViewLogin(View):
         if user is not None:            
             user = json.loads(user)        
             self.gEngine.addUser(user["id"],user["firstName"],user["lastName"],user["email"],user["nickname"],user["tin_role"])
+            self.gEngine.sessionInJournal()
             if user["tin_role"] == 1:
                 self.openPlayer()                
             else:

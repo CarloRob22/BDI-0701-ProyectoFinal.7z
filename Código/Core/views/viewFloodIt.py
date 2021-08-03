@@ -18,10 +18,12 @@ class ViewFloodIt(View):
         self.second = 0
         self.minutes = 0
         self.hours = 0
-        self.aux_hour =00 
-        self.aux_min = 00
-        self.aux_sec = 00
-                
+        self.aux_hour =0 
+        self.aux_min = 0
+        self.aux_sec = 0
+        self.state = True  
+        self.listMoves = []          
+    
         self.BoxWaff = Box(self.app, layout="auto", align="left")
         #cuadricula de colores, su tamaño se modifico mediante la propiedad dim        
         self.board = Waffle(self.BoxWaff, width=self.board_size, height=self.board_size, pad=0, dim=35)        
@@ -81,14 +83,16 @@ class ViewFloodIt(View):
     
     #mediante la siguiente función se obtinene el tablero inicial de la partida.
     def get_start_board(self,b_init):
-            #print(b_init.get_all())            
-            pass
+                        
+            self.listMoves.append(self.board.get_all())
 
     def fill_board(self):
         for x in range(self.board_size):
             for y in range(self.board_size):
                 self.board.set_pixel(x, y, random.choice(self.colours))
         self.get_start_board(self.board)
+        self.listMoves.append(self.board.get_all())
+        
 
     def init_palette(self):
         for colour in self.colours:
@@ -99,7 +103,7 @@ class ViewFloodIt(View):
         target = self.board.get_pixel(0,0)
         self.flood(0, 0, target, flood_colour)
         self.win_check()
-        self.lastMove()
+        self.lastMove(self.board)
       
     #mediante la siguiente función se obtiene la hora de inicio del juego en formato HH:MM:SS.  
     def startTime(self):
@@ -115,41 +119,55 @@ class ViewFloodIt(View):
         print(self.startTim["sec"])  
     
     
-    #Mediante la siguiente función se inicia el tiempo del juego desde (00:00:00).                
+    #Mediante la siguiente función se inicia el tiempo del juego desde (00:00:00).               
     
-    def gameTime(self,):        
-        sec = time.strftime("%S")
-        self.second = self.second + (int(sec)-(int(sec))) +1    
-        self.aux_sec = self.second
-        
-        if self.aux_sec == 60:
-            self.aux_sec = "0"
-            self.aux_min = self.aux_min + 1
-            self.second = 0
+    def gameTime(self):              
+        if (self.state):
+            sec = time.strftime("%S")
+            self.second = self.second + (int(sec)-(int(sec))) +1    
+            self.aux_sec = self.second
             
-        if self.aux_min == 60:
-            self.aux_min = "0"
-            self.aux_hour= self.aux_hour + 1
-            self.min = 0
-        
-        self.timer.tk.config(text="{}:{}:{}".format(str(self.aux_hour).zfill(2),str(self.aux_min).zfill(2),str(self.aux_sec).zfill(2)))
-               
-        self.timer.tk.after(1000, self.gameTime)
-        
+            if self.aux_sec == 60:
+                self.aux_sec = "0"
+                self.aux_min = self.aux_min + 1
+                self.second = 0
+                
+            if self.aux_min == 60:
+                self.aux_min = "0"
+                self.aux_hour= self.aux_hour + 1
+                self.min = 0
+            
+            self.timer.tk.config(text="{}:{}:{}".format(str(self.aux_hour).zfill(2),str(self.aux_min).zfill(2),str(self.aux_sec).zfill(2)))                                            
+            
+            self.timer.tk.after(1000, self.gameTime)
+            
     #Mediante la siguiente función se pausa el tiempo del juego. La función es llamada desde el botón "pause"
     def pause(self):
-        pass
+        if self.state:       
+            self.pauseGame.text = "Continue"    
+            self.state = False
+            self.palette.enabled = False
+        else:
+            self.state = True
+            self.palette.enabled = True
+            self.pauseGame.text =  "Pause"
+            self.gameTime()
     
     #Mediante la siguiente fución se elimina el ultimo movimiento que hubo en el juego. La función es llamada desde el botón "Rewind".
     def stepRewind(self):
-        pass
+        self.board.pixel(2,2).color = "red"
 
     #Mediante la siguiente función se declara el juego en estado de derrota. La función es llamada desde el botón "Declare Defeat" 
     def declareDefeat(self):
         pass
     
     #mediante la siguiente función se obtiene el ultimo moviento realizado.
-    def lastMove(self):
+    def lastMove(self, board):
+        self.listMoves.append(board)
+        print(self.board.get_all())
         return self.board.get_all()
+        
+    
+    
         
 #instancia para pruebas :
