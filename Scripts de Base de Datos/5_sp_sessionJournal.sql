@@ -1,4 +1,4 @@
-USE GameManager3;
+USE GameManager;
 
 DROP PROCEDURE IF EXISTS sp_sessionJournal;
 
