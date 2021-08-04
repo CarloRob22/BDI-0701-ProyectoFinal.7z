@@ -164,7 +164,7 @@ class FloodItView(View):
     #mediante la siguiente función se obtiene el ultimo moviento realizado.
     def lastMove(self, board):
         self.listMoves.append(board)
-        print(self.board.get_all())
+        print(self.board.get_all())        
         return self.board.get_all()
         
     

@@ -17,6 +17,7 @@ class DestroyDotsView(View):
         self.aux_hour =0 
         self.aux_min = 0
         self.aux_sec = 0
+        self.state = True
         
         self.BoxWaff = Box(self.app, layout="auto", align="left")
         self.instructions = Text(self.BoxWaff, text="Click the dots to destroy them")
@@ -92,29 +93,40 @@ class DestroyDotsView(View):
     
     #Mediante la siguiente función se inicia el tiempo del juego desde (00:00:00).                
     
-    def gameTime(self,):        
-        sec = time.strftime("%S")
-        self.second = self.second + (int(sec)-(int(sec))) +1    
-        self.aux_sec = self.second
-        
-        if self.aux_sec == 60:
-            self.aux_sec = "0"
-            self.aux_min = self.aux_min + 1
-            self.second = 0
+    def gameTime(self,): 
+        if(self.state):       
+            sec = time.strftime("%S")
+            self.second = self.second + (int(sec)-(int(sec))) +1    
+            self.aux_sec = self.second
             
-        if self.aux_min == 60:
-            self.aux_min = "0"
-            self.aux_hour= self.aux_hour + 1
-            self.min = 0
-        
-        self.timer.tk.config(text="{}:{}:{}".format(str(self.aux_hour).zfill(2),str(self.aux_min).zfill(2),str(self.aux_sec).zfill(2)))
-               
-        self.timer.tk.after(1000, self.gameTime)                 
+            if self.aux_sec == 60:
+                self.aux_sec = "0"
+                self.aux_min = self.aux_min + 1
+                self.second = 0
+                
+            if self.aux_min == 60:
+                self.aux_min = "0"
+                self.aux_hour= self.aux_hour + 1
+                self.min = 0
+            
+            self.timer.tk.config(text="{}:{}:{}".format(str(self.aux_hour).zfill(2),str(self.aux_min).zfill(2),str(self.aux_sec).zfill(2)))
+                
+            self.timer.tk.after(1000, self.gameTime)
+                 
                     
                
     #Mediante la siguiente función se pausa el tiempo del juego. La función es llamada desde el botón "pause"
     def pause(self):
-        pass    
+        if self.state:       
+            self.pauseGame.text = "Continue"    
+            self.state = False
+            self.palette.enabled = False
+        else:
+            self.state = True
+            self.palette.enabled = True
+            self.pauseGame.text =  "Pause"
+            self.gameTime()
+
     
     #Mediante la siguiente función se declara el juego en estado de derrota. La función es llamada desde el botón "Declare Defeat" 
     def declareDefeat(self):

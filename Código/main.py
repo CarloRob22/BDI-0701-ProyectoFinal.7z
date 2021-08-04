@@ -9,7 +9,7 @@ def main():
         "localhost",
         "3306",
         "root",
-        "paladino123",
+        "123Qweasd",
         "GameManager"
     ) 
 
