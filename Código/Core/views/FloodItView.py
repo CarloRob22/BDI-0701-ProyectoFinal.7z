@@ -90,8 +90,8 @@ class FloodItView(View):
         for x in range(self.board_size):
             for y in range(self.board_size):
                 self.board.set_pixel(x, y, random.choice(self.colours))
-        self.get_start_board(self.board)
-        self.listMoves.append(self.board.get_all())
+        self.get_start_board(self.board.get_all())        
+        
         
 
     def init_palette(self):
@@ -155,19 +155,33 @@ class FloodItView(View):
     
     #Mediante la siguiente fución se elimina el ultimo movimiento que hubo en el juego. La función es llamada desde el botón "Rewind".
     def stepRewind(self):
-        self.board.pixel(2,2).color = "red"
-
+        if len(self.listMoves)>1:            
+            self.fillRewind()        
+            self.moves_taken -= 1
+            self.moves.value = 'Movimientos realizados: ' + str(self.moves_taken)
+        print(self.listMoves)
+     
     #Mediante la siguiente función se declara el juego en estado de derrota. La función es llamada desde el botón "Declare Defeat" 
     def declareDefeat(self):
         pass
     
     #mediante la siguiente función se obtiene el ultimo moviento realizado.
     def lastMove(self, board):
-        self.listMoves.append(board)
-        print(self.board.get_all())        
-        return self.board.get_all()
+        self.listMoves.append(self.board.get_all())
+        print(self.listMoves)
+        
+        
+        
+    #mediante la siguiente función se dibuja el tablero del paso anterior, esta es llamada desde el metodo stepRewind.        
+    def fillRewind(self):
+        self.listMoves.pop()
+        for x in range(self.board_size):
+            for y in range(self.board_size):
+                self.board.set_pixel(x, y, self.listMoves[len(self.listMoves)-1][x][y] )
+        
         
     
     
         
 #instancia para pruebas :
+
