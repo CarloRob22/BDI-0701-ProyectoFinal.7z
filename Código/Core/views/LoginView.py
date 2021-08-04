@@ -18,9 +18,9 @@ class LoginView(View):
         buttonsBox.resize(self.width, (2*self.height)/100)
 
         self.Lnickname = Text(self.app, text="Nickname") 
-        self.nickname = TextBox(self.app)
+        self.nickname = TextBox(self.app,width=15)
         self.Lpassword = Text(self.app, text="Password") 
-        self.password = TextBox(self.app,hide_text=True)
+        self.password = TextBox(self.app,width=15,hide_text=True)
 
         submitBox = Box(self.app)
         submitBox.resize(self.width, (15*self.height)/100)
