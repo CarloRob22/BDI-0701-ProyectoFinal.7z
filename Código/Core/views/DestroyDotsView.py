@@ -1,3 +1,5 @@
+#from .StartPlayerView import StartPlayerView
+#from .StartAdminView import StartAdminView
 from guizero import *
 from .View import View
 from random import randint
@@ -17,7 +19,9 @@ class DestroyDotsView(View):
         self.aux_hour =0 
         self.aux_min = 0
         self.aux_sec = 0
-        self.state = True
+        self.stateTime = True
+        self.varGameTime = ""
+        
         
         self.BoxWaff = Box(self.app, layout="auto", align="left")
         self.instructions = Text(self.BoxWaff, text="Click the dots to destroy them")
@@ -37,36 +41,41 @@ class DestroyDotsView(View):
         self.app.display()
 
     def add_dot(self):
-        x, y = randint(0,self.GRID_SIZE-1), randint(0,self.GRID_SIZE-1)
-
-        while self.board[x, y].dotty == True:
+        if self.stateTime == True:            
             x, y = randint(0,self.GRID_SIZE-1), randint(0,self.GRID_SIZE-1)
 
-        self.board[x, y].dotty = True
-        self.board.set_pixel(x, y, "red")
+            while self.board[x, y].dotty == True:
+                x, y = randint(0,self.GRID_SIZE-1), randint(0,self.GRID_SIZE-1)
 
-        speed = 2000
+            self.board[x, y].dotty = True
+            self.board.set_pixel(x, y, "red")
 
-        if self.score > 30:
-            speed = 200
-        elif self.score > 20:
-            speed = 400
-        elif self.score > 10:
-            speed = 500
-        
-        all_red = True
+            speed = 2000
 
-        for x in range(self.GRID_SIZE):
-            for y in range(self.GRID_SIZE):
-                if self.board[x,y].color != "red":
-                    all_red = False
-        if all_red:
-            self.score_display.value = "You lost! Score: " + str(self.score)
-            self.board.disable()
-        else:
-            self.board.after(speed, self.add_dot)
+            if self.score > 30:
+                speed = 200
+            elif self.score > 20:
+                speed = 400
+            elif self.score > 10:
+                speed = 500
+            
+            all_red = True
 
-#PREGUNTA: Para que sirve este metodo?
+            for x in range(self.GRID_SIZE):
+                for y in range(self.GRID_SIZE):
+                    if self.board[x,y].color != "red":
+                        all_red = False
+            if all_red:
+                self.score_display.value = "You lost! Score: " + str(self.score)
+                self.board.disable()
+                popUpLoser = self.app.info("Perdiste", "Alcansaste una puntuación de {}".format(str(self.score)))
+                popUpLoser = True
+                if popUpLoser == True:
+                    self.app.destroy()
+            else:
+                self.board.after(speed, self.add_dot)
+
+
     def destroy_dot(self,x,y):
         global score
         if self.board[x,y].dotty == True:
@@ -90,11 +99,9 @@ class DestroyDotsView(View):
         }  
         print(self.startTim["sec"])  
     
-    
-    #Mediante la siguiente función se inicia el tiempo del juego desde (00:00:00).                
-    
+    #Mediante la siguiente función se inicia el tiempo del juego desde (00:00:00).      
     def gameTime(self,): 
-        if(self.state):       
+        if(self.stateTime):       
             sec = time.strftime("%S")
             self.second = self.second + (int(sec)-(int(sec))) +1    
             self.aux_sec = self.second
@@ -108,33 +115,33 @@ class DestroyDotsView(View):
                 self.aux_min = "0"
                 self.aux_hour= self.aux_hour + 1
                 self.min = 0
-            
-            self.timer.tk.config(text="{}:{}:{}".format(str(self.aux_hour).zfill(2),str(self.aux_min).zfill(2),str(self.aux_sec).zfill(2)))
-                
+            self.varGameTime = "{}:{}:{}".format(str(self.aux_hour).zfill(2),str(self.aux_min).zfill(2),str(self.aux_sec).zfill(2))            
+            self.timer.tk.config(text="{}:{}:{}".format(str(self.aux_hour).zfill(2),str(self.aux_min).zfill(2),str(self.aux_sec).zfill(2)))                
             self.timer.tk.after(1000, self.gameTime)
-                 
-                    
                
     #Mediante la siguiente función se pausa el tiempo del juego. La función es llamada desde el botón "pause"
     def pause(self):
-        if self.state:       
+        if self.stateTime:       
             self.pauseGame.text = "Continue"    
-            self.state = False
-            self.palette.enabled = False
+            self.stateTime = False            
         else:
-            self.state = True
-            self.palette.enabled = True
+            self.stateTime = True            
             self.pauseGame.text =  "Pause"
             self.gameTime()
+            self.add_dot()
 
     
     #Mediante la siguiente función se declara el juego en estado de derrota. La función es llamada desde el botón "Declare Defeat" 
     def declareDefeat(self):
-        pass
-    
+        self.popUpDefeat = self.app.yesno("Defeat", "¿Desea abandonar la partida?")        
+        if self.popUpDefeat == True:                                                         
+            self.app.destroy()
+            #playerInt = StartPlayerView()
+                        
+       
     #mediante la siguiente función se obtiene el ultimo moviento realizado.
     def lastMove(self):
         #print(self.board.get_all())
         return self.board.get_all()
 
-#instancia para hacer pruebas
+        

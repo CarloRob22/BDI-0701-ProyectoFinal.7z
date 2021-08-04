@@ -2,6 +2,8 @@ from genericpath import getatime
 from tkinter.constants import TOP
 from guizero import *
 from .View import View
+#from .StartPlayerView import StartPlayerView
+#from .StartAdminView import StartAdminView
 import random
 import time
 import json
@@ -21,8 +23,9 @@ class FloodItView(View):
         self.aux_hour =0 
         self.aux_min = 0
         self.aux_sec = 0
-        self.state = True  
-        self.listMoves = []          
+        self.stateTime = True  
+        self.listMoves = []    
+        self.varGameTime = ""      
     
         self.BoxWaff = Box(self.app, layout="auto", align="left")
         #cuadricula de colores, su tamaño se modifico mediante la propiedad dim        
@@ -39,7 +42,7 @@ class FloodItView(View):
         self.Defeat = PushButton(self.BoxBottonL, text="Declare Defeat", command=self.declareDefeat, width="fill", height="fill")
         self.BoxBottonR =Box(self.BoxBotton, align="left", width="fill", height="fill")    
         self.timer = Text(self.BoxBottonR, text="")
-        
+                
         self.fill_board()
         self.init_palette()
         self.startTime()
@@ -70,29 +73,36 @@ class FloodItView(View):
             return True
         else:
             return False
-
+    
+    #mediante la siguiente función el juego detecta cuando el usuario gano el juego y nos manda al score personal.    
     def win_check(self):
         global moves_taken
         self.moves_taken += 1
         self.moves.value = 'Movimientos realizados: ' + str(self.moves_taken)
-        if self.moves_taken <= self.moves_limit:
+        if self.moves_taken < self.moves_limit:            
             if self.all_squares_are_the_same():
                 self.win_text.value = "You win!"
+                self.palette.enabled = False                
         else:
             self.win_text.value = "You lost :("
+            self.palette.enabled = False            
+            popUpLoser = self.app.info("Perdiste", "Haz perdido esta partida, suerte a la próxima")
+            popUpLoser = True
+            if popUpLoser == True:
+                self.app.destroy()
+                #playerInt = StartPlayerView()
+                
     
     #mediante la siguiente función se obtinene el tablero inicial de la partida.
     def get_start_board(self,b_init):
-                        
-            self.listMoves.append(self.board.get_all())
+            self.initialBoard = b_init
+            self.listMoves.append(b_init)
 
     def fill_board(self):
         for x in range(self.board_size):
             for y in range(self.board_size):
                 self.board.set_pixel(x, y, random.choice(self.colours))
-        self.get_start_board(self.board.get_all())        
-        
-        
+        self.get_start_board(self.board.get_all())    
 
     def init_palette(self):
         for colour in self.colours:
@@ -119,10 +129,9 @@ class FloodItView(View):
         print(self.startTim["sec"])  
     
     
-    #Mediante la siguiente función se inicia el tiempo del juego desde (00:00:00).               
-    
+    #Mediante la siguiente función se inicia el tiempo del juego desde (00:00:00). 
     def gameTime(self):              
-        if (self.state):
+        if (self.stateTime):
             sec = time.strftime("%S")
             self.second = self.second + (int(sec)-(int(sec))) +1    
             self.aux_sec = self.second
@@ -137,18 +146,18 @@ class FloodItView(View):
                 self.aux_hour= self.aux_hour + 1
                 self.min = 0
             
-            self.timer.tk.config(text="{}:{}:{}".format(str(self.aux_hour).zfill(2),str(self.aux_min).zfill(2),str(self.aux_sec).zfill(2)))                                            
-            
+            self.varGameTime = "{}:{}:{}".format(str(self.aux_hour).zfill(2),str(self.aux_min).zfill(2),str(self.aux_sec).zfill(2))            
+            self.timer.tk.config(text="{}:{}:{}".format(str(self.aux_hour).zfill(2),str(self.aux_min).zfill(2),str(self.aux_sec).zfill(2)))                                                        
             self.timer.tk.after(1000, self.gameTime)
             
     #Mediante la siguiente función se pausa el tiempo del juego. La función es llamada desde el botón "pause"
     def pause(self):
-        if self.state:       
+        if self.stateTime:       
             self.pauseGame.text = "Continue"    
-            self.state = False
+            self.stateTime = False
             self.palette.enabled = False
         else:
-            self.state = True
+            self.stateTime = True
             self.palette.enabled = True
             self.pauseGame.text =  "Pause"
             self.gameTime()
@@ -156,32 +165,49 @@ class FloodItView(View):
     #Mediante la siguiente fución se elimina el ultimo movimiento que hubo en el juego. La función es llamada desde el botón "Rewind".
     def stepRewind(self):
         if len(self.listMoves)>1:            
-            self.fillRewind()        
+            self.fillRewind()                    
             self.moves_taken -= 1
             self.moves.value = 'Movimientos realizados: ' + str(self.moves_taken)
         print(self.listMoves)
      
     #Mediante la siguiente función se declara el juego en estado de derrota. La función es llamada desde el botón "Declare Defeat" 
-    def declareDefeat(self):
-        pass
+    def declareDefeat(self):      
+        self.popUpDefeat = self.app.yesno("Defeat", "¿Desea abandonar la partida?")                
+        if self.popUpDefeat == True:                                    
+            self.popUpNewBoard = self.app.yesno("Reiniciar Tablero", "¿Deseas reanudar juego con el mismo tablero inicial?")
+            if self.popUpNewBoard == True:
+                self.restartGame()
+            else:
+                self.app.destroy()                
+                #playerInt = StartPlayerView()
+        else:
+            pass
     
     #mediante la siguiente función se obtiene el ultimo moviento realizado.
     def lastMove(self, board):
         self.listMoves.append(self.board.get_all())
-        print(self.listMoves)
-        
-        
+        print(self.listMoves) 
         
     #mediante la siguiente función se dibuja el tablero del paso anterior, esta es llamada desde el metodo stepRewind.        
     def fillRewind(self):
         self.listMoves.pop()
         for x in range(self.board_size):
-            for y in range(self.board_size):
-                self.board.set_pixel(x, y, self.listMoves[len(self.listMoves)-1][x][y] )
+            for y in range(self.board_size):                                
+                self.board.set_pixel(x, y, self.listMoves[len(self.listMoves)-1][y][x])
+                
+    #mediante la siguiente fución se reinicia el tablero al tablero inicial de la partida
+    def restartGame(self):        
+        for x in range(self.board_size):
+            for y in range(self.board_size):                                
+                self.board.set_pixel(x, y, self.initialBoard[y][x])  
+        self.stateTime = False
+        self.moves_taken = 0
+        self.moves.value = ""              
+        self.second = 0
+        self.minutes = 0
+        self.hours = 0
+        self.aux_hour =0 
+        self.aux_min = 0
+        self.aux_sec = 0
+                
         
-        
-    
-    
-        
-#instancia para pruebas :
-
