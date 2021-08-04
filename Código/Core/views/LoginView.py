@@ -61,7 +61,7 @@ class LoginView(View):
 
     def openPlayer(self):
         self.app.destroy()
-        viewLogin = StartPlayerView("algo")
+        viewLogin = StartPlayerView(self.gEngine,"Player Start Menu")
 
     def openAdmin(self):
         self.app.destroy()

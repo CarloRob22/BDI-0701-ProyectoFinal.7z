@@ -11,7 +11,6 @@ class Auth:
         self.db.select("CALL sp_auth('%s','%s',@res)" % (email, password))
         response = self.db.select("SELECT @res;")
         if response[0][0] is not None:
-            print(response[0][0])
             user = json.loads(response[0][0])
             self.authInJournal(user["nickname"],user["id"])
             return self.getRole(user["id"],user["firstName"],user["lastName"],user["email"],user["nickname"],user["tin_role"])        
@@ -20,9 +19,9 @@ class Auth:
 
     def getRole(self, id, firstName, lastName, email, nickName, role):
         if role == 2:
-            return AdministratorUser(id, firstName, lastName, email, nickName, role)
+            return AdministratorUser(self.db, id, firstName, lastName, email, nickName, role)
         else:
-            return PlayerUser(id, firstName, lastName, email, nickName, role)
+            return PlayerUser(self.db, id, firstName, lastName, email, nickName, role)
 
     def authInJournal(self, nickname, id):
         action = "Usuario %s inicio sesión con exíto"%(nickname)

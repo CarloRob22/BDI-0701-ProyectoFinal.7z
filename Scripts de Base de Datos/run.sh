@@ -16,6 +16,7 @@ mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 1_DDS.sql
 mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 2_DMS.sql
 mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 3_sp_auth.sql
 mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 5_sp_sessionJournal.sql
+mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 6_sp_gameMatch.sql
 
 echo ""
 echo "------------------------------------------------------------------------------"

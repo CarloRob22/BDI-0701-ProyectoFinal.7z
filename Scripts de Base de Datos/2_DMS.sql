@@ -12,3 +12,14 @@ INSERT INTO User (var_firstName, var_lastName, var_email, var_nickname, var_pass
     ("Alex","Martinez","ale@email.com","ale","12345678",1),
     ("John","Nunez","john@email.com","john","12345678",1)
 ;
+
+INSERT INTO GameState (var_name) VALUES
+    ("In progress"),
+    ("On hold"),
+    ("On pause")
+;
+
+INSERT INTO Game (var_name) VALUES
+    ("Flood it"),
+    ("Destroy the dots")
+;

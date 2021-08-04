@@ -1,7 +1,7 @@
 from .User import User
 
 class AdministratorUser(User):    
-    def __init__(self, id, firstName, lastName, email, nickName, role):
-        super().__init__(id, firstName, lastName, email, nickName, role)
+    def __init__(self, db, id, firstName, lastName, email, nickName, role):
+        super().__init__(db, id, firstName, lastName, email, nickName, role)
         
     
