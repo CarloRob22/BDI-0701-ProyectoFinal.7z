@@ -9,9 +9,10 @@ import time
 import json
 
 class FloodItView(View):   
-    def __init__(self, title="Flood it!", width=900, height=700, layout="auto", bg="white", visible=True):
+    def __init__(self, gEngine,title="Flood it!", width=900, height=700, layout="auto", bg="white", visible=True):
         super().__init__(title, width, height, layout, bg, visible)
-
+        self.gEngine = gEngine
+        
         self.colours = ["red", "blue", "green", "yellow", "magenta", "purple"]
         self.board_size = 14
         self.moves_limit = 25
@@ -39,7 +40,7 @@ class FloodItView(View):
         self.BoxBottonL =Box(self.BoxBotton, align="left", width="fill", height="fill")
         self.pauseGame = PushButton(self.BoxBottonL, text="Pause", command=self.pause, width="fill", height="fill")               
         self.Rewind = PushButton(self.BoxBottonL, text="Rewind", command=self.stepRewind, width="fill", height="fill")
-        self.Defeat = PushButton(self.BoxBottonL, text="Declare Defeat", command=self.declareDefeat, width="fill", height="fill")
+        self.Defeat = PushButton(self.BoxBottonL, text="Declare Defeat", command=self.declareDefeat, width="fill", height="fill")        
         self.BoxBottonR =Box(self.BoxBotton, align="left", width="fill", height="fill")    
         self.timer = Text(self.BoxBottonR, text="")
                 
@@ -47,7 +48,9 @@ class FloodItView(View):
         self.init_palette()
         self.startTime()
         self.gameTime()      
+        
         self.app.display()
+        self.matchOnHold()
          
     # Recursively floods adjacent squares
     def flood(self, x, y, target, replacement):
@@ -151,12 +154,14 @@ class FloodItView(View):
             self.timer.tk.after(1000, self.gameTime)
             
     #Mediante la siguiente función se pausa el tiempo del juego. La función es llamada desde el botón "pause"
-    def pause(self):
+    def pause(self):        
         if self.stateTime:       
+            self.gEngine.updateStateMatch(3)
             self.pauseGame.text = "Continue"    
             self.stateTime = False
             self.palette.enabled = False
         else:
+            self.gEngine.updateStateMatch(1)
             self.stateTime = True
             self.palette.enabled = True
             self.pauseGame.text =  "Pause"
@@ -209,5 +214,17 @@ class FloodItView(View):
         self.aux_hour =0 
         self.aux_min = 0
         self.aux_sec = 0
-                
         
+    def winProtocol(self):
+        self.popUpClose = False
+        self.popUpClose = self.app.yesno("Guardar", "¿Desea saGuardar la partida?")                
+        if self.popUpClose == True:                                                
+            self.gEngine.updateStateMatch(2)
+            self.app.destroy()
+        else:
+            pass
+                
+    #mediante esta función se actualiza el estado de la partida a estado "en espera".    
+    def matchOnHold(self):        
+        #self.app.when_closed = self.gEngine.updateStateMatch(2)
+        self.app.tk.protocol("WM_DELETE_WINDOW", self.gEngine.updateStateMatch(2))

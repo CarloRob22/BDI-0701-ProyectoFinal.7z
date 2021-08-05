@@ -49,7 +49,8 @@ class MySQLEngine:
         self.mydb.commit()
 
     def update(self, query):
-        pass
+        self.link.execute(query)
+        self.mydb.commit()
 
     def auth():
         pass

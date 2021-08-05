@@ -1,4 +1,5 @@
 from guizero import *
+from guizero import Picture
 from .View import View
 from .LoginView import LoginView
 

@@ -3,6 +3,7 @@ from .View import View
 from .DestroyDotsView import DestroyDotsView
 from .FloodItView import FloodItView
 
+
 class StartPlayerView(View):
     def __init__(self, gEngine, title="view", width=700, height=700, layout="auto", bg="white", visible=True):
         super().__init__(title, width, height, layout, bg, visible)
@@ -48,12 +49,12 @@ class StartPlayerView(View):
     def newFloodIt(self):
         self.app.destroy()
         self.gEngine.startMatch(1)
-        destroyDots = FloodItView()
+        destroyDots = FloodItView(self.gEngine)
 
     def newDestroyDots(self):
         self.app.destroy()
         self.gEngine.startMatch(2)
-        destroyDots = DestroyDotsView()
+        destroyDots = DestroyDotsView(self.gEngine)
         
 
 
