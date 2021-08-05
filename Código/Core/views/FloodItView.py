@@ -214,17 +214,8 @@ class FloodItView(View):
         self.aux_hour =0 
         self.aux_min = 0
         self.aux_sec = 0
-        
-    def winProtocol(self):
-        self.popUpClose = False
-        self.popUpClose = self.app.yesno("Guardar", "¿Desea saGuardar la partida?")                
-        if self.popUpClose == True:                                                
-            self.gEngine.updateStateMatch(2)
-            self.app.destroy()
-        else:
-            pass
-                
+                    
     #mediante esta función se actualiza el estado de la partida a estado "en espera".    
     def matchOnHold(self):        
-        #self.app.when_closed = self.gEngine.updateStateMatch(2)
-        self.app.tk.protocol("WM_DELETE_WINDOW", self.gEngine.updateStateMatch(2))  
+        self.app.when_closed = self.gEngine.updateStateMatch(2)
+        
