@@ -21,7 +21,7 @@ class User:
             print(self.match)
 
     def updateStateMatch(self, gameState):           
-        self.gameMatch = GameMatch(self.match["gameId"], self.match["gameStateId"], self.match["lastTime"], self.db)
+        self.gameMatch = GameMatch(self.match["idMatch"], self.match["gameStateId"], self.match["lastTime"], self.db)
         self.gameMatch.updateState(gameState)
     
         
