@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS Journal(
         COMMENT "Corresponde al identificador de cada registro de bitacora",
     tim_dueDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
         COMMENT "Corresponde a la fecha y hora en que se registro la accion del usuario",
-    var_action VARCHAR(200) NOT NULL
+    var_action VARCHAR(500) NOT NULL
         COMMENT "Mediante este campo se describe la acción insertada en la bitácora",
     int_user_FK INT UNSIGNED NOT NULL
         COMMENT "Esta llave foranea hace referencia al usuario que realizo la accion
