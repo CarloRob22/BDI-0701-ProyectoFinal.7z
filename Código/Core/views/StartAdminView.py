@@ -76,7 +76,6 @@ class StartAdminView:
     def updateUsers(self):
         pass
 
-
     def getName(self, name):
         #self.userName.clear()
         self.userName.append(str(name))

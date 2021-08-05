@@ -144,4 +144,4 @@ class DestroyDotsView(View):
         #print(self.board.get_all())
         return self.board.get_all()
 
-        
+          

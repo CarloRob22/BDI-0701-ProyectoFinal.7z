@@ -227,4 +227,4 @@ class FloodItView(View):
     #mediante esta función se actualiza el estado de la partida a estado "en espera".    
     def matchOnHold(self):        
         #self.app.when_closed = self.gEngine.updateStateMatch(2)
-        self.app.tk.protocol("WM_DELETE_WINDOW", self.gEngine.updateStateMatch(2))
+        self.app.tk.protocol("WM_DELETE_WINDOW", self.gEngine.updateStateMatch(2))  
