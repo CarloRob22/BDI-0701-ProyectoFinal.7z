@@ -1,10 +1,10 @@
 USE GameManager;
 
-DROP PROCEDURE IF EXISTS sp_restartHoldMatch;
+DROP PROCEDURE IF EXISTS sp_getHoldMatch;
 
 DELIMITER $$
 
-CREATE PROCEDURE sp_restartHoldMatch(
+CREATE PROCEDURE sp_getHoldMatch(
     IN idUser INT,    
     OUT res JSON
 )

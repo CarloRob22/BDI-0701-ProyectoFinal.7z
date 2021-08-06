@@ -1,3 +1,4 @@
+#from time import process_time_ns
 from guizero import *
 from .View import View
 from .DestroyDotsView import DestroyDotsView
@@ -46,15 +47,24 @@ class StartPlayerView(View):
         logoutBtn.text_color = "white"
         logoutBtn.text_size = 14 
 
-    def newFloodIt(self):
-        self.app.destroy()
-        self.gEngine.startMatch(1)
-        floodIt = FloodItView(self.gEngine, "Flood It")
+    def newFloodIt(self):            
+        check = str(self.gEngine.checkStateMatch())        
+        if check == "[(None,)]":
+            self.gEngine.startMatch(1)               
+            self.app.destroy()                 
+            floodIt = FloodItView(self.gEngine, "Flood It")
+        else:
+            print("hay una partidada guardada")
+            self.popUpHoldMacht = self.app.info("Partida en espera","Tienes una Partida en espera")            
 
     def newDestroyDots(self):
-        self.app.destroy()
-        self.gEngine.startMatch(2)
-        destroyDots = DestroyDotsView(self.gEngine, "Destroy The Dots")
+        check = str(self.gEngine.checkStateMatch())        
+        if check == "[(None,)]":
+            self.gEngine.startMatch(2)
+            self.app.destroy()            
+            destroyDots = DestroyDotsView(self.gEngine, "Destroy The Dots")
+        else:
+            self.popUpHoldMacht = self.app.info("Partida en espera","Tienes una Partida en espera")
         
 
 

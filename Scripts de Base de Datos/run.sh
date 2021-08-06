@@ -19,7 +19,7 @@ mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 4_tg_matchJournal.sql
 mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 5_sp_sessionJournal.sql
 mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 6_sp_gameMatch.sql
 mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 7_sp_updateStateGameMatch.sql
-mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 8._sp_restartHoldMatch.sql
+mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 8_sp_getHoldMatch.sql
 
 echo ""
 echo "------------------------------------------------------------------------------"

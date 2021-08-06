@@ -5,13 +5,13 @@ import json
 
 class Auth:
     def __init__(self, db):
-        self.db = db
+        self.db = db        
 
     def auth(self, email, password):
         self.db.select("CALL sp_auth('%s','%s',@res)" % (email, password))
         response = self.db.select("SELECT @res;")
         if response[0][0] is not None:
-            user = json.loads(response[0][0])
+            user = json.loads(response[0][0])            
             self.authInJournal(user["nickname"],user["id"])
             return self.getRole(user["id"],user["firstName"],user["lastName"],user["email"],user["nickname"],user["tin_role"])        
         else:
@@ -26,3 +26,6 @@ class Auth:
     def authInJournal(self, nickname, id):
         action = "Usuario %s inicio sesión con exíto"%(nickname)
         self.db.insert("CALL sp_sessionJournal(%s, '%s');" %(id, action))
+       
+    def getIdUser(self):
+        return self.auxIdUser

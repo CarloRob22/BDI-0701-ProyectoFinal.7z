@@ -86,16 +86,25 @@ class StartAdminView(View):
             
     #Mediante la siguiente función se inicia el juego Floodit cuando el usuario da click en el boton "Jugar Flood It".
     def startFloodit(self): 
-        self.app.destroy()       
-        self.gEngine.startMatch(1)
-        flood = FloodItView(self.gEngine, "Flood It")
+        check = str(self.gEngine.checkStateMatch())        
+        if check == "[(None,)]":
+            self.gEngine.startMatch(1)               
+            self.app.destroy()                 
+            floodIt = FloodItView(self.gEngine, "Flood It")
+        else:
+            print("hay una partidada guardada")
+            self.popUpHoldMacht = self.app.info("Partida en espera","Tienes una Partida en espera")
         
         
     #Mediante la siguiente función se inicia el juego Destroy The Dots cuando el usuario da click el el boton "Jugar Destroy The Dots".
     def startDestroy(self): 
-        self.app.destroy()       
-        self.gEngine.startMatch(2)
-        destroyDots = DestroyDotsView(self.gEngine, "Destroy The Dots")
+        check = str(self.gEngine.checkStateMatch())        
+        if check == "[(None,)]":
+            self.gEngine.startMatch(2)
+            self.app.destroy()            
+            destroyDots = DestroyDotsView(self.gEngine, "Destroy The Dots")
+        else:
+            self.popUpHoldMacht = self.app.info("Partida en espera","Tienes una Partida en espera")
         
             
     #Mediante la siguiente función el usuario inicia el módulo  de registro de bitácora al dar click en el boton "Visualizar Bitácora".

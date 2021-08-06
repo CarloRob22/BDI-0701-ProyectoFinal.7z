@@ -8,7 +8,7 @@ def main():
     config = ConfigConnection(
         "localhost",
         "3306",
-        "root",
+       "root",
         "paladino123",
         "GameManager"
     ) 
