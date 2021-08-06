@@ -1,5 +1,3 @@
-#from .StartPlayerView import StartPlayerView
-#from .StartAdminView import StartAdminView
 from guizero import *
 from .View import View
 from random import randint
@@ -7,10 +5,10 @@ import time
 import json
 
 class DestroyDotsView(View):   
-    def __init__(self, gEngine, title="Destroy de dots", width=840, height=620, layout="auto", bg="white", visible=True):
+    def __init__(self, gEngine, returning, title="Destroy de dots", width=840, height=620, layout="auto", bg="white", visible=True):
         super().__init__(title,  width, height, layout, bg, visible)
         self.gEngine = gEngine
-
+        self.returning = returning
         self.GRID_SIZE = 5
         self.score = 0
         self.startTim = {}
@@ -134,13 +132,23 @@ class DestroyDotsView(View):
             self.gameTime()
             self.add_dot()
 
+    def ReturnBack(self):
+        if self.returning==1:
+            self.gEngine.updateStateMatch(0)
+            from .StartAdminView import StartAdminView
+            viewLogin = StartAdminView(self.gEngine, "Admin Start Menu")
+        else:
+            self.gEngine.updateStateMatch(0)
+            from .StartPlayerView import StartPlayerView
+            viewLogin = StartPlayerView(self.gEngine,"Player Start Menu")
     
     #Mediante la siguiente función se declara el juego en estado de derrota. La función es llamada desde el botón "Declare Defeat" 
     def declareDefeat(self):
         self.popUpDefeat = self.app.yesno("Defeat", "¿Desea abandonar la partida?")        
         if self.popUpDefeat == True:                                                         
             self.app.destroy()
-            #playerInt = StartPlayerView()
+            self.ReturnBack()
+            
                         
        
     #mediante la siguiente función se obtiene el ultimo moviento realizado.

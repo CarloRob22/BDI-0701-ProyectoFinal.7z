@@ -10,14 +10,14 @@ class ScreenSplashView(View):
         self.gEngine = gEngine
         
 
-        self.app.after(4000, self.openLogin, args="")
+        self.app.after(3000, self.openLogin, args="")
         #p=Picture(self.app,image="Código/Core/Splash.png")
         #text=Text(self.app,text="Cargando...",size=28,height=5,font="Haettenschweiler",align="bottom")
 
     def openLogin(self):
         
         self.app.destroy()
-        viewLogin = LoginView(self.gEngine,"algo")
+        viewLogin = LoginView(self.gEngine,"Login")
         
         
         

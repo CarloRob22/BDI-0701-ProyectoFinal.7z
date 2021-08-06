@@ -9,7 +9,7 @@ class StartPlayerView(View):
     def __init__(self, gEngine, title="view", width=700, height=700, layout="auto", bg="white", visible=True):
         super().__init__(title, width, height, layout, bg, visible)
         self.gEngine = gEngine
-
+        self.returning = 0
         
         #Estilos para el titulo de la ventana
         titleBox = Box(self.app)

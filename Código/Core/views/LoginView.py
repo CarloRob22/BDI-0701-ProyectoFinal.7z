@@ -24,12 +24,13 @@ class LoginView(View):
 
         submitBox = Box(self.app)
         submitBox.resize(self.width, (15*self.height)/100)
-
+        Text(submitBox, text="")
         submitButton = PushButton(submitBox, text="Submit", command=self.openUser)
 
 #------------Authores
         def open_window():
             window.show()
+            Text(window, text="")
             windowtext = Text(window, text="Agradecimientos a la pagina https://lawsie.github.io/guizero/")
             windowButton = PushButton(window, text="Close",command=close_window)
 
