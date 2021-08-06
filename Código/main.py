@@ -2,15 +2,27 @@ from Core.MySQLEngine import MySQLEngine
 from Core.ConfigConnection import ConfigConnection
 from Core.classes.GameEngine import MyGameEngine
 from Core.views.ScreenSplashView import ScreenSplashView
+import configparser
+
 
 def main():
-    
+
+    filename=r'config.ini'
+    config = configparser.ConfigParser()
+    config.read(filename)
+    Host = config['mysql']['host']
+    Port = config['mysql']['port']
+    User = config['mysql']['user']
+    Pws = config['mysql']['password']
+    Dabase = config['mysql']['database']
+
+
     config = ConfigConnection(
-        "localhost",
-        "3306",
-        "root",
-        "paladino123" and "123Qweasd",
-        "GameManager"
+        Host,
+        Port,
+        User,
+        Pws,
+        Dabase
     ) 
 
     mEngine = MySQLEngine(config)
