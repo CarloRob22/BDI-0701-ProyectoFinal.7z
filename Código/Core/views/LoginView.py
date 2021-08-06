@@ -65,7 +65,7 @@ class LoginView(View):
 
     def openAdmin(self):
         self.app.destroy()
-        viewLogin = StartAdminView()
+        viewLogin = StartAdminView(self.gEngine, "Admin Start Menu")
 
     def verifyRole():
         pass

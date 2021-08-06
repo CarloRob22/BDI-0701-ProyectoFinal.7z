@@ -9,7 +9,7 @@ import time
 import json
 
 class FloodItView(View):   
-    def __init__(self, gEngine,title="Flood it!", width=900, height=700, layout="auto", bg="white", visible=True):
+    def __init__(self, gEngine, title="Flood it!", width=900, height=700, layout="auto", bg="white", visible=True):
         super().__init__(title, width, height, layout, bg, visible)
         self.gEngine = gEngine
         

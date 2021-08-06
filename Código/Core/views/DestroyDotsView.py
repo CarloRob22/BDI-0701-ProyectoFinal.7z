@@ -7,8 +7,9 @@ import time
 import json
 
 class DestroyDotsView(View):   
-    def __init__(self, title="Destroy de dots", width=840, height=620, layout="auto", bg="white", visible=True):
-        super().__init__(title, width, height, layout, bg, visible)
+    def __init__(self, gEngine, title="Destroy de dots", width=840, height=620, layout="auto", bg="white", visible=True):
+        super().__init__(title,  width, height, layout, bg, visible)
+        self.gEngine = gEngine
 
         self.GRID_SIZE = 5
         self.score = 0
@@ -39,6 +40,7 @@ class DestroyDotsView(View):
         self.startTime()
         self.gameTime()
         self.app.display()
+        self.matchOnHold()
 
     def add_dot(self):
         if self.stateTime == True:            
@@ -121,10 +123,12 @@ class DestroyDotsView(View):
                
     #Mediante la siguiente función se pausa el tiempo del juego. La función es llamada desde el botón "pause"
     def pause(self):
-        if self.stateTime:       
+        if self.stateTime:      
+            self.gEngine.updateStateMatch(3) 
             self.pauseGame.text = "Continue"    
             self.stateTime = False            
         else:
+            self.gEngine.updateStateMatch(1)
             self.stateTime = True            
             self.pauseGame.text =  "Pause"
             self.gameTime()
@@ -144,4 +148,7 @@ class DestroyDotsView(View):
         #print(self.board.get_all())
         return self.board.get_all()
 
+    #mediante esta función se actualiza el estado de la partida a estado "en espera".    
+    def matchOnHold(self):        
+        self.app.when_closed = self.gEngine.updateStateMatch(2)
           

@@ -49,12 +49,12 @@ class StartPlayerView(View):
     def newFloodIt(self):
         self.app.destroy()
         self.gEngine.startMatch(1)
-        destroyDots = FloodItView(self.gEngine)
+        floodIt = FloodItView(self.gEngine, "Flood It")
 
     def newDestroyDots(self):
         self.app.destroy()
         self.gEngine.startMatch(2)
-        destroyDots = DestroyDotsView(self.gEngine)
+        destroyDots = DestroyDotsView(self.gEngine, "Destroy The Dots")
         
 
 
