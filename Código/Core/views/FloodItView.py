@@ -50,7 +50,7 @@ class FloodItView(View):
         self.gameTime()      
         
         self.app.display()        
-        self.holdOrDefeat()
+        self.matchOnHold()
         
          
     # Recursively floods adjacent squares
@@ -197,15 +197,14 @@ class FloodItView(View):
     def declareDefeat(self):      
         self.popUpDefeat = self.app.yesno("Defeat", "¿Desea abandonar la partida?")                
         if self.popUpDefeat == True: 
-            self.stateTime = False 
-            #self.gEngine.successfulMatch(self.varGameTime, 4) 
-            self.holDef = 'd'                                 
+            self.stateTime = False             
+            self.gEngine.successfulMatch(self.varGameTime, 4)
             self.popUpNewBoard = self.app.yesno("Reiniciar Tablero", "¿Deseas reanudar juego con el mismo tablero inicial?")
             if self.popUpNewBoard == True:                
                 self.restartGame()        
                 self.stateTime = True  
             else:
-                self.app.destroy()
+                self.app.destroy()                
                 self.ReturnBack()
         else:
             self.stateTime = True
@@ -238,12 +237,8 @@ class FloodItView(View):
         self.aux_sec = 0
                     
     #mediante esta función se actualiza el estado de la partida a estado "en espera".    
-    def holdOrDefeat(self):     
-        if self.holDef == 'h':            
-            #self.gEngine.updateStateMatch(2)
-            self.gEngine.successfulMatch(self.varGameTime, 4)
-        if self.holDef == 'd':
-            self.gEngine.successfulMatch(self.varGameTime, 4)
+    def matchOnHold(self):     
+        self.app.when_closed = self.gEngine.updateStateMatch(2)
     
   
             
