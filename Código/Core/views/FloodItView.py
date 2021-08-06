@@ -2,17 +2,15 @@ from genericpath import getatime
 from tkinter.constants import TOP
 from guizero import *
 from .View import View
-#from .StartPlayerView import StartPlayerView
-#from .StartAdminView import StartAdminView
 import random
 import time
 import json
 
 class FloodItView(View):   
-    def __init__(self, gEngine, title="Flood it!", width=900, height=700, layout="auto", bg="white", visible=True):
+    def __init__(self, gEngine,returning, title="Flood it!", width=900, height=700, layout="auto", bg="white", visible=True):
         super().__init__(title, width, height, layout, bg, visible)
         self.gEngine = gEngine
-        
+        self.returning = returning        
         self.colours = ["red", "blue", "green", "yellow", "magenta", "purple"]
         self.board_size = 14
         self.moves_limit = 25
@@ -185,6 +183,16 @@ class FloodItView(View):
             self.moves.value = 'Movimientos realizados: ' + str(self.moves_taken)
         print(self.listMoves)
      
+    def ReturnBack(self):
+        if self.returning==1:
+            self.gEngine.updateStateMatch(0)
+            from .StartAdminView import StartAdminView
+            viewLogin = StartAdminView(self.gEngine, "Admin Start Menu")
+        else:
+            self.gEngine.updateStateMatch(0)
+            from .StartPlayerView import StartPlayerView
+            viewLogin = StartPlayerView(self.gEngine,"Player Start Menu")
+
     #Mediante la siguiente función se declara el juego en estado de derrota. La función es llamada desde el botón "Declare Defeat" 
     def declareDefeat(self):      
         self.popUpDefeat = self.app.yesno("Defeat", "¿Desea abandonar la partida?")                
@@ -193,11 +201,12 @@ class FloodItView(View):
             #self.gEngine.successfulMatch(self.varGameTime, 4) 
             self.holDef = 'd'                                 
             self.popUpNewBoard = self.app.yesno("Reiniciar Tablero", "¿Deseas reanudar juego con el mismo tablero inicial?")
-            if self.popUpNewBoard == True:
-                self.stateTime = True
-                self.restartGame()                
-            else:               
-                self.app.destroy() 
+            if self.popUpNewBoard == True:                
+                self.restartGame()        
+                self.stateTime = True  
+            else:
+                self.app.destroy()
+                self.ReturnBack()
         else:
             self.stateTime = True
     

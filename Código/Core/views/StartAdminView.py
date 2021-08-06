@@ -11,7 +11,8 @@ from .FloodItView import FloodItView
 class StartAdminView(View):    
     def __init__(self, gEngine, title="view", width=700, height=700, layout="auto", bg="white", visible=True):
         super().__init__(title, width, height, layout, bg, visible)        
-        self.gEngine = gEngine  
+        self.gEngine = gEngine
+        self.returning = 1 
         
         #self.app = App("Interfaz de Administrador", height=300)
         self.Name_box = Box(self.app, width="fill", align="top", border=True, height=60)
@@ -90,7 +91,7 @@ class StartAdminView(View):
         if check == "[(None,)]":
             self.gEngine.startMatch(1)               
             self.app.destroy()                 
-            floodIt = FloodItView(self.gEngine, "Flood It")
+            floodIt = FloodItView(self.gEngine,self.returning, "Flood It")
         else:
             print("hay una partidada guardada")
             self.popUpHoldMacht = self.app.info("Partida en espera","Tienes una Partida en espera")
@@ -102,7 +103,7 @@ class StartAdminView(View):
         if check == "[(None,)]":
             self.gEngine.startMatch(2)
             self.app.destroy()            
-            destroyDots = DestroyDotsView(self.gEngine, "Destroy The Dots")
+            destroyDots = DestroyDotsView(self.gEngine,self.returning, "Destroy The Dots")
         else:
             self.popUpHoldMacht = self.app.info("Partida en espera","Tienes una Partida en espera")
         
