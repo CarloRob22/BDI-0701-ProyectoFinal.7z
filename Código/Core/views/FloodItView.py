@@ -26,7 +26,9 @@ class FloodItView(View):
         self.aux_sec = 0
         self.stateTime = True  
         self.listMoves = []    
-        self.varGameTime = ""      
+        self.varGameTime = "" 
+        self.suc = None   
+        self.holDef = 'h' 
     
         self.BoxWaff = Box(self.app, layout="auto", align="left")
         #cuadricula de colores, su tamaño se modifico mediante la propiedad dim        
@@ -49,8 +51,9 @@ class FloodItView(View):
         self.startTime()
         self.gameTime()      
         
-        self.app.display()
-        self.matchOnHold()
+        self.app.display()        
+        self.holdOrDefeat()
+        
          
     # Recursively floods adjacent squares
     def flood(self, x, y, target, replacement):
@@ -80,19 +83,26 @@ class FloodItView(View):
     #mediante la siguiente función el juego detecta cuando el usuario gano el juego y nos manda al score personal.    
     def win_check(self):
         global moves_taken
-        self.moves_taken += 1
-        self.moves.value = 'Movimientos realizados: ' + str(self.moves_taken)
+        self.moves_taken += 1                
+        if self.moves_taken == self.moves_limit:
+            self.suc = True
+        self.moves.value = 'Movimientos realizados: ' + str(self.moves_taken)         
         if self.moves_taken < self.moves_limit:            
             if self.all_squares_are_the_same():
-                self.win_text.value = "You win!"
-                self.palette.enabled = False                
-        else:
-            self.win_text.value = "You lost :("
+                self.win_text.value = "You win!" 
+                self.stateTime = False
+                self.gEngine.successfulMatch(self.varGameTime, 5)
+                self.palette.enabled = False              
+        else:            
+            self.win_text.value = "You lost :(" 
+            self.stateTime = False
+            self.gEngine.successfulMatch(self.varGameTime, 5)           
             self.palette.enabled = False            
             popUpLoser = self.app.info("Perdiste", "Haz perdido esta partida, suerte a la próxima")
             popUpLoser = True
-            if popUpLoser == True:
-                self.app.destroy()
+            if popUpLoser == True:    
+                pass
+                #self.app.destroy()
                 #playerInt = StartPlayerView()
                 
     
@@ -115,7 +125,7 @@ class FloodItView(View):
         flood_colour = self.palette.get_pixel(x,y)
         target = self.board.get_pixel(0,0)
         self.flood(0, 0, target, flood_colour)
-        self.win_check()
+        self.win_check()       
         self.lastMove(self.board)
       
     #mediante la siguiente función se obtiene la hora de inicio del juego en formato HH:MM:SS.  
@@ -178,20 +188,23 @@ class FloodItView(View):
     #Mediante la siguiente función se declara el juego en estado de derrota. La función es llamada desde el botón "Declare Defeat" 
     def declareDefeat(self):      
         self.popUpDefeat = self.app.yesno("Defeat", "¿Desea abandonar la partida?")                
-        if self.popUpDefeat == True:                                    
+        if self.popUpDefeat == True: 
+            self.stateTime = False 
+            #self.gEngine.successfulMatch(self.varGameTime, 4) 
+            self.holDef = 'd'                                 
             self.popUpNewBoard = self.app.yesno("Reiniciar Tablero", "¿Deseas reanudar juego con el mismo tablero inicial?")
             if self.popUpNewBoard == True:
-                self.restartGame()
-            else:
-                self.app.destroy()                
-                #playerInt = StartPlayerView()
+                self.stateTime = True
+                self.restartGame()                
+            else:               
+                self.app.destroy() 
         else:
-            pass
+            self.stateTime = True
     
     #mediante la siguiente función se obtiene el ultimo moviento realizado.
     def lastMove(self, board):
         self.listMoves.append(self.board.get_all())
-        print(self.listMoves) 
+        #print(self.listMoves) 
         
     #mediante la siguiente función se dibuja el tablero del paso anterior, esta es llamada desde el metodo stepRewind.        
     def fillRewind(self):
@@ -216,6 +229,12 @@ class FloodItView(View):
         self.aux_sec = 0
                     
     #mediante esta función se actualiza el estado de la partida a estado "en espera".    
-    def matchOnHold(self):        
-        self.app.when_closed = self.gEngine.updateStateMatch(2)
-        
+    def holdOrDefeat(self):     
+        if self.holDef == 'h':            
+            #self.gEngine.updateStateMatch(2)
+            self.gEngine.successfulMatch(self.varGameTime, 4)
+        if self.holDef == 'd':
+            self.gEngine.successfulMatch(self.varGameTime, 4)
+    
+  
+            

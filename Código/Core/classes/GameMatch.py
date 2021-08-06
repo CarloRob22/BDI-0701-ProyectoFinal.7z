@@ -16,6 +16,9 @@ class GameMatch:
 
     def verifyState(self):
         pass
+    
+    def successfulMatch(self, lastTime, gamestate):
+        self.db.update("CALL sp_updateGameMatch(%s,'%s',%s)" % (self.id,lastTime, gamestate))
             
 
 

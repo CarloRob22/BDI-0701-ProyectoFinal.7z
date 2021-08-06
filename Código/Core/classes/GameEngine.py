@@ -22,6 +22,9 @@ class MyGameEngine:
     
     def checkStateMatch(self):       
         return self.user.checkStateMatch(int(self.idUser))
+    
+    def successfulMatch(self, lastTime, gamestate):
+        self.user.uppSuccessfulMatch(lastTime, gamestate)
         
         
                     

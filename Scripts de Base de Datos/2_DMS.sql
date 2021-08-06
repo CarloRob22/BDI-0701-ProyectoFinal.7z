@@ -16,7 +16,9 @@ INSERT INTO User (var_firstName, var_lastName, var_email, var_nickname, var_pass
 INSERT INTO GameState (var_name) VALUES
     ("In progress"),
     ("On hold"),
-    ("On pause")
+    ("On pause"),    
+    ("In defeat"),
+    ("In success")
 ;
 
 INSERT INTO Game (var_name) VALUES
