@@ -11,15 +11,15 @@ class User:
         self.email = email
         self.nickName = nickName
         self.role = role
-        self.match = None
+        self.gamematch = None
         
     def startMatch(self, gameId):
         self.db.insert("CALL sp_insertGameMAtch('%s',%s,%s,%s,@res)" % ("00:00:00", gameId, self.id, 1))
         response = self.db.select("SELECT @res;")
         if response[0][0] is not None:
-            self.match = json.loads(response[0][0])
-            print(self.match)
-        self.gameMatch = GameMatch(self.match["idMatch"], self.match["gameStateId"], self.match["lastTime"], self.db)
+            match = json.loads(response[0][0])
+            print(match)
+        self.gameMatch = GameMatch(match["idMatch"], match["gameStateId"], match["lastTime"], self.db)
         
     def updateStateMatch(self, gameState):
         self.gameMatch.updateState(gameState)        
@@ -34,5 +34,9 @@ class User:
         self.gameMatch.successfulMatch(lastTime, gamestate)
               
         
+    def addMovementMatch(self, time, move):
+        self.gameMatch.addMovement(time, move)
     
     
+    def getFirstMove(self):
+        self.gameMatch.getFirstMove()     

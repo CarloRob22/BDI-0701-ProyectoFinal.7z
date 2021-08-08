@@ -6,12 +6,10 @@ class MyGameEngine:
     def __init__(self,db):        
         self.db = db
         self.view = None
-        self.user = None 
-        self.idUser = None  
+        self.user = None         
         
     def authUser(self, email, password):
-        self.user = Auth(self.db).auth(email, password)
-        self.idUser = self.user.getIdUser()
+        self.user = Auth(self.db).auth(email, password)        
         return self.user
 
     def startMatch(self, gameId):
@@ -20,14 +18,18 @@ class MyGameEngine:
     def updateStateMatch(self, gameState):       
         self.user.updateStateMatch(gameState)   
     
-    def checkStateMatch(self):       
-        return self.user.checkStateMatch(int(self.idUser))
+    def checkStateMatch(self):               
+        return self.user.checkStateMatch(self.user.getIdUser())
     
     def successfulMatch(self, lastTime, gamestate):
         self.user.uppSuccessfulMatch(lastTime, gamestate)
         
+    def addMovementMatch(self, time, move):
+        self.user.addMovementMatch(time,move)
         
+    def getFirstMove(self):
+        self.user.getFirstMove()
                     
 
-
+    
     

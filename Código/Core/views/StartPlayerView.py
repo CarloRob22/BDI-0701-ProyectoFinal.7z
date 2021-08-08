@@ -11,7 +11,7 @@ class StartPlayerView(View):
         self.gEngine = gEngine
         self.returning = 0
         
-        #Estilos para el titulo de la ventana
+        #Estilos para el titulo de la ventana      
         titleBox = Box(self.app)
         titleBox.resize(self.width, (15*self.height)/100)
         title = Text(titleBox, text="Ventana de inicio", height=200, size=20)
@@ -68,7 +68,7 @@ class StartPlayerView(View):
         
 
 
-      
+          
 
 
 
