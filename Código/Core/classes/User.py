@@ -18,7 +18,7 @@ class User:
         response = self.db.select("SELECT @res;")
         if response[0][0] is not None:
             match = json.loads(response[0][0])
-            print(match)
+            print(match)      
         self.gameMatch = GameMatch(match["idMatch"], match["gameStateId"], match["lastTime"], self.db)
         
     def updateStateMatch(self, gameState):
@@ -39,7 +39,7 @@ class User:
     
     
     def getFirstMove(self):
-        self.gameMatch.getFirstMove()
-        
+        return self.gameMatch.getFirstMove()        
+    
     def delMovement(self):
         self.gameMatch.delMovement()

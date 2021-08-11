@@ -19,12 +19,12 @@ class GameMatch:
             movement = json.loads(response[0][0])
             print(movement)
         self.movement = Movement(movement["idMove"],movement["time"],movement["move"],movement["idMatch"], self.db)
-        
-    def verifyState(self):
-        pass
     
+    def restartGameMatch(self):     
+        self.db.select("CALL sp_restartGameMatch({},{},@res)")
+       
     def getFirstMove(self):
-        self.movement.getFirstMove()
+        return self.movement.getFirstMove(self.id)
         
     def delMovement(self):
         self.movement.delMovement()

@@ -9,12 +9,12 @@ class Movement:
         self.idMatch = idMatch
         self.db = db
         
-    def getFirstMove(self):
-        self.db.select("CALL sp_getFirstMove(@res);")
-        response = self.db.select("SELECT @res;")
-        print("response: {}".format(response))
+    def getFirstMove(self, idMatch):        
+        #idMatch -= 1        
+        self.db.select("CALL sp_getFirstMove({}, @res);".format(idMatch))
+        response = self.db.select("SELECT @res;")        
         move = json.loads(response[0][0])
-        print(move)
+        print("primer move: {}".format(move))
         return move
     
     def delMovement(self):

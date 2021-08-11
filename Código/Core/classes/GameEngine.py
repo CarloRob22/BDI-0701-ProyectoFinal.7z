@@ -28,8 +28,8 @@ class MyGameEngine:
         self.user.addMovementMatch(time,move)
         
     def getFirstMove(self):
-        self.user.getFirstMove()
-        
+        return self.user.getFirstMove()
+                
     def delMovement(self):
         self.user.delMovement()
                     

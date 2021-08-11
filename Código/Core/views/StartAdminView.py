@@ -91,7 +91,7 @@ class StartAdminView(View):
         if check == "[(None,)]":
             self.gEngine.startMatch(1)               
             self.app.destroy()                 
-            floodIt = FloodItView(self.gEngine,self.returning, "Flood It")
+            floodIt = FloodItView(self.gEngine,self.returning, None ,"Flood It")
         else:
             print("hay una partidada guardada")
             self.popUpHoldMacht = self.app.info("Partida en espera","Tienes una Partida en espera")
@@ -103,7 +103,7 @@ class StartAdminView(View):
         if check == "[(None,)]":
             self.gEngine.startMatch(2)
             self.app.destroy()            
-            destroyDots = DestroyDotsView(self.gEngine,self.returning, "Destroy The Dots")
+            destroyDots = DestroyDotsView(self.gEngine,self.returning, None,"Destroy The Dots")
         else:
             self.popUpHoldMacht = self.app.info("Partida en espera","Tienes una Partida en espera")
         
