@@ -9,11 +9,11 @@ CREATE PROCEDURE sp_getLastMove(
     ) 
 BEGIN      
     SELECT
-        JSON_OBJECT('idMove', int_id , 'idMatch', int_match_FK) AS "response" INTO res
+        JSON_OBJECT('idMove', big_id , 'idMatch', big_match_FK) AS "response" INTO res
     FROM
         Movement
     GROUP BY
-        int_id DESC
+        big_id DESC
     LIMIT 1;
 END$$
     

@@ -13,8 +13,8 @@ CREATE PROCEDURE sp_delMoveMatch(
         DELETE FROM 
             Movement 
         WHERE 
-            int_id = idMove AND
-            int_match_FK = idMatch
+            big_id = idMove AND
+            big_match_FK = idMatch
         ;        
     END$$
   

@@ -49,7 +49,8 @@ class StartPlayerView(View):
 
     def newFloodIt(self):            
         check = str(self.gEngine.checkStateMatch())        
-        if check == "[(None,)]":
+        #if check == "[(None,)]":
+        if True:
             self.gEngine.startMatch(1)               
             self.app.destroy()                 
             floodIt = FloodItView(self.gEngine, self.returning, None,"Flood It")
@@ -59,7 +60,8 @@ class StartPlayerView(View):
 
     def newDestroyDots(self):
         check = str(self.gEngine.checkStateMatch())        
-        if check == "[(None,)]":
+        #if check == "[(None,)]":
+        if True:
             self.gEngine.startMatch(2)
             self.app.destroy()            
             destroyDots = DestroyDotsView(self.gEngine, self.returning, None,"Destroy The Dots")

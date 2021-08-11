@@ -17,7 +17,7 @@ BEGIN
         tim_lastTime = lastTime,
         tin_gameState_FK = gameState
     WHERE 
-        int_id = idMatch        
+        big_id = idMatch        
     ;
 END$$
 

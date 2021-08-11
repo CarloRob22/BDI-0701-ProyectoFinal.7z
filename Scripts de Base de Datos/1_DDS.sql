@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS UserRole(
 almacena los roles que puede tener cada usuario dentro de la aplicacion";
 
 CREATE TABLE IF NOT EXISTS User(
-    int_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY
+    big_id SERIAL PRIMARY KEY
         COMMENT "Corresponde al identificador del usuario",
     var_firstName VARCHAR(30) NOT NULL
         COMMENT "Corresponde al primer nombre del usuario",
@@ -36,16 +36,16 @@ CREATE TABLE IF NOT EXISTS User(
 de un usuario registrado";
 
 CREATE TABLE IF NOT EXISTS Journal(
-    int_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY
+    big_id SERIAL PRIMARY KEY
         COMMENT "Corresponde al identificador de cada registro de bitacora",
     tim_dueDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
         COMMENT "Corresponde a la fecha y hora en que se registro la accion del usuario",
     var_action VARCHAR(500) NOT NULL
         COMMENT "Mediante este campo se describe la acción insertada en la bitácora",
-    int_user_FK INT UNSIGNED NOT NULL
+    big_user_FK BIGINT UNSIGNED NOT NULL
         COMMENT "Esta llave foranea hace referencia al usuario que realizo la accion
         registrada en la bitacora",    
-    CONSTRAINT int_user_FK2 FOREIGN KEY(int_user_FK) REFERENCES User(int_id)
+    CONSTRAINT big_user_FK2 FOREIGN KEY(big_user_FK) REFERENCES User(big_id)
 ) COMMENT "Esta relacion corresponde al tipo de entidad Bitacora, la cual almacena un
 registro cada vez que un usuario realiza algunas acciones especificas dentro de la
 aplicacion";
@@ -68,24 +68,25 @@ CREATE TABLE IF NOT EXISTS Game(
 los juegos disponibles en la aplicacion";
 
 CREATE TABLE IF NOT EXISTS GameMatch(
-    int_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "Corresponde al identificador de cada partida de juego",
+    big_id SERIAL PRIMARY KEY COMMENT "Corresponde al identificador de cada partida de juego",
     tim_lastTime TIME NOT NULL DEFAULT "00:00:00"
         COMMENT "Corresponde al ultimo tiempo de juego registrado, el cual se actualiza cada vez que un jugador hace un cambio de estado
         en el juego",
+    tim_dueDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT "Corresponde a la fecha en que se creo la partida",
     tin_game_FK TINYINT UNSIGNED NOT NULL
         COMMENT "Esta llave foranea indica el juego al cual pertenece la partida",
-    int_user_FK INT UNSIGNED NOT NULL
+    big_user_FK BIGINT UNSIGNED NOT NULL 
         COMMENT "Esta llave foranea indica el jugador que inicio la partida",
     tin_gameState_FK TINYINT UNSIGNED NOT NULL
         COMMENT "Esta llave foranea indica el estado en el que se encuentra el juego",
     CONSTRAINT tin_game_FK1 FOREIGN KEY(tin_game_FK) REFERENCES Game(tin_id),
-    CONSTRAINT int_user_FK3 FOREIGN KEY(int_user_FK) REFERENCES User(int_id),
+    CONSTRAINT big_user_FK3 FOREIGN KEY(big_user_FK) REFERENCES User(big_id),
     CONSTRAINT tin_gameState_FK1 FOREIGN KEY(tin_game_FK) REFERENCES GameState(tin_id)
 ) COMMENT "Esta relacion corresponde al tipo de entidad Partida, en la cual se
 crea un nuevo registro, cada vez que se inicia un juego nuevo";
 
 CREATE TABLE IF NOT EXISTS Score(
-    int_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY
+    big_id SERIAL PRIMARY KEY
         COMMENT "Corresponde al identificador del puntaje de un juego",
     sma_score SMALLINT UNSIGNED NOT NULL
         COMMENT "Corresponde a la magnitud del puntaje obtenido. Se selecciono
@@ -93,22 +94,22 @@ CREATE TABLE IF NOT EXISTS Score(
         no tienden a ser muy altos",
     tim_timeScore TIME NOT NULL
         COMMENT "Corresponde al tiempo que le tomo al jugador obtener el puntaje",
-    int_match_FK INT UNSIGNED NOT NULL
+    big_match_FK BIGINT UNSIGNED NOT NULL
         COMMENT "Esta llave foranea nos indica para que partida se registro el puntaje",
-    CONSTRAINT int_match_FK1 FOREIGN KEY(int_match_FK) REFERENCES GameMatch(int_id)
+    CONSTRAINT big_match_FK1 FOREIGN KEY(big_match_FK) REFERENCES GameMatch(big_id)
 ) COMMENT "Esta relacion corresponde al tipo de entidad Puntaje, en la cual se crea un nuevo
 registro cada vez que un jugador termina una partida";
 
 CREATE TABLE IF NOT EXISTS Movement(
-    int_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY
+    big_id SERIAL PRIMARY KEY
         COMMENT "Corresponde al identificador de cada movimiento realizado en una partida",
     tim_timeMovement TIME NOT NULL
         COMMENT "Corresponde al tiempo en que tardo el jugador en realizar el movimiento",
     jso_move  JSON NOT NULL 
         COMMENT "Este campo guarda el movimiento realizado en un formato json",
-    int_match_FK INT UNSIGNED NOT NULL
+    big_match_FK BIGINT UNSIGNED NOT NULL
         COMMENT "Esta llave foranea nos indica en que partida ocurre el movimiento",    
-    CONSTRAINT int_match_FK2 FOREIGN KEY(int_match_FK) REFERENCES GameMatch(int_id)
+    CONSTRAINT big_match_FK2 FOREIGN KEY(big_match_FK) REFERENCES GameMatch(big_id)
 ) COMMENT "Esta relacion conrresponde al tipo de entidad Movimiento, en la cual se crea unj registro
 cada vez que un jugador realiza un movimiento dentro de una partida";
 

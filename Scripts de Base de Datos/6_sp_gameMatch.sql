@@ -13,13 +13,13 @@ CREATE PROCEDURE sp_insertGameMatch(
 )
 BEGIN
 
-    INSERT INTO GameMatch (tim_lastTime, tin_game_FK, int_user_FK, tin_gameState_FK) VALUES
+    INSERT INTO GameMatch (tim_lastTime, tin_game_FK, big_user_FK, tin_gameState_FK) VALUES
         (lastTime, game_FK, user_FK, gameState_FK);
 
-    SELECT JSON_OBJECT('idMatch', int_id, 'lastTime', tim_lastTime, 'gameId', tin_game_FK, 'userId', int_user_FK, 'gameStateId', tin_gameState_FK) AS "response" INTO res
+    SELECT JSON_OBJECT('idMatch', big_id, 'lastTime', tim_lastTime, 'gameId', tin_game_FK, 'userId', big_user_FK, 'gameStateId', tin_gameState_FK) AS "response" INTO res
     FROM
         GameMatch
-    ORDER BY int_id DESC
+    ORDER BY big_id DESC
     LIMIT 1;
 
 END$$
