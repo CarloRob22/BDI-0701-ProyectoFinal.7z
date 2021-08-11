@@ -39,4 +39,7 @@ class User:
     
     
     def getFirstMove(self):
-        self.gameMatch.getFirstMove()     
+        self.gameMatch.getFirstMove()
+        
+    def delMovement(self):
+        self.gameMatch.delMovement()

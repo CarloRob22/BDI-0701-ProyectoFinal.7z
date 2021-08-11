@@ -12,7 +12,7 @@ class ScreenSplashView(View):
 
         self.app.after(3000, self.openLogin, args="")
         #p=Picture(self.app,image="Código/Core/Splash.png")
-        #text=Text(self.app,text="Cargando...",size=28,height=5,font="Haettenschweiler",align="bottom")
+        text=Text(self.app,text="Cargando...",size=28,height=5,font="Haettenschweiler",align="bottom")
 
     def openLogin(self):
         

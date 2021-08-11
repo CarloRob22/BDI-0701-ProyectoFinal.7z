@@ -199,10 +199,11 @@ class FloodItView(View):
     #Mediante la siguiente fución se elimina el ultimo movimiento que hubo en el juego. La función es llamada desde el botón "Rewind".
     def stepRewind(self):
         if len(self.listMoves)>1:            
-            self.fillRewind()                    
+            self.fillRewind()  
+            self.gEngine.delMovement()                  
             self.moves_taken -= 1
             self.moves.value = 'Movimientos realizados: ' + str(self.moves_taken)
-        print(self.listMoves)
+        print(self.listMoves)        
      
     def ReturnBack(self):        
         if self.returning==1:            
@@ -219,10 +220,10 @@ class FloodItView(View):
         self.popUpDefeat = self.app.yesno("Defeat", "¿Desea abandonar la partida?")                
         self.stateTime = False 
         if self.popUpDefeat == True:                                                 
-            self.popUpNewBoard = self.app.yesno("Reiniciar Tablero", "¿Deseas reanudar juego con el mismo tablero inicial?")
+            self.popUpNewBoard = self.app.yesno("Nuevo Juego", "¿Deseas iniciar un nuevo juego con el mismo tablero inicial de esta partida?")
             if self.popUpNewBoard == True:
                 self.stateMatch = 4                
-                self.restartGame(self.initialBoard)                        
+                self.restartGame()                        
             else: 
                 self.stateMatch = 4                
                 self.app.destroy()                
@@ -249,32 +250,33 @@ class FloodItView(View):
                 self.board.set_pixel(x, y, self.listMoves[len(self.listMoves)-1][y][x])            
     
     #mediante la siguiente fución se reinicia el tablero al tablero inicial de la partida
-    def restartGame(self, initBoard): 
+    def restartGame(self): 
+         
         self.gEngine.successfulMatch(self.varGameTime, self.stateMatch)
         self.app.destroy()
         self.gEngine.startMatch(1) 
-        #firstMove = self.gEngine.getFirstMove()   
-        
-        """ for x in range(self.board_size):
+        floodIt = FloodItView(self.gEngine, "Flood It") 
+        firstMove = self.gEngine.getFirstMove() 
+        for x in range(self.board_size):
             for y in range(self.board_size):                                
                 self.board.set_pixel(x, y, firstMove[y][x])                                            
-        floodIt = FloodItView(self.gEngine, "Flood It")                    
+                           
           
-        #  
-       self.listMoves.append(self.initialBoard)              
-        self.listMoves = []
-        self.moves_taken = 0
-        self.moves.value = "" 
-        self.stateTime = True     
-        self.varGameTime = ""        
-        self.second = 0
-        self.minutes = 0
-        self.hours = 0
-        self.aux_hour =0 
-        self.aux_min = 0
-        self.aux_sec = 0
+          
+        """self.listMoves.append(self.initialBoard)              
+            self.listMoves = []
+            self.moves_taken = 0
+            self.moves.value = "" 
+            self.stateTime = True     
+            self.varGameTime = ""        
+            self.second = 0
+            self.minutes = 0
+            self.hours = 0
+            self.aux_hour =0 
+            self.aux_min = 0
+            self.aux_sec = 0"""
         
-         """
+         
         
         
                   

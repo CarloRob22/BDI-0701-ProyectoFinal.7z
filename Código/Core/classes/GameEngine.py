@@ -29,6 +29,9 @@ class MyGameEngine:
         
     def getFirstMove(self):
         self.user.getFirstMove()
+        
+    def delMovement(self):
+        self.user.delMovement()
                     
 
     
