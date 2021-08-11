@@ -88,12 +88,14 @@ crea un nuevo registro, cada vez que se inicia un juego nuevo";
 CREATE TABLE IF NOT EXISTS Score(
     big_id SERIAL PRIMARY KEY
         COMMENT "Corresponde al identificador del puntaje de un juego",
-    sma_score SMALLINT UNSIGNED NOT NULL
+    dec_score DECIMAL(6,2) UNSIGNED NOT NULL
         COMMENT "Corresponde a la magnitud del puntaje obtenido. Se selecciono
         el tipo SMALLINT ya que los puntajes maximos de los juegos seleccionados
         no tienden a ser muy altos",
     tim_timeScore TIME NOT NULL
         COMMENT "Corresponde al tiempo que le tomo al jugador obtener el puntaje",
+    tim_dueDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP 
+        COMMENT "Corresponde a la fecha en que se registro el puntaje",
     big_match_FK BIGINT UNSIGNED NOT NULL
         COMMENT "Esta llave foranea nos indica para que partida se registro el puntaje",
     CONSTRAINT big_match_FK1 FOREIGN KEY(big_match_FK) REFERENCES GameMatch(big_id)

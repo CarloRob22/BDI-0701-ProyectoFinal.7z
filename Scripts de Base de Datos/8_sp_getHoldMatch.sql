@@ -5,7 +5,7 @@ DROP PROCEDURE IF EXISTS sp_getHoldMatch;
 DELIMITER $$
 
 CREATE PROCEDURE sp_getHoldMatch(
-    IN idUser INT,    
+    IN idUser BIGINT,    
     OUT res JSON
 )
 BEGIN

@@ -5,7 +5,7 @@ import time
 import json
 
 class DestroyDotsView(View):   
-    def __init__(self, gEngine, returning, title="Destroy de dots", width=840, height=620, layout="auto", bg="white", visible=True):
+    def __init__(self, gEngine, returning, title="Destroy de dots", width=740, height=620, layout="auto", bg="white", visible=True):
         super().__init__(title,  width, height, layout, bg, visible)
         self.gEngine = gEngine
         self.returning = returning
@@ -68,6 +68,7 @@ class DestroyDotsView(View):
             if all_red:
                 self.score_display.value = "You lost! Score: " + str(self.score)
                 self.board.disable()
+                #self.gEngine.setScore(self.score,2)
                 popUpLoser = self.app.info("Perdiste", "Alcansaste una puntuación de {}".format(str(self.score)))
                 popUpLoser = True
                 if popUpLoser == True:

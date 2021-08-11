@@ -5,7 +5,7 @@ DROP PROCEDURE IF EXISTS sp_updateStateGameMatch;
 DELIMITER $$
 
 CREATE PROCEDURE sp_updateStateGameMatch(
-    IN idMatch INT,
+    IN idMatch BIGINT,
     IN gameState TINYINT, 
     OUT res JSON
 )

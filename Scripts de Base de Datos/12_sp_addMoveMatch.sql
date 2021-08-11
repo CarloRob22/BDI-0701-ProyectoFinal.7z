@@ -7,7 +7,7 @@ DELIMITER $$
 CREATE PROCEDURE sp_addMoveMatch(
     IN timeMovement TIME,
     IN move  JSON,
-    IN idMatch INT,
+    IN idMatch BIGINT,
     OUT res JSON
 )
 BEGIN

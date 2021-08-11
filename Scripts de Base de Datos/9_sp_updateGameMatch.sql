@@ -5,7 +5,7 @@ DROP PROCEDURE IF EXISTS sp_updateGameMatch;
 DELIMITER $$
 
 CREATE PROCEDURE sp_updateGameMatch(
-    IN idMatch INT,
+    IN idMatch BIGINT,
     IN lastTime TIME,    
     IN gameState TINYINT    
     

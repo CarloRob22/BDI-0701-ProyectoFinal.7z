@@ -6,8 +6,8 @@ DROP PROCEDURE IF EXISTS sp_delMoveMatch;
 DELIMITER $$
 
 CREATE PROCEDURE sp_delMoveMatch(
-    IN idMove INT,
-    IN idMatch INT
+    IN idMove BIGINT,
+    IN idMatch BIGINT
     )   
     BEGIN
         DELETE FROM 

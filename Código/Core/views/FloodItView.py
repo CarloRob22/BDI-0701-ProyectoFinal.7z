@@ -91,7 +91,7 @@ class FloodItView(View):
             "move": self.board.get_all()
         }     
         rmove=json.dumps(move)   
-        self.gEngine.addMovementMatch(self.varGameTime ,rmove)      
+        self.gEngine.addMovementMatch(self.varGameTime ,rmove)     
              
         if self.moves_taken == self.moves_limit:
             self.suc = True
@@ -101,11 +101,13 @@ class FloodItView(View):
                 self.win_text.value = "You win!" 
                 self.stateTime = False
                 self.gEngine.successfulMatch(self.varGameTime, 5)
+                self.gEngine.setScore(self.moves_taken,1)
                 self.palette.enabled = False              
         else:            
             self.win_text.value = "You lost :(" 
             self.stateTime = False
-            self.gEngine.successfulMatch(self.varGameTime, 5)           
+            self.gEngine.successfulMatch(self.varGameTime, 5)
+            self.gEngine.setScore(self.moves_taken,1)           
             self.palette.enabled = False            
             popUpLoser = self.app.info("Perdiste", "Haz perdido esta partida, suerte a la próxima")
             popUpLoser = True
@@ -113,6 +115,7 @@ class FloodItView(View):
                 self.app.destroy()
                 self.ReturnBack()
                 self.gEngine.successfulMatch(self.varGameTime, 5)
+                
                 
     
     #mediante la siguiente función se obtinene el tablero inicial de la partida.
