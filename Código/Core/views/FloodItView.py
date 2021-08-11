@@ -233,7 +233,7 @@ class FloodItView(View):
             self.popUpNewBoard = self.app.yesno("Nuevo Juego", "¿Deseas iniciar un nuevo juego con el mismo tablero inicial de esta partida?")
             if self.popUpNewBoard == True:
                 self.stateMatch = 4                
-                self.restartGame()                        
+                self.newGame()                        
             else: 
                 self.stateMatch = 4                
                 self.app.destroy()                
@@ -259,9 +259,10 @@ class FloodItView(View):
             for y in range(self.board_size):                                
                 self.board.set_pixel(x, y, self.listMoves[len(self.listMoves)-1][y][x])    
     
-    #mediante la siguiente fución se reinicia el tablero al tablero inicial de la partida
-    def restartGame(self):          
-        #self.gEngine.successfulMatch(self.varGameTime, self.stateMatch)
+    #mediante la siguiente fución el usuario al declarar derrota y elegir un nuevo con el mismo tablero
+    #se crea un nueva partida con el mismo tablero de la partida anterior.
+    def newGame(self):          
+        self.gEngine.successfulMatch(self.varGameTime, self.stateMatch)
         firstMove = self.gEngine.getFirstMove() 
         print("en flootit: {}".format(firstMove))
         self.gEngine.startMatch(1)        
