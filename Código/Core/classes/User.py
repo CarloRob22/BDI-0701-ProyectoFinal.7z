@@ -43,3 +43,6 @@ class User:
     
     def delMovement(self):
         self.gameMatch.delMovement()
+
+    def setScore(self, movesTaken, gameId):
+        self.gameMatch.setScore(movesTaken, gameId)

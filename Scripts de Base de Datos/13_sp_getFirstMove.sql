@@ -5,7 +5,7 @@ DROP PROCEDURE IF EXISTS sp_getFirstMove;
 DELIMITER $$
 
 CREATE PROCEDURE sp_getFirstMove(
-    IN idMatch INT,
+    IN idMatch BIGINT,
     OUT res JSON
     ) 
 BEGIN      

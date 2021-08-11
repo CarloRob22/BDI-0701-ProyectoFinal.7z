@@ -7,7 +7,7 @@ DELIMITER $$
 CREATE PROCEDURE sp_insertGameMatch(
     IN lastTime TIME,
     IN game_FK TINYINT,
-    IN user_FK INT,
+    IN user_FK BIGINT,
     IN gameState_FK TINYINT,
     OUT res JSON
 )

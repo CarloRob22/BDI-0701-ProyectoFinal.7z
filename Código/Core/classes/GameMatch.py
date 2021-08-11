@@ -1,5 +1,6 @@
 import json
 from .Movement import Movement
+from .ScoreManager import ScoreManager
 
 class GameMatch:
     def __init__(self, id, idState, lastTime, db):
@@ -19,6 +20,7 @@ class GameMatch:
             movement = json.loads(response[0][0])
             print(movement)
         self.movement = Movement(movement["idMove"],movement["time"],movement["move"],movement["idMatch"], self.db)
+        self.lastTime = time
     
     def restartGameMatch(self):     
         self.db.select("CALL sp_restartGameMatch({},{},@res)")
@@ -31,6 +33,9 @@ class GameMatch:
     
     def successfulMatch(self, lastTime, gamestate):
         self.db.update("CALL sp_updateGameMatch(%s,'%s',%s)" % (self.id,lastTime, gamestate))
+    
+    def setScore(self, movesTaken, gameId):
+        ScoreManager(self.db).set(self.id, gameId, self.lastTime, movesTaken)
        
     
 

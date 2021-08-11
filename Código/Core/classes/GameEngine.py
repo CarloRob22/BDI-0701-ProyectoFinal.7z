@@ -32,6 +32,9 @@ class MyGameEngine:
                 
     def delMovement(self):
         self.user.delMovement()
+
+    def setScore(self, movesTaken,gameId):
+        self.user.setScore(movesTaken, gameId)
                     
 
     
