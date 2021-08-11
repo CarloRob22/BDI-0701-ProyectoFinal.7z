@@ -14,7 +14,7 @@ class User:
         self.gamematch = None
         
     def startMatch(self, gameId):
-        self.db.insert("CALL sp_insertGameMAtch('%s',%s,%s,%s,@res)" % ("00:00:00", gameId, self.id, 1))
+        self.db.insert("CALL sp_insertGameMatch('%s',%s,%s,%s,@res)" % ("00:00:00", gameId, self.id, 1))
         response = self.db.select("SELECT @res;")
         if response[0][0] is not None:
             match = json.loads(response[0][0])
