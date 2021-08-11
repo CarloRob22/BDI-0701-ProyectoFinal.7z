@@ -15,15 +15,15 @@ BEGIN
     SET 
         tin_gameState_FK = gameState 
     WHERE 
-        int_id = idMatch
+        big_id = idMatch
     ;
 
     SELECT 
-        JSON_OBJECT('idMatch', int_id, 'lastTime', tim_lastTime, 'gameId', tin_game_FK, 'userId', int_user_FK, 'gameStateId', tin_gameState_FK) AS "response" INTO res
+        JSON_OBJECT('idMatch', big_id, 'lastTime', tim_lastTime, 'gameId', tin_game_FK, 'userId', big_user_FK, 'gameStateId', tin_gameState_FK) AS "response" INTO res
     FROM
         GameMatch
     ORDER BY 
-        int_id DESC
+        big_id DESC
     LIMIT 1;
 
 END$$

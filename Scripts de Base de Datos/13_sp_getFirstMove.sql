@@ -14,9 +14,9 @@ BEGIN
     FROM
         Movement
     WHERE
-        int_match_FK = idMatch 
+        big_match_FK = idMatch 
     ORDER BY
-        int_id ASC
+        big_id ASC
     LIMIT 1;
 END$$
     
