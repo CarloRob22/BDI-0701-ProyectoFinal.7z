@@ -18,6 +18,6 @@ BEGIN
         int_user_FK = idUser
         tin_gameState_FK = 2
     LIMIT 1;
-END$$
+END $$
 
 DELIMITER ;

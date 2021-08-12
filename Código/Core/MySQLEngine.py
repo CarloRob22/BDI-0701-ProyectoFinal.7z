@@ -22,6 +22,12 @@ class MySQLEngine:
     def select(self,query):
         self.link.execute(query)
         return self.link.fetchall()
+    
+    def auxSelect(self,query):
+        self.link.execute(query)
+        fetch = self.link.consume_result()
+        self.mydb.free_result()
+        return fetch
 
     def printAsTable(self, result, headers=[]):
 

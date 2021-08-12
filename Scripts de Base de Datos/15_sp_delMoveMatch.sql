@@ -16,6 +16,6 @@ CREATE PROCEDURE sp_delMoveMatch(
             big_id = idMove AND
             big_match_FK = idMatch
         ;        
-    END$$
+    END $$
   
 DELIMITER ;

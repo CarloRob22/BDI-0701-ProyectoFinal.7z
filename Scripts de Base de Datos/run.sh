@@ -28,6 +28,10 @@ mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 13_sp_getFirstMove.sql
 mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 14_sp_getLastMove.sql
 mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 15_sp_delMoveMatch.sql
 mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 17_vw_getAllDataUser.sql
+mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 18_sp_deleteUser.sql
+mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 19_sp_getUser.sql
+mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 20_sp_insertUser.sql
+mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 21_sp_updateDataUser.sql
 
 echo ""
 echo "------------------------------------------------------------------------------"

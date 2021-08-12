@@ -15,6 +15,6 @@ BEGIN
     GROUP BY
         big_id DESC
     LIMIT 1;
-END$$
+END $$
     
 DELIMITER ; 

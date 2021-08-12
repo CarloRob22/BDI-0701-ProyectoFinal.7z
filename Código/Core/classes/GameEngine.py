@@ -37,7 +37,16 @@ class MyGameEngine:
         self.user.setScore(movesTaken, gameId)
           
     def getAllDataUser(self):
-        self.user.getAllDataUser()          
+        return self.user.getAllDataUser()   
+    
+    def deleteUser(self, idUser):
+        self.user.deleteUser(idUser)       
+        
+    def fillTextboxUser(self, idUser):
+        return self.user.fillTextboxUser(idUser)
 
+    def insertUser(self,firsName,lastName,email,nickName, password):
+        self.user.insertUser(firsName,lastName,email,nickName, password)
     
-    
+    def updateDataUser(self,idUser,firsName,lastName,email,nickName, password):
+        self.user.updateDataUser(idUser,firsName,lastName,email,nickName, password)
