@@ -3,6 +3,7 @@ from guizero import *
 from .View import View
 from .DestroyDotsView import DestroyDotsView
 from .FloodItView import FloodItView
+from .ScoreView import ScoreView
 
 
 class StartPlayerView(View):
@@ -33,7 +34,7 @@ class StartPlayerView(View):
 
         scoreUserBox = Box(buttonsBox)
         scoreUserBox.resize(self.width, (25*((70*self.height)/100))/100)
-        scoreUserButton = PushButton(scoreUserBox, text="Mostrar tabla de puntuaciones", height=4, width=40)
+        scoreUserButton = PushButton(scoreUserBox, text="Mostrar tabla de puntuaciones", height=4, width=40, command=self.openScoreTable)
 
         sectionExitBox = Box(self.app)
         sectionExitBox.resize(self.width, (15*self.height)/100)
@@ -67,6 +68,10 @@ class StartPlayerView(View):
             destroyDots = DestroyDotsView(self.gEngine, self.returning,"Destroy The Dots")
         else:
             self.popUpHoldMacht = self.app.info("Partida en espera","Tienes una Partida en espera")
+
+    def openScoreTable(self):
+        self.app.destroy()            
+        destroyDots = ScoreView(self.gEngine,"Personal Score Table")
         
 
 
