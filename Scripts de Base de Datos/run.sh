@@ -27,6 +27,7 @@ mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 12_sp_addMoveMatch.sql
 mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 13_sp_getFirstMove.sql
 mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 14_sp_getLastMove.sql
 mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 15_sp_delMoveMatch.sql
+mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 17_vw_getAllDataUser.sql
 
 echo ""
 echo "------------------------------------------------------------------------------"

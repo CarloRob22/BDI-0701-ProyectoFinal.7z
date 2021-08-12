@@ -68,7 +68,7 @@ class StartAdminView(View):
 
 #Mediante esta función se muestra la ventana principal de acciones del administrador.
     def addUsers(self):
-        pass
+        self.gEngine.getAllDataUser()
 
     def deleteUsers(self):
         pass

@@ -35,7 +35,9 @@ class MyGameEngine:
 
     def setScore(self, movesTaken,gameId):
         self.user.setScore(movesTaken, gameId)
-                    
+          
+    def getAllDataUser(self):
+        self.user.getAllDataUser()          
 
     
     

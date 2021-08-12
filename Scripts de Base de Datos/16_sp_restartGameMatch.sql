@@ -13,7 +13,7 @@ BEGIN
         JSON_OBJECT('idMatch', int_id, 'lastTime', tim_lastTime, 'gameId', tin_game_FK, 'userId', int_user_FK, 'gameStateId', tin_gameState_FK) AS "response" INTO res
         
     FROM
-        GameMatch,
+        GameMatch
     WHERE
         int_user_FK = idUser
         tin_gameState_FK = 2

@@ -7,3 +7,7 @@ class AdministratorUser(User):
         
     def getIdUser(self):
         return self.id
+    
+    def getAllDataUser(self):
+        data = self.db.select("select * from vm_getAllDataUser;")
+        print(data)
