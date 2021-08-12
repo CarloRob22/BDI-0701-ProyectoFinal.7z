@@ -68,7 +68,7 @@ class DestroyDotsView(View):
             if all_red:
                 self.score_display.value = "You lost! Score: " + str(self.score)
                 self.board.disable()
-                #self.gEngine.setScore(self.score,2)
+                self.gEngine.setScore(self.score,2, self.varGameTime)
                 popUpLoser = self.app.info("Perdiste", "Alcansaste una puntuación de {}".format(str(self.score)))
                 popUpLoser = True
                 if popUpLoser == True:

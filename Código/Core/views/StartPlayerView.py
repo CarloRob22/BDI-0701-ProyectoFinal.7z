@@ -64,7 +64,7 @@ class StartPlayerView(View):
         if True:
             self.gEngine.startMatch(2)
             self.app.destroy()            
-            destroyDots = DestroyDotsView(self.gEngine, self.returning, None,"Destroy The Dots")
+            destroyDots = DestroyDotsView(self.gEngine, self.returning,"Destroy The Dots")
         else:
             self.popUpHoldMacht = self.app.info("Partida en espera","Tienes una Partida en espera")
         

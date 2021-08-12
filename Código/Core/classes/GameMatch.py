@@ -34,8 +34,8 @@ class GameMatch:
     def successfulMatch(self, lastTime, gamestate):
         self.db.update("CALL sp_updateGameMatch(%s,'%s',%s)" % (self.id,lastTime, gamestate))
     
-    def setScore(self, movesTaken, gameId):
-        ScoreManager(self.db).set(self.id, gameId, self.lastTime, movesTaken)
+    def setScore(self, movesTaken, gameId, time):
+        ScoreManager(self.db).set(self.id, gameId, time, movesTaken)
        
     
 

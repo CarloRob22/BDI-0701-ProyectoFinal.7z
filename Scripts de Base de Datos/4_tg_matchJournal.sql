@@ -3,7 +3,7 @@ USE GameManager;
 DROP TRIGGER IF EXISTS tg_matchJournal;
 
 DELIMITER $$
-CREATE TRIGGER tg_sesion
+CREATE TRIGGER tg_matchJournal
     AFTER INSERT
     ON GameMatch FOR EACH ROW
 BEGIN

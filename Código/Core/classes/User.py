@@ -44,5 +44,5 @@ class User:
     def delMovement(self):
         self.gameMatch.delMovement()
 
-    def setScore(self, movesTaken, gameId):
-        self.gameMatch.setScore(movesTaken, gameId)
+    def setScore(self, movesTaken, gameId, time):
+        self.gameMatch.setScore(movesTaken, gameId, time)

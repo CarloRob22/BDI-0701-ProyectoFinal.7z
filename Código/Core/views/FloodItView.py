@@ -101,14 +101,14 @@ class FloodItView(View):
                 self.win_text.value = "You win!" 
                 self.stateTime = False
                 self.gEngine.successfulMatch(self.varGameTime, 5)
-                self.gEngine.setScore(self.moves_taken,1)
-                self.palette.enabled = False              
+                self.palette.enabled = False 
+                self.gEngine.setScore(self.moves_taken,1, self.varGameTime)             
         else:            
             self.win_text.value = "You lost :(" 
             self.stateTime = False
-            self.gEngine.successfulMatch(self.varGameTime, 5)
-            self.gEngine.setScore(self.moves_taken,1)           
-            self.palette.enabled = False            
+            self.gEngine.successfulMatch(self.varGameTime, 5)           
+            self.palette.enabled = False  
+            self.gEngine.setScore(self.moves_taken,1, self.varGameTime)          
             popUpLoser = self.app.info("Perdiste", "Haz perdido esta partida, suerte a la próxima")
             popUpLoser = True
             if popUpLoser == True:                    
