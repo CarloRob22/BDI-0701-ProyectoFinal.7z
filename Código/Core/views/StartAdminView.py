@@ -7,6 +7,7 @@ import random
 from .View import View
 from .DestroyDotsView import DestroyDotsView
 from .FloodItView import FloodItView
+from .CrudView import CrudView
 
 class StartAdminView(View):    
     def __init__(self, gEngine, title="view", width=700, height=700, layout="auto", bg="white", visible=True):
@@ -29,14 +30,8 @@ class StartAdminView(View):
 
 #----Ventana para emergente de la Gestion----
 
-        def openCrud():
-            window_crud.show()
-
-        def close_crud():
-            window_crud.hide()
-
         self.Crud_box = Box(self.app, width="fill", align="top", height=60)
-        self.crudUser = PushButton(self.Crud_box, width="fill", height="fill", text='Gestionar Usuarios',command=openCrud)
+        self.crudUser = PushButton(self.Crud_box, width="fill", height="fill", text='Gestionar Usuarios',command=self.openCrud)
         self.crudUser.bg = '#22778B'
 
         self.Bin_box = Box(self.app, width="fill", align="top", height=60)
@@ -67,7 +62,7 @@ class StartAdminView(View):
         deleteButton.bg = "red"
         updateButton = PushButton(boxIt,text="Update User",width=15,height=1, grid=[0,2],align="left", command= self.updateUsers)
         updateButton.bg ="yellow"
-        closeButton = PushButton(boxIt,text="Close",width=15,height=1, grid=[0,3],align="left", command=close_crud)
+        closeButton = PushButton(boxIt,text="Close",width=15,height=1, grid=[0,3],align="left")
         closeButton.bg ="DodgerBlue2"
 #---------------------
 
@@ -112,4 +107,8 @@ class StartAdminView(View):
     def startBinnacle(self):
         pass
         #agregar aquí código para iniciar módulo de registro de bitácora.
-        
+
+    def openCrud(self):
+        self.app.destroy() 
+        crudView = CrudView(self.gEngine,"CRUD users")
+
