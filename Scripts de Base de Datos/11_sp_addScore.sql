@@ -12,7 +12,7 @@ CREATE PROCEDURE sp_addScore(
 )
     BEGIN
 
-        DECLARE score DECIMAL(6,2);
+        DECLARE score DECIMAL(20,6);
 
         IF gameId = 1 THEN SET score = (SELECT fn_weighFloodItMatch(movesTaken, timeScore));
         ELSE SET score = (SELECT fn_weighDestroyDotsMatch(movesTaken, timeScore));
