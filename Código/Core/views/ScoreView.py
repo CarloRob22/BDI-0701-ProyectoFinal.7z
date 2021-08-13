@@ -3,50 +3,98 @@ from .View import View
 
 
 class ScoreView(View):
-    def __init__(self, gEngine, title="view", width=1200, height=900, layout="grid", bg="white", visible=True):
+    def __init__(self, gEngine, title="view", width=1200, height=900, layout="auto", bg="white", visible=True):
         super().__init__(title, width, height, layout, bg, visible)
         self.gEngine = gEngine
         self.returning = 0
 
-        leftTitleMarginBox = Box(self.app, grid=[0,0], width=(self.width*10)/100, height=(self.height*15)/100, border=1)
-        titleContainerBox = Box(self.app, layout="grid", grid=[1,0], width=(self.width*80)/100, height=(self.height*15)/100, border=1)
-        titleText = Text(titleContainerBox, text="Tabla de los mejores puntajes obtenidos", size=22, width="fill", height="fill", grid=[0,0])
-        rightTitleMarginBox = Box(self.app, grid=[2,0], width=(self.width*10)/100, height=(self.height*15)/100, border=1)
+        allBox = Box(self.app, layout="auto", width=self.width, height=self.height, border=1)
+        allBox.tk.pack()
+        allBox.tk.pack_propagate(0)
+
+        #INICIO SECCION DEL TITULO        
+        allColBox1 = Box(allBox, layout="auto", border=1)
+        allColBox1.tk.pack()
+        allColBox1.tk.pack_propagate(0)
+        allColBox1.resize(allBox.tk.winfo_reqwidth(), (allBox.tk.winfo_reqheight()*15)/100)
+        allColBox1.bg = "navy"
+        title = Text(allColBox1, text="Tabla de los 10 mejores puntajes", size=18)
+        title.tk.place(x=allColBox1.tk.winfo_reqwidth()/2, y=allColBox1.tk.winfo_reqheight()/2, anchor="center")
+        #FINAL SECCION DEL TITULO
+
+        #INICIO SECCION DE LA TABLA
+        allColBox2 = Box(allBox, layout="auto", border=1)
+        allColBox2.tk.pack_propagate(0)
+        allColBox2.resize(allBox.tk.winfo_reqwidth(), (allBox.tk.winfo_reqheight()*70)/100)
+        allColBox2.bg = "beige"
+
+        tableBox = Box(allColBox2, layout="auto", border=1)
+        tableBox.resize((allColBox2.tk.winfo_reqwidth()*85)/100, (allColBox2.tk.winfo_reqheight()*85)/100)
+        tableBox.bg = "gold4"
+        tableBox.tk.place(x=allColBox2.tk.winfo_reqwidth()/2, y=allColBox2.tk.winfo_reqheight()/2, anchor="center")
+        tableBox.tk.pack_propagate(0)
+            #INICIO FILA 1 DE LA TABLA
+        rowTableBox1 = Box(tableBox, layout="auto", border=1)
+        rowTableBox1.resize(tableBox.tk.winfo_reqwidth(), (tableBox.tk.winfo_reqheight()*10)/100)
+        rowTableBox1.tk.pack_propagate(0)
+        rowTableBox1.bg ="RoyalBlue4"
+
+                #INICIO COLUMNA 1 FILA 1 DE LA TABLA
+        col1RowTableBox1 = Box(rowTableBox1, layout="auto", border=1, align="left")
+        col1RowTableBox1.resize((rowTableBox1.tk.winfo_reqwidth()*5)/100, rowTableBox1.tk.winfo_reqheight())
+        col1RowTableBox1.tk.pack_propagate(0)
+        textCol1RowTableBox1le = Text(col1RowTableBox1, text="N", size=14)
+        textCol1RowTableBox1le.tk.place(x=col1RowTableBox1.tk.winfo_reqwidth()/2, y=col1RowTableBox1.tk.winfo_reqheight()/2, anchor="center")
+                #FINAL COLUMNA 1 FILA 1 DE LA TABLA
+
+                #INICIO COLUMNA 2 FILA 1 DE LA TABLA
+        col2RowTableBox1 = Box(rowTableBox1, layout="auto", border=1, align="left")
+        col2RowTableBox1.resize((rowTableBox1.tk.winfo_reqwidth()*19)/100, rowTableBox1.tk.winfo_reqheight())
+        col2RowTableBox1.tk.pack_propagate(0)
+        textCol2RowTableBox1le = Text(col2RowTableBox1, text="Nickname", size=14)
+        textCol2RowTableBox1le.tk.place(x=col2RowTableBox1.tk.winfo_reqwidth()/2, y=col2RowTableBox1.tk.winfo_reqheight()/2, anchor="center")
+                #FINAL COLUMNA 2 FILA 1 DE LA TABLA
+
+                 #INICIO COLUMNA 3 FILA 1 DE LA TABLA
+        col3RowTableBox1 = Box(rowTableBox1, layout="auto", border=1, align="left")
+        col3RowTableBox1.resize((rowTableBox1.tk.winfo_reqwidth()*19)/100, rowTableBox1.tk.winfo_reqheight())
+        col3RowTableBox1.tk.pack_propagate(0)
+        textCol3RowTableBox1le = Text(col3RowTableBox1, text="Juego", size=14)
+        textCol3RowTableBox1le.tk.place(x=col3RowTableBox1.tk.winfo_reqwidth()/2, y=col3RowTableBox1.tk.winfo_reqheight()/2, anchor="center")
+                #FINAL COLUMNA 3 FILA 1 DE LA TABLA
+
+                #INICIO COLUMNA 4 FILA 1 DE LA TABLA
+        col4RowTableBox1 = Box(rowTableBox1, layout="auto", border=1, align="left")
+        col4RowTableBox1.resize((rowTableBox1.tk.winfo_reqwidth()*19)/100, rowTableBox1.tk.winfo_reqheight())
+        col4RowTableBox1.tk.pack_propagate(0)
+        textCol4RowTableBox1le = Text(col4RowTableBox1, text="Tiempo", size=14)
+        textCol4RowTableBox1le.tk.place(x=col4RowTableBox1.tk.winfo_reqwidth()/2, y=col4RowTableBox1.tk.winfo_reqheight()/2, anchor="center")
+                #FINAL COLUMNA 4 FILA 1 DE LA TABLA
+
+                #INICIO COLUMNA 5 FILA 1 DE LA TABLA
+        col5RowTableBox1 = Box(rowTableBox1, layout="auto", border=1, align="left")
+        col5RowTableBox1.resize((rowTableBox1.tk.winfo_reqwidth()*19)/100, rowTableBox1.tk.winfo_reqheight())
+        col5RowTableBox1.tk.pack_propagate(0)
+        textCol5RowTableBox1le = Text(col5RowTableBox1, text="Puntaje", size=14)
+        textCol5RowTableBox1le.tk.place(x=col5RowTableBox1.tk.winfo_reqwidth()/2, y=col5RowTableBox1.tk.winfo_reqheight()/2, anchor="center")
+                #FINAL COLUMNA 5 FILA 1 DE LA TABLA
+
+                #INICIO COLUMNA 6 FILA 1 DE LA TABLA
+        col6RowTableBox1 = Box(rowTableBox1, layout="auto", border=1, align="left")
+        col6RowTableBox1.resize((rowTableBox1.tk.winfo_reqwidth()*19)/100, rowTableBox1.tk.winfo_reqheight())
+        col6RowTableBox1.tk.pack_propagate(0)
+        textCol6RowTableBox1le = Text(col6RowTableBox1, text="Fecha", size=14)
+        textCol6RowTableBox1le.tk.place(x=col6RowTableBox1.tk.winfo_reqwidth()/2, y=col6RowTableBox1.tk.winfo_reqheight()/2, anchor="center")
+                #FINAL COLUMNA 6 FILA 1 DE LA TABLA
+            #FINAL FILA 1 DE LA TABLA
+            
+               
 
 
-        leftTableMarginBox = Box(self.app, grid=[0,1], width=(self.width*10)/100, height=(self.height*70)/100, border=1)
-        tableContainerBox = Box(self.app, layout="grid", grid=[1,1], width=(self.width*80)/100, height=(self.height*70)/100, border=1)
-        rightTableMarginBox = Box(self.app, grid=[2,1], width=(self.width*10)/100, height=(self.height*70)/100, border=1)
 
-        tableRowContainerBox1  = Box(tableContainerBox, layout="grid", grid=[0,0], width=(self.width*80)/100, height=(((self.height*70)/100)*10)/100, border=1)
-        col1TableRowContainerBox1  = Box(tableRowContainerBox1, layout="grid", grid=[0,0], align="left", width=(((self.width*80)/100)*5)/100, height=(((self.height*70)/100)*10)/100, border=1)
         
-        col2TableRowContainerBox1  = Box(tableRowContainerBox1, layout="grid", grid=[1,0], align="left", width=(((self.width*80)/100)*19)/100, height=(((self.height*70)/100)*10)/100, border=1)
-        col3TableRowContainerBox1  = Box(tableRowContainerBox1, layout="grid", grid=[2,0], align="left", width=(((self.width*80)/100)*19)/100, height=(((self.height*70)/100)*10)/100, border=1)
-        col4TableRowContainerBox1  = Box(tableRowContainerBox1, layout="grid", grid=[3,0], align="left", width=(((self.width*80)/100)*19)/100, height=(((self.height*70)/100)*10)/100, border=1)
-        col5TableRowContainerBox1  = Box(tableRowContainerBox1, layout="grid", grid=[4,0], align="left", width=(((self.width*80)/100)*19)/100, height=(((self.height*70)/100)*10)/100, border=1)
-        col6TableRowContainerBox1  = Box(tableRowContainerBox1, layout="grid", grid=[5,0], align="left", width=(((self.width*80)/100)*19)/100, height=(((self.height*70)/100)*10)/100, border=1)
 
-
-        tableRowContainerBox2  = Box(tableContainerBox, layout="grid", grid=[0,1], width=(self.width*80)/100, height=(((self.height*70)/100)*9)/100, border=1)
-
-        tableRowContainerBox3  = Box(tableContainerBox, layout="grid", grid=[0,2], width=(self.width*80)/100, height=(((self.height*70)/100)*9)/100, border=1)
-
-        tableRowContainerBox4  = Box(tableContainerBox, layout="grid", grid=[0,3], width=(self.width*80)/100, height=(((self.height*70)/100)*9)/100, border=1)
-
-        tableRowContainerBox5  = Box(tableContainerBox, layout="grid", grid=[0,4], width=(self.width*80)/100, height=(((self.height*70)/100)*9)/100, border=1)
-
-        tableRowContainerBox6  = Box(tableContainerBox, layout="grid", grid=[0,5], width=(self.width*80)/100, height=(((self.height*70)/100)*9)/100, border=1)
-
-        tableRowContainerBox7  = Box(tableContainerBox, layout="grid", grid=[0,6], width=(self.width*80)/100, height=(((self.height*70)/100)*9)/100, border=1)
-
-        tableRowContainerBox8  = Box(tableContainerBox, layout="grid", grid=[0,7], width=(self.width*80)/100, height=(((self.height*70)/100)*9)/100, border=1)
-
-        tableRowContainerBox9  = Box(tableContainerBox, layout="grid", grid=[0,8], width=(self.width*80)/100, height=(((self.height*70)/100)*9)/100, border=1)
-
-        tableRowContainerBox10  = Box(tableContainerBox, layout="grid", grid=[0,9], width=(self.width*80)/100, height=(((self.height*70)/100)*9)/100, border=1)
-        
-        tableRowContainerBox11  = Box(tableContainerBox, layout="grid", grid=[0,10], width=(self.width*80)/100, height=(((self.height*70)/100)*9)/100, border=1)
+        #FINAL SECCION DE LA TABLA
 
 
         
