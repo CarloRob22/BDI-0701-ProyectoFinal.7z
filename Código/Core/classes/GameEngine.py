@@ -15,8 +15,8 @@ class MyGameEngine:
     def startMatch(self, gameId):
         self.user.startMatch(gameId)    
 
-    def updateStateMatch(self, gameState):       
-        self.user.updateStateMatch(gameState)   
+    def updateStateMatch(self, lastTime, gameState):       
+        self.user.updateStateMatch(lastTime, gameState)   
     
     def checkStateMatch(self):               
         return self.user.checkStateMatch(self.user.getIdUser())
@@ -50,3 +50,15 @@ class MyGameEngine:
     
     def updateDataUser(self,idUser,firsName,lastName,email,nickName, password):
         self.user.updateDataUser(idUser,firsName,lastName,email,nickName, password)
+
+    def restartGameMatchHold(self):
+        return self.user.restartGameMatchHold()
+        
+    def getAllMovesMatch(self):
+        return self.user.getAllMovesMatch()
+    
+    def getLastTime(self):
+        return self.user.getLastTime()
+    
+    def updateJsonMoves(self, jsonMove):
+        self.user.updateJsonMoves(jsonMove)

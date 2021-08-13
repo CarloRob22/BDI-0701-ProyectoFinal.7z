@@ -10,8 +10,8 @@ class GameMatch:
         self.lastTime = lastTime
         
 
-    def updateState(self, gameState):
-        self.db.update("CALL sp_updateStateGameMatch({},{},@res)".format(self.id, gameState))
+    def updateState(self, lastTime, gameState):
+        self.db.update("CALL sp_updateGameMatch(%s,'%s',%s)" % (self.id,lastTime, gameState))
         
     def addMovement(self,time,move):
         self.db.insert("CALL sp_addMoveMatch('%s','%s', %s, @res);"%(time, move, self.id))
@@ -36,10 +36,9 @@ class GameMatch:
     
     def setScore(self, movesTaken, gameId, time):
         ScoreManager(self.db).set(self.id, gameId, time, movesTaken)
-       
-    
-
-
-
+     
+    def updateJsonMoves(self, jsonMove):
+        self.db.update("CALL sp_updateJsonMoves({},{})".format(self.id, jsonMove))
+        
 
     

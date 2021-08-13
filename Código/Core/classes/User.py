@@ -21,8 +21,8 @@ class User:
             print(match)      
         self.gameMatch = GameMatch(match["idMatch"], match["gameStateId"], match["lastTime"], self.db)
         
-    def updateStateMatch(self, gameState):
-        self.gameMatch.updateState(gameState)        
+    def updateStateMatch(self, lastTime, gameState):
+        self.gameMatch.updateState(lastTime, gameState)        
     
     #Mediante el siguiente Método se verifica si existe una partidad guardada en estado Hold(id=2).
     def checkStateMatch(self, idUser):               
@@ -46,3 +46,12 @@ class User:
 
     def setScore(self, movesTaken, gameId, time):
         self.gameMatch.setScore(movesTaken, gameId, time)
+        
+    def restartGameMatchHold(self):        
+        data = self.db.select("CALL sp_getAllDataMatchHold({});".format(self.id))
+        print(data[0][0], data[0][4], data[0][1])         
+        self.gameMatch = GameMatch(data[0][0], data[0][4], data[0][1], self.db)            
+        return data       
+    
+    def updateJsonMoves(self, jsonMove):
+        self.gameMatch.updateJsonMoves(jsonMove)

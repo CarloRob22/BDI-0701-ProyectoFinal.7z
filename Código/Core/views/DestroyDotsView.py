@@ -20,6 +20,7 @@ class DestroyDotsView(View):
         self.aux_sec = 0
         self.stateTime = True
         self.varGameTime = ""
+        self.stateMatch = 2 # se utiliza para llevar de manera globar el estado de la partida, su valor por defecto es necesario que sea 2.
         
         
         self.BoxWaff = Box(self.app, layout="auto", align="left")
@@ -66,13 +67,19 @@ class DestroyDotsView(View):
                     if self.board[x,y].color != "red":
                         all_red = False
             if all_red:
+                self.stateMatch=5
+                self.gEngine.successfulMatch(self.varGameTime, self.stateMatch)
                 self.score_display.value = "You lost! Score: " + str(self.score)
+                self.stateTime = False 
                 self.board.disable()
                 self.gEngine.setScore(self.score,2, self.varGameTime)
-                popUpLoser = self.app.info("Perdiste", "Alcansaste una puntuación de {}".format(str(self.score)))
+                popUpLoser = self.app.info("Finalizado", "finalizaste el juego con una puntuación de {}".format(str(self.score)))
                 popUpLoser = True
                 if popUpLoser == True:
+                    self.stateTime = False 
                     self.app.destroy()
+                    self.ReturnBack()
+                    self.gEngine.successfulMatch(self.varGameTime, self.stateMatch)
             else:
                 self.board.after(speed, self.add_dot)
 
@@ -122,11 +129,13 @@ class DestroyDotsView(View):
                
     #Mediante la siguiente función se pausa el tiempo del juego. La función es llamada desde el botón "pause"
     def pause(self):
-        if self.stateTime:      
+        if self.stateTime:  
+            self.board.visible = False   
             self.gEngine.updateStateMatch(3) 
             self.pauseGame.text = "Continue"    
             self.stateTime = False            
         else:
+            self.board.visible = True
             self.gEngine.updateStateMatch(1)
             self.stateTime = True            
             self.pauseGame.text =  "Pause"
@@ -134,23 +143,28 @@ class DestroyDotsView(View):
             self.add_dot()
 
     def ReturnBack(self):
-        if self.returning==1:
-            self.gEngine.updateStateMatch(0)
+        if self.returning==1:            
             from .StartAdminView import StartAdminView
+            self.gEngine.successfulMatch(self.varGameTime, self.stateMatch)
             viewLogin = StartAdminView(self.gEngine, "Admin Start Menu")
-        else:
-            self.gEngine.updateStateMatch(0)
+        else:            
             from .StartPlayerView import StartPlayerView
+            self.gEngine.successfulMatch(self.varGameTime, self.stateMatch)
             viewLogin = StartPlayerView(self.gEngine,"Player Start Menu")
     
     #Mediante la siguiente función se declara el juego en estado de derrota. La función es llamada desde el botón "Declare Defeat" 
-    def declareDefeat(self):
-        self.popUpDefeat = self.app.yesno("Defeat", "¿Desea abandonar la partida?")        
-        if self.popUpDefeat == True:                                                         
-            self.app.destroy()
+    def declareDefeat(self):          
+        self.popUpDefeat = self.app.yesno("Defeat", "¿Desea abandonar la partida?") 
+        self.stateTime = False                                                            
+        if self.popUpDefeat == True:                                                                                                    
+            self.stateMatch = 4                
+            self.app.destroy()                
             self.ReturnBack()
+        else:
+            self.stateTime = True
             
-                        
+                  
+   
        
     #mediante la siguiente función se obtiene el ultimo moviento realizado.
     def lastMove(self):
@@ -159,5 +173,9 @@ class DestroyDotsView(View):
 
     #mediante esta función se actualiza el estado de la partida a estado "en espera".    
     def matchOnHold(self):        
-        self.app.when_closed = self.gEngine.updateStateMatch(2)
+        if self.stateMatch != 2:            
+            self.app.when_closed = self.gEngine.updateStateMatch(self.stateMatch)                
+        else:
+            #self.ReturnBack()                                                         
+            self.app.when_closed = self.gEngine.updateStateMatch(self.stateMatch) 
           

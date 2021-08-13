@@ -4,7 +4,7 @@ import mysql.connector
 from tabulate import tabulate
 
 class MySQLEngine:
-
+    
     def __init__(self, config):
         self.connect(config)
 
@@ -57,4 +57,3 @@ class MySQLEngine:
     def update(self, query):
         self.link.execute(query)
         self.mydb.commit()
-     

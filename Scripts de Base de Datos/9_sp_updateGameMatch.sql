@@ -7,8 +7,7 @@ DELIMITER $$
 CREATE PROCEDURE sp_updateGameMatch(
     IN idMatch BIGINT,
     IN lastTime TIME,    
-    IN gameState TINYINT    
-    
+    IN gameState TINYINT   
 )
 BEGIN
     UPDATE 

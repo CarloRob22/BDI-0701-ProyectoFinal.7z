@@ -4,6 +4,7 @@ from .View import View
 from .DestroyDotsView import DestroyDotsView
 from .FloodItView import FloodItView
 from .ScoreView import ScoreView
+import json
 
 
 class StartPlayerView(View):
@@ -30,7 +31,7 @@ class StartPlayerView(View):
 
         resumeGameBox = Box(buttonsBox)
         resumeGameBox.resize(self.width, (25*((70*self.height)/100))/100)
-        resumeGameButton = PushButton(resumeGameBox, text="Reanudar juego", height=4, width=40)
+        resumeGameButton = PushButton(resumeGameBox, text="Reanudar juego", height=4, width=40, command=self.restartGameMatchHold)
 
         scoreUserBox = Box(buttonsBox)
         scoreUserBox.resize(self.width, (25*((70*self.height)/100))/100)
@@ -50,14 +51,13 @@ class StartPlayerView(View):
 
     def newFloodIt(self):            
         check = str(self.gEngine.checkStateMatch())        
-        #if check == "[(None,)]":
-        if True:
+        if check == "[(None,)]":            
             self.gEngine.startMatch(1)               
             self.app.destroy()                 
             floodIt = FloodItView(self.gEngine, self.returning, None,"Flood It")
         else:
             print("hay una partidada guardada")
-            self.popUpHoldMacht = self.app.info("Partida en espera","Tienes una Partida en espera")            
+            self.popUpHoldMacht = self.app.info("Partida en espera","Tienes una Partida en espera")      
 
     def newDestroyDots(self):
         check = str(self.gEngine.checkStateMatch())        
@@ -73,8 +73,15 @@ class StartPlayerView(View):
         self.app.destroy()            
         destroyDots = ScoreView(self.gEngine,"Personal Score Table")
         
-
-
+    def restartGameMatchHold(self):                       
+        dataMatch = self.gEngine.restartGameMatchHold()   
+        lastTime = str(dataMatch[0][1])
+        movesMatch = []
+        for i in dataMatch:
+            move =json.loads(i[5])            
+            movesMatch.append(move["move"])              
+        self.app.destroy()                 
+        floodIt = FloodItView(self.gEngine, self.returning, None, True,lastTime,movesMatch,"Flood It")
           
 
 

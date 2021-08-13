@@ -1,21 +1,20 @@
 USE GameManager;
 
-DROP PROCEDURE IF EXISTS sp_restartGameMatch;
+DROP PROCEDURE IF EXISTS sp_restartGameMatchHold;
 
 DELIMITER $$
 
-CREATE PROCEDURE sp_restartGameMatch(
-    IN idUser_FK INT,    
+CREATE PROCEDURE sp_restartGameMatchHold( 
+    IN idUser INT,
     OUT res JSON
 )
 BEGIN
     SELECT 
-        JSON_OBJECT('idMatch', int_id, 'lastTime', tim_lastTime, 'gameId', tin_game_FK, 'userId', int_user_FK, 'gameStateId', tin_gameState_FK) AS "response" INTO res
-        
+        JSON_OBJECT('idMatch', big_id, 'lastTime', tim_lastTime, 'gameId', tin_game_FK, 'userId', big_user_FK, 'gameStateId', tin_gameState_FK) AS "response" INTO res        
     FROM
         GameMatch
     WHERE
-        int_user_FK = idUser
+        big_user_FK = idUser AND
         tin_gameState_FK = 2
     LIMIT 1;
 END $$

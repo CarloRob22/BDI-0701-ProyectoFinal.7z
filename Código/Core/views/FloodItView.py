@@ -7,10 +7,11 @@ import time
 import json
 
 class FloodItView(View):   
-    def __init__(self, gEngine, returning, initBoard=None, title="Flood it!",  width=900, height=700, layout="auto", bg="white", visible=True):
+    def __init__(self, gEngine, returning, initBoard=None, restart = None, lastTime="", movesMatch = [], title="Flood it!",  width=900, height=700, layout="auto", bg="white", visible=True):
         super().__init__(title, width, height, layout, bg, visible)
         self.gEngine = gEngine        
-        self.returning = returning        
+        self.returning = returning   
+        self.restart = restart     
         self.colours = ["red", "blue", "green", "yellow", "magenta", "purple"]
         self.board_size = 14
         self.moves_limit = 25
@@ -24,8 +25,8 @@ class FloodItView(View):
         self.aux_min = 0
         self.aux_sec = 0
         self.stateTime = True  
-        self.listMoves = []    
-        self.varGameTime = "" 
+        self.listMoves = movesMatch   
+        self.varGameTime = lastTime 
         self.suc = None   
         self.holDef = 'h' 
         self.stateMatch = 2 # se utiliza para llevar de manera globar el estado de la partida, su valor por defecto es necesario que sea 2.
@@ -46,11 +47,12 @@ class FloodItView(View):
         self.Defeat.enabled = False
         self.BoxBottonR =Box(self.BoxBotton, align="left", width="fill", height="fill")    
         self.timer = Text(self.BoxBottonR, text="")
-                
+                 
         self.fill_board()
         self.init_palette()
         self.startTime()
         self.gameTime()      
+        
         
         self.app.display()        
         self.matchOnHold()
@@ -116,7 +118,7 @@ class FloodItView(View):
             if popUpLoser == True:                
                 self.app.destroy()
                 self.ReturnBack()
-                self.gEngine.successfulMatch(self.varGameTime, 5)
+                self.gEngine.successfulMatch(self.varGameTime, self.stateMatch)
     
     #mediante la siguiente función se obtinene el tablero inicial de la partida.
     def get_start_board(self,b_init):
@@ -125,24 +127,31 @@ class FloodItView(View):
            
 
     def fill_board(self):
-        if self.initBoard == None:
+        if self.validateRestart() == True:            
+            self.get_start_board(self.listMoves[0])
+            lastmove = self.listMoves[len(self.listMoves)-1]
             for x in range(self.board_size):
-                for y in range(self.board_size):
-                    self.board.set_pixel(x, y, random.choice(self.colours))
-            self.get_start_board(self.board.get_all())  
+                    for y in range(self.board_size):
+                        self.board.set_pixel(x, y, lastmove[y][x])
         else:
-            for x in range(self.board_size):
-                for y in range(self.board_size):                                
-                    self.board.set_pixel(x, y, self.initBoard[y][x])
-            self.get_start_board(self.initBoard)
+            if self.initBoard == None:
+                for x in range(self.board_size):
+                    for y in range(self.board_size):
+                        self.board.set_pixel(x, y, random.choice(self.colours))
+                self.get_start_board(self.board.get_all())  
+            else:
+                for x in range(self.board_size):
+                    for y in range(self.board_size):                                
+                        self.board.set_pixel(x, y, self.initBoard[y][x])
+                self.get_start_board(self.initBoard)
+            
+            move = {
+                "no":0,
+                "move": self.initBoard
+            }     
         
-        move = {
-            "no":0,
-            "move": self.initBoard
-        }     
-        
-        rmove=json.dumps(move)   
-        self.gEngine.addMovementMatch(self.varGameTime ,rmove)
+            rmove=json.dumps(move)   
+            self.gEngine.addMovementMatch(self.varGameTime ,rmove)
          
 
     def init_palette(self):
@@ -197,13 +206,13 @@ class FloodItView(View):
     def pause(self):        
         if self.stateTime:     
             self.board.visible = False
-            self.gEngine.updateStateMatch(3)
+            self.gEngine.updateStateMatch(self.varGameTime,3)
             self.pauseGame.text = "Continue"    
             self.stateTime = False
             self.palette.enabled = False
         else:
             self.board.visible = True
-            self.gEngine.updateStateMatch(1)
+            self.gEngine.updateStateMatch(self.varGameTime,1)
             self.stateTime = True
             self.palette.enabled = True
             self.pauseGame.text =  "Pause"
@@ -236,11 +245,13 @@ class FloodItView(View):
             self.popUpNewBoard = self.app.yesno("Nuevo Juego", "¿Deseas iniciar un nuevo juego con el mismo tablero inicial de esta partida?")
             if self.popUpNewBoard == True:
                 self.stateMatch = 4                
-                self.newGame()                        
+                self.newGame()   
+                self.stateMatch = 2                     
             else: 
                 self.stateMatch = 4                
                 self.app.destroy()                
                 self.ReturnBack()
+                self.stateMatch = 2 
         else:
             self.stateTime = True
     
@@ -274,13 +285,28 @@ class FloodItView(View):
         
                        
     #mediante esta función se actualiza el estado de la partida a estado "en espera".    
-    def matchOnHold(self):                          
-        if self.stateMatch != 2:            
-            self.app.when_closed = self.gEngine.updateStateMatch(self.stateMatch)                
-        else:
-            #self.ReturnBack()                                                         
-            self.app.when_closed = self.gEngine.updateStateMatch(self.stateMatch)            
+    def matchOnHold(self):                                    
+        self.app.when_closed = self.gEngine.updateStateMatch(self.varGameTime,2)            
                                
-             
-
+    
+    def validateRestart(self):       
+        if self.restart == True:  
+            self.moves_taken = len(self.listMoves)-1
+            print("tamaño list: {}".format(len(self.listMoves)))
+            self.moves.value = str(self.moves_taken)  
+            self.Defeat.enabled = True
+            return True
+        
+    def activateAdd(self):
+        move = {
+                "no":0,
+                "move": "[[]]"
+            }     
+        
+        rmove=json.dumps(move)   
+        self.gEngine.addMovementMatch(self.varGameTime ,rmove)
+        self.gEngine.delMovement() 
+        
             
+
+    
