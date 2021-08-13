@@ -35,6 +35,7 @@ mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 20_sp_insertUser.sql
 mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 21_sp_updateDataUser.sql
 mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 22_tg_scoreJournal.sql
 mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 23_sp_getAllDataMatchHold.sql
+mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 24_spcu_getUserScore.sql
 mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 28_sp_updateJsonMoves.sql
 
 echo ""

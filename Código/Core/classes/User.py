@@ -1,5 +1,6 @@
 #from time import process_time_ns
 from Core.classes.GameMatch import GameMatch
+from Core.classes.ScoreManager import ScoreManager
 import json
 
 class User:
@@ -55,3 +56,6 @@ class User:
     
     def updateJsonMoves(self, jsonMove):
         self.gameMatch.updateJsonMoves(jsonMove)
+
+    def getScores(self):
+        return ScoreManager(self.db).get(self.id)

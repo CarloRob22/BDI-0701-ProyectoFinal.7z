@@ -62,3 +62,6 @@ class MyGameEngine:
     
     def updateJsonMoves(self, jsonMove):
         self.user.updateJsonMoves(jsonMove)
+
+    def getUserScores(self):
+        return self.user.getScores()
