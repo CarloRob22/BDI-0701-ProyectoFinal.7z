@@ -9,7 +9,7 @@ CREATE VIEW vm_getAllDataUser AS
         var_lastName,
         var_email,
         var_nickname,
-        var_password
+        CONVERT(AES_DECRYPT(var_password,'salt') USING utf8)
     FROM
         User
     ;

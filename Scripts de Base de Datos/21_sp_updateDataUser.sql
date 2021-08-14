@@ -10,7 +10,7 @@ CREATE PROCEDURE sp_updateUser(
     IN lName VARCHAR(30),
     IN email VARCHAR(60),
     IN nick VARCHAR(100),
-    IN pass VARCHAR(20)
+    IN pass VARCHAR(255)
 )
 BEGIN
     UPDATE 
