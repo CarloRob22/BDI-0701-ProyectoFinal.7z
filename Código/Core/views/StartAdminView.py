@@ -9,7 +9,11 @@ from .DestroyDotsView import DestroyDotsView
 from .FloodItView import FloodItView
 from .CrudView import CrudView
 <<<<<<< HEAD
+<<<<<<< HEAD
 from .ScoreView import ScoreView
+=======
+from .JournalView import JournalView
+>>>>>>> 4fd58bac2617738fec4203ce1c8a3cddd1067707
 =======
 from .JournalView import JournalView
 >>>>>>> 4fd58bac2617738fec4203ce1c8a3cddd1067707
