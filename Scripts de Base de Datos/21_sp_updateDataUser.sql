@@ -20,7 +20,7 @@ BEGIN
         var_lastName = lName,
         var_email = email,
         var_nickname = nick,
-        var_password = pass
+        var_password = AES_ENCRYPT(pass,'salt')
     WHERE 
         big_id = idUser
     ;
