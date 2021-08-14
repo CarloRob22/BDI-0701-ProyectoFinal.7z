@@ -32,7 +32,7 @@ class ScoreView(View):
         tableBox.resize((allColBox2.tk.winfo_reqwidth()*85)/100, (allColBox2.tk.winfo_reqheight()*85)/100)
         tableBox.tk.place(x=allColBox2.tk.winfo_reqwidth()/2, y=allColBox2.tk.winfo_reqheight()/2, anchor="center")
         tableBox.tk.pack_propagate(0)
-            #INICIO FILA 1 DE LA TABLA
+        #INICIO FILA 1 DE LA TABLA
         rowTableBox1 = Box(tableBox, layout="auto")
         rowTableBox1.resize(tableBox.tk.winfo_reqwidth(), (tableBox.tk.winfo_reqheight()*10)/100)
         rowTableBox1.tk.pack_propagate(0)
@@ -46,7 +46,7 @@ class ScoreView(View):
         textCol1RowTableBox1le.tk.place(x=col1RowTableBox1.tk.winfo_reqwidth()/2, y=col1RowTableBox1.tk.winfo_reqheight()/2, anchor="center")
                 #FINAL COLUMNA 1 FILA 1 DE LA TABLA
 
-                 #INICIO COLUMNA 2 FILA 1 DE LA TABLA
+                #INICIO COLUMNA 2 FILA 1 DE LA TABLA
         col2RowTableBox1 = Box(rowTableBox1, layout="auto", border=1, align="left")
         col2RowTableBox1.resize((rowTableBox1.tk.winfo_reqwidth()*23.75)/100, rowTableBox1.tk.winfo_reqheight())
         col2RowTableBox1.tk.pack_propagate(0)
@@ -70,24 +70,25 @@ class ScoreView(View):
         textCol4RowTableBox1le.tk.place(x=col4RowTableBox1.tk.winfo_reqwidth()/2, y=col4RowTableBox1.tk.winfo_reqheight()/2, anchor="center")
                 #FINAL COLUMNA 4 FILA 1 DE LA TABLA
 
-                #INICIO COLUMNA 5 FILA 1 DE LA TABLA
+                        #INICIO COLUMNA 5 FILA 1 DE LA TABLA
         col5RowTableBox1 = Box(rowTableBox1, layout="auto", border=1, align="left")
         col5RowTableBox1.resize((rowTableBox1.tk.winfo_reqwidth()*23.75)/100, rowTableBox1.tk.winfo_reqheight())
         col5RowTableBox1.tk.pack_propagate(0)
         textCol5RowTableBox1le = Text(col5RowTableBox1, text="Fecha", size=14)
         textCol5RowTableBox1le.tk.place(x=col5RowTableBox1.tk.winfo_reqwidth()/2, y=col5RowTableBox1.tk.winfo_reqheight()/2, anchor="center")
                 #FINAL COLUMNA 6 FILA 1 DE LA TABLA
-            #FINAL FILA 1 DE LA TABLA
+        #FINAL FILA 1 DE LA TABLA
             
                
         scores = self.gEngine.getUserScores()
         
-        if len(scores)>0:
+        
+        if isinstance(scores, dict):
 
             counter = 1
 
             for score in scores.values():
-                    #INICIO FILA 1 DE LA TABLA
+                #INICIO FILA 1 DE LA TABLA
                 rowTableBox1 = Box(tableBox, layout="auto")
                 rowTableBox1.resize(tableBox.tk.winfo_reqwidth(), (tableBox.tk.winfo_reqheight()*9)/100)
                 rowTableBox1.tk.pack_propagate(0)
@@ -132,18 +133,38 @@ class ScoreView(View):
                 textCol5RowTableBox1le.tk.place(x=col5RowTableBox1.tk.winfo_reqwidth()/2, y=col5RowTableBox1.tk.winfo_reqheight()/2, anchor="center")
                         #FINAL COLUMNA 6 FILA 1 DE LA TABLA
                 counter = counter + 1
-                    #FINAL FILA 1 DE LA TABLA
+                        #FINAL FILA 1 DE LA TABLA
 
-
+                #FINAL SECCION DE LA TABLA
         
-
-        #FINAL SECCION DE LA TABLA
-
-
         
+        self.gEngine.logScoreView()
 
 
-          
+        #FINAL SECCION DE LA LISTA
+                
+        #INICIO SECCIOM DE BOTONES
+        allColBox3 = Box(allBox, layout="auto")
+        allColBox3.resize(allBox.tk.winfo_reqwidth(), (allBox.tk.winfo_reqheight()*15)/100)
+        allColBox3.tk.pack_propagate(0)
+
+
+        returnButton = PushButton(allColBox3, text="Regresar", width=20, height=2, command=self.returnMenu)
+        returnButton.tk.place(x=allColBox3.tk.winfo_reqwidth()/2, y=allColBox3.tk.winfo_reqheight()/2, anchor="center")
+        returnButton.tk.pack_propagate(0)
+        returnButton.bg = "RoyalBlue4"
+
+    def returnMenu(self):
+            if self.gEngine.user.role == 1:
+                from .StartPlayerView import StartPlayerView
+                self.app.destroy()
+                viewLogin = StartPlayerView(self.gEngine, "Menu del jugador")
+            else:
+                from .StartAdminView import StartAdminView
+                self.app.destroy()
+                viewLogin = StartAdminView(self.gEngine, "Menu del administrador")   
+
+
 
 
 

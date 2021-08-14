@@ -75,4 +75,7 @@ class User:
     def getScores(self):
         return ScoreManager(self.db).get(self.id)
 
+    def logScoreView(self):
+        self.db.insert("CALL sp_logScoreView({},'{}')".format(self.id, self.nickName))
+
     

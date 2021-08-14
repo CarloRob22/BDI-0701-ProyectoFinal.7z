@@ -68,3 +68,6 @@ class MyGameEngine:
 
     def getJournalActions(self):
         return self.user.getJournalActions()
+
+    def logScoreView(self):
+        self.user.logScoreView()

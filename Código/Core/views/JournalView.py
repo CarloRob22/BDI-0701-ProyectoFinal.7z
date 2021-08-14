@@ -4,7 +4,7 @@ from .View import View
 
 
 class JournalView(View):
-    def __init__(self, gEngine, title="view", width=700, height=500, layout="auto", bg="white", visible=True):
+    def __init__(self, gEngine, title="view", width=1200, height=800, layout="auto", bg="white", visible=True):
         super().__init__(title, width, height, layout, bg, visible)
         self.gEngine = gEngine
         self.returning = 0
@@ -33,7 +33,7 @@ class JournalView(View):
         
         for action in actions:
             #print(action)
-            list.append("{} | {}".format(action[0],action[1]))
+            list.append("{}:    {}".format(action[1],action[0]))
             print(action[1])
 
         
