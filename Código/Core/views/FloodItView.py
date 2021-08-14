@@ -107,7 +107,14 @@ class FloodItView(View):
                 self.stateTime = False
                 self.gEngine.successfulMatch(self.varGameTime, self.stateMatch)
                 self.palette.enabled = False 
-                self.gEngine.setScore(self.moves_taken,1, self.varGameTime)             
+                self.gEngine.setScore(self.moves_taken,1, self.varGameTime) 
+                popUpLoser = self.app.info("Ganaste", "Felicidades, haz ganado")
+                popUpLoser = True
+                if popUpLoser == True:                
+                    self.app.destroy()
+                    self.stateMatch = 5
+                    self.gEngine.successfulMatch(self.varGameTime, self.stateMatch)
+                    self.ReturnBack()     
         else:            
             self.stateMatch = 5
             self.win_text.value = "You lost :(" 
@@ -120,8 +127,9 @@ class FloodItView(View):
             if popUpLoser == True:                
                 self.app.destroy()
                 self.stateMatch = 5
-                self.ReturnBack()                
-                self.gEngine.successfulMatch(self.varGameTime, self.stateMatch)                
+                self.gEngine.successfulMatch(self.varGameTime, self.stateMatch)
+                self.ReturnBack()                 
+                           
     
     #mediante la siguiente función se obtinene el tablero inicial de la partida.
     def get_start_board(self,b_init):
@@ -263,12 +271,12 @@ class FloodItView(View):
             if self.popUpNewBoard == True:
                 self.stateMatch = 4                
                 self.newGame()   
-                self.stateMatch = 2                     
+                #self.stateMatch = 2                     
             else: 
                 self.stateMatch = 4                
                 self.app.destroy()                
                 self.ReturnBack()
-                self.stateMatch = 2 
+                #self.stateMatch = 2 
         else:
             self.stateTime = True
     

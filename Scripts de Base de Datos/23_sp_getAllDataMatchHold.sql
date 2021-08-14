@@ -5,7 +5,7 @@ DROP PROCEDURE IF EXISTS sp_getAllDataMatchHold;
 DELIMITER $$
 
 CREATE PROCEDURE sp_getAllDataMatchHold(
-    IN idUser BIGINT,
+    IN idUser BIGINT,  
     OUT jsonOfJsons JSON        
 )
 BEGIN
@@ -16,7 +16,7 @@ BEGIN
             GameMatch
         WHERE
             tin_gameState_FK = 2 AND
-            big_user_FK = idUser    
+            big_user_FK = idUser 
         ORDER BY
             big_id DESC
         LIMIT 1)
