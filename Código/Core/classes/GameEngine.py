@@ -65,3 +65,6 @@ class MyGameEngine:
 
     def getUserScores(self):
         return self.user.getScores()
+
+    def getJournalActions(self):
+        return self.user.getJournalActions()

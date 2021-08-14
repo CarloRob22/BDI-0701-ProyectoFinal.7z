@@ -73,3 +73,5 @@ class User:
 
     def getScores(self):
         return ScoreManager(self.db).get(self.id)
+
+    

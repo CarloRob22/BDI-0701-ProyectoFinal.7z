@@ -28,4 +28,6 @@ class AdministratorUser(User):
     def updateDataUser(self,idUser,firsName,lastName,email,nickName, password):
         self.db.update("CALL sp_updateUser({},'{}','{}','{}','{}','{}')".format(idUser, firsName,lastName,email,nickName, password));    
     
-        
+    def getJournalActions(self):
+        actions = self.db.select("SELECT var_action FROM Journal;")
+        return actions
