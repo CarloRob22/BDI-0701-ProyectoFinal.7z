@@ -132,7 +132,7 @@ class FloodItView(View):
     def fill_board(self):
         if self.restart == True:            
             self.get_start_board(self.listMoves[0])
-            lastmove = self.listMoves[len(self.listMoves)-1]
+            lastmove = self.listMoves[-1]
             for x in range(self.board_size):
                     for y in range(self.board_size):
                         self.board.set_pixel(x, y, lastmove[y][x])
@@ -168,7 +168,7 @@ class FloodItView(View):
         target = self.board.get_pixel(0,0)
         self.flood(0, 0, target, flood_colour)
         self.win_check()       
-        self.lastMove(self.board)  
+        self.addLastMove()  
                     
         
         
@@ -240,9 +240,7 @@ class FloodItView(View):
             self.gEngine.delMovement()              
             self.moves_taken -= 1
             if self.moves_taken == 0:                
-                self.Rewind.enabled = False
-            else:
-                self.Rewind.enabled = True            
+                self.Rewind.enabled = False                     
             self.moves.value = 'Movimientos realizados: ' + str(self.moves_taken)
         print(self.listMoves)        
      
@@ -275,10 +273,8 @@ class FloodItView(View):
             self.stateTime = True
     
     #mediante la siguiente función se obtiene el ultimo moviento realizado.
-    def lastMove(self, board):
-        self.listMoves.append(self.board.get_all())
-        return self.board.get_all()
-        #print(self.listMoves) 
+    def addLastMove(self):
+        self.listMoves.append(self.board.get_all())        
         
     #mediante la siguiente función se dibuja el tablero del paso anterior, esta es llamada desde el metodo stepRewind.        
     def fillRewind(self):
@@ -312,13 +308,22 @@ class FloodItView(View):
     def validateRestart(self):       
         if self.restart == True:  
             self.moves_taken = len(self.listMoves)-1
+            print("moves_taken: {}".format(self.moves_taken))
             print("tamaño list: {}".format(len(self.listMoves)))
-            self.moves.value = str(self.moves_taken)  
+            self.moves.value = 'Movimientos realizados: ' + str(self.moves_taken)  
             self.Defeat.enabled = True
+            self.initMovement()
             #self.restart = False
             #return True
         
-  
-            
+    #en caso de reanudar partida inicia la instancia de movement.
+    def initMovement(self):
+        move = {
+            "no":self.moves_taken,
+            "move": self.board.get_all()
+        }             
+        rmove=json.dumps(move)   
+        self.gEngine.addMovementMatch(self.varGameTime ,rmove)
+        self.gEngine.delMovement()
 
  

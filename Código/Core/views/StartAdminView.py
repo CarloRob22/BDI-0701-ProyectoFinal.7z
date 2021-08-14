@@ -8,19 +8,8 @@ from .View import View
 from .DestroyDotsView import DestroyDotsView
 from .FloodItView import FloodItView
 from .CrudView import CrudView
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 from .ScoreView import ScoreView
-=======
 from .JournalView import JournalView
->>>>>>> 4fd58bac2617738fec4203ce1c8a3cddd1067707
-=======
-from .JournalView import JournalView
->>>>>>> 4fd58bac2617738fec4203ce1c8a3cddd1067707
-=======
-from .JournalView import JournalView
->>>>>>> 4fd58bac2617738fec4203ce1c8a3cddd1067707
 
 class StartAdminView(View):    
     def __init__(self, gEngine, title="view", width=700, height=700, layout="auto", bg="white", visible=True):
