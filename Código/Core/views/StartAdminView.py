@@ -8,7 +8,11 @@ from .View import View
 from .DestroyDotsView import DestroyDotsView
 from .FloodItView import FloodItView
 from .CrudView import CrudView
+<<<<<<< HEAD
 from .ScoreView import ScoreView
+=======
+from .JournalView import JournalView
+>>>>>>> 4fd58bac2617738fec4203ce1c8a3cddd1067707
 
 class StartAdminView(View):    
     def __init__(self, gEngine, title="view", width=700, height=700, layout="auto", bg="white", visible=True):
@@ -44,7 +48,7 @@ class StartAdminView(View):
         self.crudUser.bg = '#22778B'
 
         self.Bin_box = Box(self.app, width="fill", align="top", height=60)
-        self.viewBinnacle = PushButton(self.Bin_box, width="fill", height="fill", text='Visualizar Bitácora')
+        self.viewBinnacle = PushButton(self.Bin_box, width="fill", height="fill", text='Visualizar Bitácora', command=self.startJournal)
         self.viewBinnacle.bg = '#104B59'
 
         window_crud = Window(self.app,"Interfaz de Administrador",width=400, height=250, layout="grid")
@@ -126,9 +130,9 @@ class StartAdminView(View):
         
             
     #Mediante la siguiente función el usuario inicia el módulo  de registro de bitácora al dar click en el boton "Visualizar Bitácora".
-    def startBinnacle(self):
-        pass
-        #agregar aquí código para iniciar módulo de registro de bitácora.
+    def startJournal(self):
+        self.app.destroy()            
+        destroyDots = JournalView(self.gEngine,"Registro de bitacora")
 
     def openCrud(self):
         self.app.destroy() 

@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS User(
         COMMENT "Corresponde a una palabra clave opcional con la cual el usuario
         podra iniciar sesion, tambien esta palabra clase se mostraria en cada score
         del jugador en conjunto con los nombres",
-    var_password VARCHAR(20) NOT NULL
+    var_password VARBINARY(255) NOT NULL
         COMMENT "Se utiliza en conjunto con el correo o nickname para inciar sesion",
     tin_role_FK TINYINT UNSIGNED NOT NULL
         COMMENT "Corresponde a la llave foranea que hace referencia al id del rol 

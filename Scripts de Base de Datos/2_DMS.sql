@@ -6,13 +6,13 @@ INSERT INTO UserRole (var_name) VALUES
 ;
 
 INSERT INTO User (var_firstName, var_lastName, var_email, var_nickname, var_password, tin_role_FK) VALUES
-    ("Roberto","Duran","rob@email.com","rob","12345678",2),
-    ("Fernando","Murillo","fer@email.com","fer","12345678",2),
-    ("Marco","Ruiz","mar@email.com","mar","12345678",2),
-    ("Carlos","Gutierrez","car@email.com","car","12345678",1),
-    ("David","Perez","dav@email.com","dav","12345678",1),
-    ("Alex","Martinez","ale@email.com","ale","12345678",1),
-    ("John","Nunez","john@email.com","john","12345678",1)
+    ("Roberto","Duran","rob@email.com","rob", AES_ENCRYPT('12345678','salt'),2),
+    ("Fernando","Murillo","fer@email.com","fer", AES_ENCRYPT('12345678','salt'),2),
+    ("Marco","Ruiz","mar@email.com","mar" , AES_ENCRYPT('12345678','salt'),2),
+    ("Carlos","Gutierrez","car@email.com","car", AES_ENCRYPT('12345678','salt'),1),
+    ("David","Perez","dav@email.com","dav", AES_ENCRYPT('12345678','salt'),1),
+    ("Alex","Martinez","ale@email.com","ale",AES_ENCRYPT('12345678','salt'),1),
+    ("John","Nunez","john@email.com","john",AES_ENCRYPT('12345678','salt'),1)
 ;
 
 INSERT INTO GameState (var_name) VALUES
