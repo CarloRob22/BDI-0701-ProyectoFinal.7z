@@ -15,8 +15,9 @@ BEGIN
     FROM
         GameMatch
     WHERE
-        big_user_FK = idUser AND    
-        tin_gameState_FK = 2
+        big_user_FK = idUser 
+    ORDER BY
+        big_id DESC
     LIMIT 1;
 
 END$$

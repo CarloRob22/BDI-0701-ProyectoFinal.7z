@@ -50,15 +50,22 @@ class StartPlayerView(View):
         logoutBtn.text_size = 14 
 
     def newFloodIt(self):            
-        check = str(self.gEngine.checkStateMatch())        
-        if check == "[(None,)]":            
+        check = self.gEngine.checkStateMatch()        
+        if check != None:
+            print("check: {}".format(check["gameStateId"]))
+            if check["gameStateId"] != 2:                        
+                self.gEngine.startMatch(1)               
+                self.app.destroy()                 
+                floodIt = FloodItView(self.gEngine, self.returning, None,"Flood It")                
+            else:
+                print("hay una partidada guardada")
+                self.popUpHoldMacht = self.app.info("Partida en espera","Tienes una Partida en espera")      
+        else:
             self.gEngine.startMatch(1)               
             self.app.destroy()                 
             floodIt = FloodItView(self.gEngine, self.returning, None,"Flood It")
-        else:
-            print("hay una partidada guardada")
-            self.popUpHoldMacht = self.app.info("Partida en espera","Tienes una Partida en espera")      
-
+            
+        
     def newDestroyDots(self):
         check = str(self.gEngine.checkStateMatch())        
         #if check == "[(None,)]":
@@ -73,15 +80,22 @@ class StartPlayerView(View):
         self.app.destroy()            
         destroyDots = ScoreView(self.gEngine,"Personal Score Table")
         
-    def restartGameMatchHold(self):                       
-        dataMatch = self.gEngine.restartGameMatchHold()   
-        lastTime = str(dataMatch[0][1])
-        movesMatch = []
-        for i in dataMatch:
-            move =json.loads(i[5])            
-            movesMatch.append(move["move"])              
-        self.app.destroy()                 
-        floodIt = FloodItView(self.gEngine, self.returning, None, True,lastTime,movesMatch,"Flood It")
+    def restartGameMatchHold(self):         
+        check = self.gEngine.checkStateMatch()        
+        if check != None: 
+            if check["gameStateId"] == 2:      
+                dataMatch = self.gEngine.restartGameMatchHold()                  
+                lastTime = str(dataMatch[0])
+                movesMatch = dataMatch[1]                
+                print(len(movesMatch))           
+                print(lastTime)
+                self.app.destroy()                 
+                floodIt = FloodItView(self.gEngine, self.returning, None, True,lastTime,movesMatch,"Flood It")               
+            else:
+                print("no hay una partidada guardada")
+                self.popUpHoldMacht = self.app.info("Partida en espera","No tienes una Partida en espera")                
+            
+            
           
 
 

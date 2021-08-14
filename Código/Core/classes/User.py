@@ -28,8 +28,13 @@ class User:
     #Mediante el siguiente Método se verifica si existe una partidad guardada en estado Hold(id=2).
     def checkStateMatch(self, idUser):               
         self.db.select("CALL sp_getHoldMatch({},@res);".format(idUser))
-        response = self.db.select("SELECT @res;")        
-        return response
+        response = self.db.select("SELECT @res;") 
+        if response[0][0] is not None:
+            dataMatch = json.loads(response[0][0])                   
+            return dataMatch
+        else:
+            return response[0][0]
+        
     
     def uppSuccessfulMatch(self, lastTime, gamestate):
         self.gameMatch.successfulMatch(lastTime, gamestate)
@@ -49,10 +54,19 @@ class User:
         self.gameMatch.setScore(movesTaken, gameId, time)
         
     def restartGameMatchHold(self):        
-        data = self.db.select("CALL sp_getAllDataMatchHold({});".format(self.id))
-        print(data[0][0], data[0][4], data[0][1])         
-        self.gameMatch = GameMatch(data[0][0], data[0][4], data[0][1], self.db)            
-        return data       
+        self.db.select("CALL sp_getAllDataMatchHold({},@res);".format(self.id))
+        response = self.db.select("SELECT @res;")
+        listMoves = []
+        if response[0][0] is not None:
+            dataMatch = json.loads(response[0][0])                     
+            for move in dataMatch.values():
+                #print(move["jsonMove"]["move"])
+                listMoves.append(move["jsonMove"]["move"])
+                lastTime = move["lastTime"]                   
+        self.gameMatch = GameMatch(move["idMatch"], move["stateMatch"], move["lastTime"], self.db)
+        return (lastTime,listMoves)  
+
+         
     
     def updateJsonMoves(self, jsonMove):
         self.gameMatch.updateJsonMoves(jsonMove)

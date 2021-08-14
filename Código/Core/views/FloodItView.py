@@ -1,3 +1,4 @@
+from enum import IntFlag
 from genericpath import getatime
 from tkinter.constants import TOP
 from guizero import *
@@ -5,6 +6,7 @@ from .View import View
 import random
 import time
 import json
+import re
 
 class FloodItView(View):   
     def __init__(self, gEngine, returning, initBoard=None, restart = None, lastTime="", movesMatch = [], title="Flood it!",  width=900, height=700, layout="auto", bg="white", visible=True):
@@ -47,13 +49,13 @@ class FloodItView(View):
         self.Defeat.enabled = False
         self.BoxBottonR =Box(self.BoxBotton, align="left", width="fill", height="fill")    
         self.timer = Text(self.BoxBottonR, text="")
-                 
-        self.fill_board()
+          
+        self.validateRestart()
+        self.fill_board()         
+        self.gameTime()        
         self.init_palette()
         self.startTime()
-        self.gameTime()      
-        
-        
+        self.gameTime()    
         self.app.display()        
         self.matchOnHold()
         
@@ -87,7 +89,7 @@ class FloodItView(View):
     def win_check(self):
         global moves_taken
         self.moves_taken += 1  
-           
+        self.Rewind.enabled = True   
         move = {
             "no":self.moves_taken,
             "move": self.board.get_all()
@@ -127,12 +129,13 @@ class FloodItView(View):
            
 
     def fill_board(self):
-        if self.validateRestart() == True:            
+        if self.restart == True:            
             self.get_start_board(self.listMoves[0])
             lastmove = self.listMoves[len(self.listMoves)-1]
             for x in range(self.board_size):
                     for y in range(self.board_size):
                         self.board.set_pixel(x, y, lastmove[y][x])
+            #self.restart = False
         else:
             if self.initBoard == None:
                 for x in range(self.board_size):
@@ -164,7 +167,8 @@ class FloodItView(View):
         target = self.board.get_pixel(0,0)
         self.flood(0, 0, target, flood_colour)
         self.win_check()       
-        self.lastMove(self.board)              
+        self.lastMove(self.board)  
+                    
         
         
     #mediante la siguiente función se obtiene la hora de inicio del juego en formato HH:MM:SS.  
@@ -182,25 +186,33 @@ class FloodItView(View):
     
     
     #Mediante la siguiente función se inicia el tiempo del juego desde (00:00:00). 
-    def gameTime(self):              
-        if (self.stateTime):
-            sec = time.strftime("%S")
-            self.second = self.second + (int(sec)-(int(sec))) +1    
-            self.aux_sec = self.second
-            
-            if self.aux_sec == 60:
-                self.aux_sec = "0"
-                self.aux_min = self.aux_min + 1
-                self.second = 0
-                
-            if self.aux_min == 60:
-                self.aux_min = "0"
-                self.aux_hour= self.aux_hour + 1
-                self.min = 0
-            
-            self.varGameTime = "{}:{}:{}".format(str(self.aux_hour).zfill(2),str(self.aux_min).zfill(2),str(self.aux_sec).zfill(2))            
-            self.timer.tk.config(text="{}:{}:{}".format(str(self.aux_hour).zfill(2),str(self.aux_min).zfill(2),str(self.aux_sec).zfill(2)))                                                        
-            self.timer.tk.after(1000, self.gameTime)
+    def gameTime(self):    
+            if self.restart == True:                   
+                self.aux_hour = int(re.split(':',self.varGameTime)[0])                
+                self.aux_min = int(re.split(':',self.varGameTime)[1])                
+                self.secondAux = re.split(':',self.varGameTime)[2]
+                self.second = int(re.split('\.',self.secondAux)[0])                
+                self.restart = False        
+        
+            else:
+                if (self.stateTime):
+                    sec = time.strftime("%S")
+                    self.second = self.second + (int(sec)-(int(sec))) +1    
+                    self.aux_sec = self.second
+                    
+                    if self.aux_sec == 60:
+                        self.aux_sec = "0"
+                        self.aux_min = self.aux_min + 1
+                        self.second = 0
+                        
+                    if self.aux_min == 60:
+                        self.aux_min = "0"
+                        self.aux_hour= self.aux_hour + 1
+                        self.min = 0
+                    
+                    self.varGameTime = "{}:{}:{}".format(str(self.aux_hour).zfill(2),str(self.aux_min).zfill(2),str(self.aux_sec).zfill(2))            
+                    self.timer.tk.config(text="{}:{}:{}".format(str(self.aux_hour).zfill(2),str(self.aux_min).zfill(2),str(self.aux_sec).zfill(2)))                                                        
+                    self.timer.tk.after(1000, self.gameTime)
             
     #Mediante la siguiente función se pausa el tiempo del juego. La función es llamada desde el botón "pause"
     def pause(self):        
@@ -210,11 +222,13 @@ class FloodItView(View):
             self.pauseGame.text = "Continue"    
             self.stateTime = False
             self.palette.enabled = False
+            self.Rewind.enabled = False
         else:
             self.board.visible = True
             self.gEngine.updateStateMatch(self.varGameTime,1)
             self.stateTime = True
             self.palette.enabled = True
+            self.Rewind.enabled = True
             self.pauseGame.text =  "Pause"
             self.gameTime()
     
@@ -222,8 +236,12 @@ class FloodItView(View):
     def stepRewind(self):
         if len(self.listMoves)>1:            
             self.fillRewind()  
-            self.gEngine.delMovement()                  
+            self.gEngine.delMovement()              
             self.moves_taken -= 1
+            if self.moves_taken == 0:                
+                self.Rewind.enabled = False
+            else:
+                self.Rewind.enabled = True            
             self.moves.value = 'Movimientos realizados: ' + str(self.moves_taken)
         print(self.listMoves)        
      
@@ -287,7 +305,7 @@ class FloodItView(View):
     #mediante esta función se actualiza el estado de la partida a estado "en espera".    
     def matchOnHold(self):                                    
         self.app.when_closed = self.gEngine.updateStateMatch(self.varGameTime,2)            
-                               
+        print(self.varGameTime)                   
     
     def validateRestart(self):       
         if self.restart == True:  
@@ -295,17 +313,10 @@ class FloodItView(View):
             print("tamaño list: {}".format(len(self.listMoves)))
             self.moves.value = str(self.moves_taken)  
             self.Defeat.enabled = True
-            return True
+            #self.restart = False
+            #return True
         
-    def activateAdd(self):
-        move = {
-                "no":0,
-                "move": "[[]]"
-            }     
-        
-        rmove=json.dumps(move)   
-        self.gEngine.addMovementMatch(self.varGameTime ,rmove)
-        self.gEngine.delMovement() 
+    
         
             
 
