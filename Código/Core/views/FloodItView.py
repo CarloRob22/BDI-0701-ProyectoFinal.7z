@@ -119,8 +119,9 @@ class FloodItView(View):
             popUpLoser = True
             if popUpLoser == True:                
                 self.app.destroy()
-                self.ReturnBack()
-                self.gEngine.successfulMatch(self.varGameTime, self.stateMatch)
+                self.stateMatch = 5
+                self.ReturnBack()                
+                self.gEngine.successfulMatch(self.varGameTime, self.stateMatch)                
     
     #mediante la siguiente función se obtinene el tablero inicial de la partida.
     def get_start_board(self,b_init):
@@ -187,32 +188,32 @@ class FloodItView(View):
     
     #Mediante la siguiente función se inicia el tiempo del juego desde (00:00:00). 
     def gameTime(self):    
-            if self.restart == True:                   
-                self.aux_hour = int(re.split(':',self.varGameTime)[0])                
-                self.aux_min = int(re.split(':',self.varGameTime)[1])                
-                self.secondAux = re.split(':',self.varGameTime)[2]
-                self.second = int(re.split('\.',self.secondAux)[0])                
-                self.restart = False        
-        
-            else:
-                if (self.stateTime):
-                    sec = time.strftime("%S")
-                    self.second = self.second + (int(sec)-(int(sec))) +1    
-                    self.aux_sec = self.second
-                    
-                    if self.aux_sec == 60:
-                        self.aux_sec = "0"
-                        self.aux_min = self.aux_min + 1
-                        self.second = 0
-                        
-                    if self.aux_min == 60:
-                        self.aux_min = "0"
-                        self.aux_hour= self.aux_hour + 1
-                        self.min = 0
-                    
-                    self.varGameTime = "{}:{}:{}".format(str(self.aux_hour).zfill(2),str(self.aux_min).zfill(2),str(self.aux_sec).zfill(2))            
-                    self.timer.tk.config(text="{}:{}:{}".format(str(self.aux_hour).zfill(2),str(self.aux_min).zfill(2),str(self.aux_sec).zfill(2)))                                                        
-                    self.timer.tk.after(1000, self.gameTime)
+        if self.restart == True:                   
+            self.aux_hour = int(re.split(':',self.varGameTime)[0])                
+            self.aux_min = int(re.split(':',self.varGameTime)[1])                
+            self.secondAux = re.split(':',self.varGameTime)[2]
+            self.second = int(re.split('\.',self.secondAux)[0])                
+            self.restart = False        
+    
+       
+        if (self.stateTime):
+            sec = time.strftime("%S")
+            self.second = self.second + (int(sec)-(int(sec))) +1    
+            self.aux_sec = self.second
+            
+            if self.aux_sec == 60:
+                self.aux_sec = "0"
+                self.aux_min = self.aux_min + 1
+                self.second = 0
+                
+            if self.aux_min == 60:
+                self.aux_min = "0"
+                self.aux_hour= self.aux_hour + 1
+                self.min = 0
+            
+            self.varGameTime = "{}:{}:{}".format(str(self.aux_hour).zfill(2),str(self.aux_min).zfill(2),str(self.aux_sec).zfill(2))            
+            self.timer.tk.config(text="{}:{}:{}".format(str(self.aux_hour).zfill(2),str(self.aux_min).zfill(2),str(self.aux_sec).zfill(2)))                                                        
+            self.timer.tk.after(1000, self.gameTime)
             
     #Mediante la siguiente función se pausa el tiempo del juego. La función es llamada desde el botón "pause"
     def pause(self):        
@@ -303,7 +304,8 @@ class FloodItView(View):
         
                        
     #mediante esta función se actualiza el estado de la partida a estado "en espera".    
-    def matchOnHold(self):                                    
+    def matchOnHold(self):  
+        #print("timer: {}".format(self.timer.value))                                          
         self.app.when_closed = self.gEngine.updateStateMatch(self.varGameTime,2)            
         print(self.varGameTime)                   
     
@@ -316,8 +318,7 @@ class FloodItView(View):
             #self.restart = False
             #return True
         
-    
-        
+  
             
 
-    
+ 

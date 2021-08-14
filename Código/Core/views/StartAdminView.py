@@ -8,6 +8,7 @@ from .View import View
 from .DestroyDotsView import DestroyDotsView
 from .FloodItView import FloodItView
 from .CrudView import CrudView
+from .ScoreView import ScoreView
 
 class StartAdminView(View):    
     def __init__(self, gEngine, title="view", width=700, height=700, layout="auto", bg="white", visible=True):
@@ -21,12 +22,20 @@ class StartAdminView(View):
         self.userName = Text(self.Name_box, width="fill", height="fill", align="right", size=15, color='blue')
 
         self.Floodit_box = Box(self.app, width="fill", align="top", height=60)
-        self.playFloodit = PushButton(self.Floodit_box, width="fill", height="fill", text='Jugar Flood It',command=self.startFloodit)
+        self.playFloodit = PushButton(self.Floodit_box, width="fill", height="fill", text='Iniciar juego Flood It',command=self.startFloodit)
         self.playFloodit.bg = '#FBE3B8'
 
         self.Destroy_box = Box(self.app, width="fill", align="top", height=60)
-        self.playDestroy = PushButton(self.Destroy_box, width="fill", height="fill", text='Jugar Destroy The Dots',command=self.startDestroy)
+        self.playDestroy = PushButton(self.Destroy_box, width="fill", height="fill", text='Iniciar juego Destroy the dots',command=self.startDestroy)
         self.playDestroy.bg = (79, 168, 187)
+       
+        self.Resume_box = Box(self.app, width="fill", align="top", height=60)
+        self.playResume = PushButton(self.Resume_box, width="fill", height="fill", text='Reaundar Partida',command=self.restartGameMatchHold)
+        self.playResume.bg = "RoyalBlue2"
+        
+        self.Score_box = Box(self.app, width="fill", align="top", height=60)
+        self.playScore = PushButton(self.Score_box, width="fill", height="fill", text='Mostrar Tabla de Puntuaciones', command=self.openScoreTable)
+        self.playScore.bg = "plum"
 
 #----Ventana para emergente de la Gestion----
 
@@ -82,25 +91,38 @@ class StartAdminView(View):
             
     #Mediante la siguiente función se inicia el juego Floodit cuando el usuario da click en el boton "Jugar Flood It".
     def startFloodit(self): 
-        check = str(self.gEngine.checkStateMatch())        
-        if check == "[(None,)]":
+        check = self.gEngine.checkStateMatch()        
+        if check != None:
+            print("check: {}".format(check["gameStateId"]))
+            if check["gameStateId"] != 2:                        
+                self.gEngine.startMatch(1)               
+                self.app.destroy()                 
+                floodIt = FloodItView(self.gEngine, self.returning, None,"Flood It")                
+            else:
+                print("hay una partidada guardada")
+                self.popUpHoldMacht = self.app.info("Partida en espera","Tienes una Partida en espera")      
+        else:
             self.gEngine.startMatch(1)               
             self.app.destroy()                 
-            floodIt = FloodItView(self.gEngine,self.returning, None ,"Flood It")
-        else:
-            print("hay una partidada guardada")
-            self.popUpHoldMacht = self.app.info("Partida en espera","Tienes una Partida en espera")
+            floodIt = FloodItView(self.gEngine, self.returning, None,"Flood It")
         
         
     #Mediante la siguiente función se inicia el juego Destroy The Dots cuando el usuario da click el el boton "Jugar Destroy The Dots".
     def startDestroy(self): 
-        check = str(self.gEngine.checkStateMatch())        
-        if check == "[(None,)]":
-            self.gEngine.startMatch(2)
-            self.app.destroy()            
-            destroyDots = DestroyDotsView(self.gEngine,self.returning, "Destroy The Dots")
+        check = self.gEngine.checkStateMatch()        
+        if check != None:
+            print("check: {}".format(check["gameStateId"]))
+            if check["gameStateId"] != 2:                        
+                self.gEngine.startMatch(2)
+                self.app.destroy()            
+                destroyDots = DestroyDotsView(self.gEngine, self.returning,"Destroy The Dots")               
+            else:
+                print("hay una partidada guardada")
+                self.popUpHoldMacht = self.app.info("Partida en espera","Tienes una Partida en espera")      
         else:
-            self.popUpHoldMacht = self.app.info("Partida en espera","Tienes una Partida en espera")
+            self.gEngine.startMatch(2)               
+            self.app.destroy()                 
+            destroyDots = DestroyDotsView(self.gEngine, self.returning, "Destroy The Dots")
         
             
     #Mediante la siguiente función el usuario inicia el módulo  de registro de bitácora al dar click en el boton "Visualizar Bitácora".
@@ -112,3 +134,27 @@ class StartAdminView(View):
         self.app.destroy() 
         crudView = CrudView(self.gEngine,"CRUD users")
 
+
+    def restartGameMatchHold(self):         
+        check = self.gEngine.checkStateMatch()        
+        if check != None: 
+            if check["gameStateId"] == 2:      
+                dataMatch = self.gEngine.restartGameMatchHold()                  
+                lastTime = str(dataMatch[0])
+                movesMatch = dataMatch[1]
+                idGame = dataMatch[2]                
+                print(len(movesMatch))           
+                print(lastTime)
+                self.app.destroy()  
+                if idGame == 1:               
+                    floodIt = FloodItView(self.gEngine, self.returning, None, True,lastTime,movesMatch,"Flood It")               
+                elif idGame == 2:
+                    destroyDots = DestroyDotsView(self.gEngine, self.returning, True,lastTime, movesMatch,  "Destroy The Dots")
+        else:
+            print("no hay una partidada guardada")
+            self.popUpHoldMacht = self.app.info("No hay partida en espera","No tienes una Partida en espera")                
+            self.popUpHoldMacht = True
+            
+    def openScoreTable(self):
+        self.app.destroy()            
+        destroyDots = ScoreView(self.gEngine,"Personal Score Table")

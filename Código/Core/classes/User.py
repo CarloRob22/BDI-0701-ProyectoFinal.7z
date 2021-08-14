@@ -62,9 +62,10 @@ class User:
             for move in dataMatch.values():
                 #print(move["jsonMove"]["move"])
                 listMoves.append(move["jsonMove"]["move"])
-                lastTime = move["lastTime"]                   
+                lastTime = move["lastTime"]  
+                idGame = move["idGame"]                 
         self.gameMatch = GameMatch(move["idMatch"], move["stateMatch"], move["lastTime"], self.db)
-        return (lastTime,listMoves)  
+        return (lastTime,listMoves, idGame)  
 
          
     

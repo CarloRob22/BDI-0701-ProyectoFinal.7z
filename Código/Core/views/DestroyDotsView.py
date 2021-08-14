@@ -3,12 +3,14 @@ from .View import View
 from random import randint
 import time
 import json
+import re
 
 class DestroyDotsView(View):   
-    def __init__(self, gEngine, returning, title="Destroy de dots", width=740, height=620, layout="auto", bg="white", visible=True):
+    def __init__(self, gEngine, returning, restart = None, lastTime="", lastMoves=[], title="Destroy de dots", width=740, height=620, layout="auto", bg="white", visible=True):
         super().__init__(title,  width, height, layout, bg, visible)
         self.gEngine = gEngine
         self.returning = returning
+        self.restart = restart 
         self.GRID_SIZE = 5
         self.score = 0
         self.startTim = {}
@@ -19,7 +21,8 @@ class DestroyDotsView(View):
         self.aux_min = 0
         self.aux_sec = 0
         self.stateTime = True
-        self.varGameTime = ""
+        self.varGameTime = lastTime
+        self.listMoves = lastMoves
         self.stateMatch = 2 # se utiliza para llevar de manera globar el estado de la partida, su valor por defecto es necesario que sea 2.
         
         
@@ -36,9 +39,12 @@ class DestroyDotsView(View):
         self.BoxBottonR =Box(self.BoxBotton, align="left", width="fill", height="fill")    
         self.timer = Text(self.BoxBottonR, text="")
         
+        self.validateRestart()
+        self.fillRestartboard()
         self.startTime()
         self.gameTime()
         self.app.display()
+        self.stateTime = True
         self.matchOnHold()
 
     def add_dot(self):
@@ -47,7 +53,7 @@ class DestroyDotsView(View):
 
             while self.board[x, y].dotty == True:
                 x, y = randint(0,self.GRID_SIZE-1), randint(0,self.GRID_SIZE-1)
-
+            self.stateTime = True
             self.board[x, y].dotty = True
             self.board.set_pixel(x, y, "red")
 
@@ -92,6 +98,7 @@ class DestroyDotsView(View):
             self.score += 1
             self.score_display.value = "Your score is " + str(self.score)
         self.lastMove()
+        self.addMoveMatch()
     
             
     #mediante la siguiente función se obtiene la hora de inicio del juego en formato HH:MM:SS.  
@@ -108,7 +115,15 @@ class DestroyDotsView(View):
         print(self.startTim["sec"])  
     
     #Mediante la siguiente función se inicia el tiempo del juego desde (00:00:00).      
-    def gameTime(self,): 
+    def gameTime(self): 
+        if self.restart == True:                  
+            self.aux_hour = int(re.split(':',self.varGameTime)[0])                
+            self.aux_min = int(re.split(':',self.varGameTime)[1])                
+            self.secondAux = re.split(':',self.varGameTime)[2]
+            self.second = int(re.split('\.',self.secondAux)[0])                
+            self.restart = False                
+        
+        
         if(self.stateTime):       
             sec = time.strftime("%S")
             self.second = self.second + (int(sec)-(int(sec))) +1    
@@ -131,13 +146,13 @@ class DestroyDotsView(View):
     def pause(self):
         if self.stateTime:  
             self.board.visible = False   
-            self.gEngine.updateStateMatch(3) 
+            self.gEngine.updateStateMatch(self.varGameTime,3)
             self.pauseGame.text = "Continue"    
             self.stateTime = False            
         else:
             self.board.visible = True
-            self.gEngine.updateStateMatch(1)
-            self.stateTime = True            
+            self.gEngine.updateStateMatch(self.varGameTime,1)
+            self.stateTime = True                        
             self.pauseGame.text =  "Pause"
             self.gameTime()
             self.add_dot()
@@ -172,10 +187,36 @@ class DestroyDotsView(View):
         return self.board.get_all()
 
     #mediante esta función se actualiza el estado de la partida a estado "en espera".    
-    def matchOnHold(self):        
-        if self.stateMatch != 2:            
-            self.app.when_closed = self.gEngine.updateStateMatch(self.stateMatch)                
-        else:
-            #self.ReturnBack()                                                         
-            self.app.when_closed = self.gEngine.updateStateMatch(self.stateMatch) 
-          
+    def matchOnHold(self):       
+            self.addMoveMatch()
+            self.app.when_closed = self.gEngine.updateStateMatch(self.varGameTime,self.stateMatch)                
+        
+         
+    def addMoveMatch(self):
+        move = {
+            "no": int(self.score),
+            "move": self.board.get_all()
+        }     
+        rmove=json.dumps(move)   
+        self.gEngine.addMovementMatch(self.varGameTime ,rmove)  
+        
+    def validateRestart(self):       
+        if self.restart == True:  
+            self.score = len(self.listMoves)
+            self.score_display.value = str(self.score)
+            #print("tamaño list: {}".format(len(self.listMoves)))
+            self.Defeat.enabled = True
+            #self.restart = False
+            #return True
+            
+    def fillRestartboard(self):
+        if self.restart == True: 
+            lastmove = self.listMoves[len(self.listMoves)-1]
+            for x in range(self.GRID_SIZE):
+                for y in range(self.GRID_SIZE):
+                    if lastmove[y][x] == "red":
+                        self.board.set_pixel(x, y, "red")
+                        self.board[x, y].dotty = True
+                        
+                    
+        #self.restart = False
