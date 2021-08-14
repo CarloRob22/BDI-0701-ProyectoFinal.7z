@@ -29,5 +29,5 @@ class AdministratorUser(User):
         self.db.update("CALL sp_updateUser({},'{}','{}','{}','{}','{}')".format(idUser, firsName,lastName,email,nickName, password));    
     
     def getJournalActions(self):
-        actions = self.db.select("SELECT var_action FROM Journal;")
+        actions = self.db.select("SELECT var_action, tim_dueDate FROM Journal;")
         return actions
