@@ -27,7 +27,7 @@ class FloodItView(View):
         self.aux_min = 0
         self.aux_sec = 0
         self.stateTime = True  
-        self.listMoves = movesMatch   
+        self.listMoves = movesMatch          
         self.varGameTime = lastTime 
         self.suc = None   
         self.holDef = 'h' 
@@ -101,20 +101,20 @@ class FloodItView(View):
             self.suc = True
         self.moves.value = 'Movimientos realizados: ' + str(self.moves_taken)         
         if self.moves_taken < self.moves_limit:            
-            if self.all_squares_are_the_same():
-                self.stateMatch=5
+            if self.all_squares_are_the_same():                
                 self.win_text.value = "You win!" 
                 self.stateTime = False
+                self.stateMatch=5
                 self.gEngine.successfulMatch(self.varGameTime, self.stateMatch)
                 self.palette.enabled = False 
                 self.gEngine.setScore(self.moves_taken,1, self.varGameTime) 
                 popUpLoser = self.app.info("Ganaste", "Felicidades, haz ganado")
                 popUpLoser = True
-                if popUpLoser == True:                
-                    self.app.destroy()
+                if popUpLoser == True:                                    
                     self.stateMatch = 5
-                    self.gEngine.successfulMatch(self.varGameTime, self.stateMatch)
-                    self.ReturnBack()     
+                    self.gEngine.successfulMatch(self.varGameTime, self.stateMatch)   
+                    self.app.destroy()                                        
+                    self.ReturnBack()  
         else:            
             self.stateMatch = 5
             self.win_text.value = "You lost :(" 
@@ -126,9 +126,9 @@ class FloodItView(View):
             popUpLoser = True
             if popUpLoser == True:                
                 self.app.destroy()
-                self.stateMatch = 5
-                self.gEngine.successfulMatch(self.varGameTime, self.stateMatch)
-                self.ReturnBack()                 
+                self.stateMatch = 5                
+                self.ReturnBack()  
+                self.gEngine.successfulMatch(self.varGameTime, self.stateMatch)               
                            
     
     #mediante la siguiente función se obtinene el tablero inicial de la partida.
@@ -200,7 +200,7 @@ class FloodItView(View):
             self.aux_hour = int(re.split(':',self.varGameTime)[0])                
             self.aux_min = int(re.split(':',self.varGameTime)[1])                
             self.secondAux = re.split(':',self.varGameTime)[2]
-            self.second = int(re.split('\.',self.secondAux)[0])                
+            self.second = int(re.split('\.',self.secondAux)[0])                         
             self.restart = False        
     
        
@@ -269,13 +269,15 @@ class FloodItView(View):
         if self.popUpDefeat == True:                                                 
             self.popUpNewBoard = self.app.yesno("Nuevo Juego", "¿Deseas iniciar un nuevo juego con el mismo tablero inicial de esta partida?")
             if self.popUpNewBoard == True:
-                self.stateMatch = 4                
-                self.newGame()   
+                self.stateMatch = 4  
+                self.gEngine.updateStateMatch(self.varGameTime, self.stateTime)              
+                self.newGame()                 
                 #self.stateMatch = 2                     
             else: 
-                self.stateMatch = 4                
-                self.app.destroy()                
-                self.ReturnBack()
+                self.stateMatch = 4                                   
+                self.gEngine.updateStateMatch(self.varGameTime, self.stateTime)             
+                self.app.destroy()
+                self.ReturnBack()               
                 #self.stateMatch = 2 
         else:
             self.stateTime = True
@@ -308,14 +310,16 @@ class FloodItView(View):
         
                        
     #mediante esta función se actualiza el estado de la partida a estado "en espera".    
-    def matchOnHold(self):  
-        #print("timer: {}".format(self.timer.value))                                          
-        self.app.when_closed = self.gEngine.updateStateMatch(self.varGameTime,2)            
-        print(self.varGameTime)                   
-    
-    def validateRestart(self):       
-        if self.restart == True:  
+    def matchOnHold(self):         
+        if self.stateMatch == 2:
+            self.app.when_closed = self.gEngine.updateStateMatch(self.varGameTime,self.stateMatch)
+               
+    def validateRestart(self):                  
+        if self.restart == True:     
+            self.gEngine.updateStateMatch(self.varGameTime,1)                     
             self.moves_taken = len(self.listMoves)-1
+            if self.moves_taken == 0:
+                self.Rewind.enabled = False
             print("moves_taken: {}".format(self.moves_taken))
             print("tamaño list: {}".format(len(self.listMoves)))
             self.moves.value = 'Movimientos realizados: ' + str(self.moves_taken)  

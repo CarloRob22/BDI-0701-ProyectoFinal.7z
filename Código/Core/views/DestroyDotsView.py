@@ -85,6 +85,7 @@ class DestroyDotsView(View):
                     self.stateTime = False 
                     self.app.destroy()
                     self.ReturnBack()
+                    self.stateMatch=5
                     self.gEngine.successfulMatch(self.varGameTime, self.stateMatch)
             else:
                 self.board.after(speed, self.add_dot)
@@ -172,7 +173,8 @@ class DestroyDotsView(View):
         self.popUpDefeat = self.app.yesno("Defeat", "¿Desea abandonar la partida?") 
         self.stateTime = False                                                            
         if self.popUpDefeat == True:                                                                                                    
-            self.stateMatch = 4                
+            self.stateMatch = 4 
+            self.gEngine.updateStateMatch(self.varGameTime, self.stateTime)                 
             self.app.destroy()                
             self.ReturnBack()
         else:
@@ -189,7 +191,9 @@ class DestroyDotsView(View):
     #mediante esta función se actualiza el estado de la partida a estado "en espera".    
     def matchOnHold(self):       
             self.addMoveMatch()
-            self.app.when_closed = self.gEngine.updateStateMatch(self.varGameTime,self.stateMatch)                
+            if self.stateMatch == 2:
+                self.app.when_closed = self.gEngine.updateStateMatch(self.varGameTime,self.stateMatch)
+            
         
          
     def addMoveMatch(self):
