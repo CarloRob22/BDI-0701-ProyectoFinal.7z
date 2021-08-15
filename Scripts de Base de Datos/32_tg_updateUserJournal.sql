@@ -13,10 +13,12 @@ BEGIN
         new.var_nickname INTO nickname
     FROM 
         User
-    ;
+    WHERE
+        big_id = new.big_id     
+    ;    
 
     INSERT INTO Journal(var_action, big_user_FK) VALUES
-        (CONCAT("El administrador actualizó datos del usuario ", nickname), new.big_id)
+        (CONCAT("El administrador actualizó datos del usuario ", nickname), 1)
     ;
 END $$
 

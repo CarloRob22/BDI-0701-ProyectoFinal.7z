@@ -8,7 +8,7 @@ import json
 
 
 class StartPlayerView(View):
-    def __init__(self, gEngine, title="view", width=35, height=65, layout="auto", bg="gray92", visible=True):
+    def __init__(self, gEngine, title="view", width=50, height=80, layout="auto", bg="gray92", visible=True):
         super().__init__(title, width, height, layout, bg, visible)
         self.gEngine = gEngine
         self.returning = 0

@@ -12,7 +12,7 @@ from .ScoreView import ScoreView
 from .JournalView import JournalView
 
 class StartAdminView(View):    
-    def __init__(self, gEngine, title="view", width=40, height=70, layout="auto", bg="white", visible=True):
+    def __init__(self, gEngine, title="view", width=50, height=80, layout="auto", bg="white", visible=True):
         super().__init__(title, width, height, layout, bg, visible)        
         self.gEngine = gEngine
         self.returning = 1 

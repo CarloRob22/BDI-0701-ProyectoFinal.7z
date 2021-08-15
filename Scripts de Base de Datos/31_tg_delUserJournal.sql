@@ -4,7 +4,7 @@ DROP TRIGGER IF EXISTS tg_delUserJournal;
 
 DELIMITER $$
 CREATE TRIGGER tg_delUserJournal
-    AFTER DELETE
+    BEFORE DELETE
     ON User FOR EACH ROW
 BEGIN
     DECLARE nickname VARCHAR(30);    
@@ -18,7 +18,7 @@ BEGIN
     ;    
 
     INSERT INTO Journal(var_action, big_user_FK) VALUES
-        (CONCAT("El administrador eliminó al usuario jugador ", nickname), old.big_id)
+        (CONCAT("El administrador eliminó al usuario jugador ", nickname), 1)
     ;
 END $$
 

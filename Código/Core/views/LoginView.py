@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+"""
+    @author  fernando.murillo@unah.hn, mruizq@unah.hn, roberto.duran@unah.com
+    @version 0.1.0
+    @date 2021/08/10
+"""
+
+# --------------Imports----------------
 from guizero import *
 from .View import View
 from .StartPlayerView import StartPlayerView
@@ -5,11 +13,10 @@ from .StartAdminView import StartAdminView
 import json, re
 
 class LoginView(View):   
-    def __init__(self, gEngine, title="view", width=40, height=60, layout="auto", bg="gray92", visible=True):
+    def __init__(self, gEngine, title="view", width=60, height=80, layout="auto", bg="gray92", visible=True):
         super().__init__(title, width, height, layout, bg, visible)
         self.gEngine = gEngine
-
-
+        
         allBox = Box(self.app, layout="auto", width=self.pixel_width, height=self.pixel_height, border=1)
         allBox.tk.pack()
         allBox.tk.pack_propagate(0)
@@ -109,21 +116,23 @@ class LoginView(View):
         AutorsButton.tk.pack_propagate(0)
         AutorsButton.bg = "dark slate blue"
         AutorsButton.text_color = "white"
-        #FINAL SECCION DE AUTORES      
-        
+        #FINAL SECCION DE AUTORES             
         
         self.window = Window(self.app, title = "Autores", height=150, width=840)
         self.window.hide()
     
+    #Mediante el siguiente método se muestra el formulario de autores del juego.
     def open_window(self):
         self.window.show()
         Text(self.window, text="")
         windowtext = Text(self.window, text="Agradecimientos a la pagina https://lawsie.github.io/guizero/")
         windowButton = PushButton(self.window, text="Close",command=self.close_window)
 
+    #Mediante el siguiente método se cierra el formulario de autores del juego.
     def close_window(self):
         self.window.hide()
 
+    #Mediante el siguiente método se hace el proceso de autenticación, se verfica la existencia del usuario en base de datos.    
     def openUser(self):
         user = self.gEngine.authUser(re.sub("\s+$", "", self.formInput1.value), re.sub("\s+$", "", self.formInput2.value) )
         if user is not None:            
@@ -134,11 +143,14 @@ class LoginView(View):
         else:
             print("Credenciales no validas")
         
-
+    #Mediante el siguiente método se muestra la interfaz principal del usuario jugador.
     def openPlayer(self):
         self.app.destroy()
         viewLogin = StartPlayerView(self.gEngine,"Player Start Menu")
 
+    #mediante el siguiente método se muestra la interfaz principal del usuario administrador.
     def openAdmin(self):
         self.app.destroy()
         viewLogin = StartAdminView(self.gEngine, "Admin Start Menu")
+        
+    

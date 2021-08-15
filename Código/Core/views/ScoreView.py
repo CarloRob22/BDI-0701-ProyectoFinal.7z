@@ -1,6 +1,13 @@
+# -*- coding: utf-8 -*-
+"""
+    @author  mruizq@unah.hn, roberto.duran@unah.com
+    @version 0.1.0
+    @date 2021/08/13
+"""
+
+# --------------Imports----------------
 from guizero import *
 from .View import View
-
 
 class ScoreView(View):
     def __init__(self, gEngine, title="view", width=70, height=70, layout="auto", bg="gray92", visible=True):
@@ -77,14 +84,12 @@ class ScoreView(View):
         textCol5RowTableBox1le = Text(col5RowTableBox1, text="Fecha", size=14, color="white")
         textCol5RowTableBox1le.tk.place(x=col5RowTableBox1.tk.winfo_reqwidth()/2, y=col5RowTableBox1.tk.winfo_reqheight()/2, anchor="center")
                 #FINAL COLUMNA 6 FILA 1 DE LA TABLA
-        #FINAL FILA 1 DE LA TABLA
-            
+        #FINAL FILA 1 DE LA TABLA            
                
         scores = self.gEngine.getUserScores()
         
         
         if isinstance(scores, dict):
-
             counter = 1
 
             for score in scores.values():
@@ -156,6 +161,7 @@ class ScoreView(View):
         returnButton.bg = "RoyalBlue4"
         returnButton.text_color = "white"
 
+    #Mediane el siguiente método se retorna el usuario al menú principal de usuario.
     def returnMenu(self):
             if self.gEngine.user.role == 1:
                 from .StartPlayerView import StartPlayerView

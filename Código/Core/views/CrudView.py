@@ -1,7 +1,11 @@
-# ------------------------------
-# Imports
-# ------------------------------
+# -*- coding: utf-8 -*-
+"""
+    @author  mruizq@unah.hn, roberto.duran@unah.hn
+    @version 0.1.0
+    @date 2021/08/13
+"""
 
+# --------------Imports----------------
 from guizero import *
 from .View import View
 from .DestroyDotsView import DestroyDotsView
@@ -10,7 +14,7 @@ import re
 import json
 
 class CrudView(View):    
-    def __init__(self, gEngine, title="view", width=75, height=70, layout="auto", bg="gray92", visible=True):
+    def __init__(self, gEngine, title="view", width=85, height=82, layout="auto", bg="gray92", visible=True):
         super().__init__(title, width, height, layout, bg, visible)        
         self.gEngine = gEngine
         self.returning = 1         
@@ -20,11 +24,11 @@ class CrudView(View):
         allBox.tk.pack_propagate(0)
 
         #INICIO SECCION DE FORMULARIO PARA AGREGAR JUGADOR        
-        allBoxCol1 = Box(allBox, layout="auto", align="left", border=1)
+        allBoxCol1 = Box(allBox, layout="auto", align="left")
         allBoxCol1.resize((allBox.tk.winfo_reqwidth()*50)/100, allBox.tk.winfo_reqheight())
         allBoxCol1.tk.pack_propagate(0)
 
-            #INICIO TITULO DE SECCION DE FORMULARIO PARA AGREGAR JUGADOR
+        #INICIO TITULO DE SECCION DE FORMULARIO PARA AGREGAR JUGADOR
         allBoxCol1Row1 = Box(allBoxCol1, layout="auto")
         allBoxCol1Row1.tk.pack()
         allBoxCol1Row1.resize(allBoxCol1.tk.winfo_reqwidth(), (allBoxCol1.tk.winfo_reqheight()*10)/100)
@@ -32,9 +36,9 @@ class CrudView(View):
         allBoxCol1Row1.bg = "forest green"
         title = Text(allBoxCol1Row1, text="Datos del jugador", size=16, color="white")
         title.tk.place(x=allBoxCol1Row1.tk.winfo_reqwidth()/2, y=allBoxCol1Row1.tk.winfo_reqheight()/2, anchor="center")
-            #FINAL TITULO DE SECCION DE FORMULARIO PARA AGREGAR JUGADOR
+        #FINAL TITULO DE SECCION DE FORMULARIO PARA AGREGAR JUGADOR
 
-            #INICIO FORMULARIO PARA AGREGAR JUGADOR
+        #INICIO FORMULARIO PARA AGREGAR JUGADOR
         allBoxCol1Row2 = Box(allBoxCol1, layout="auto")
         allBoxCol1Row2.tk.pack()
         allBoxCol1Row2.resize(allBoxCol1.tk.winfo_reqwidth(), (allBoxCol1.tk.winfo_reqheight()*90)/100)
@@ -56,7 +60,7 @@ class CrudView(View):
         allBoxInputCol1Row2Row1.resize(allBoxCol1Row2Row1.tk.winfo_reqwidth(), (allBoxCol1Row2Row1.tk.winfo_reqheight()*60)/100)
         allBoxInputCol1Row2Row1.tk.pack_propagate(0)
 
-        self.FirstNInput = TextBox(allBoxInputCol1Row2Row1, width=70, height=2,  multiline=True)
+        self.FirstNInput = TextBox(allBoxInputCol1Row2Row1, width=55, height=2,  multiline=True)
         self.FirstNInput.tk.place(x=allBoxInputCol1Row2Row1.tk.winfo_reqwidth()/2, y=allBoxInputCol1Row2Row1.tk.winfo_reqheight()/2, anchor="center")
         self.FirstNInput.bg = "white"
 
@@ -76,7 +80,7 @@ class CrudView(View):
         allBoxInputCol1Row2Row2.resize(allBoxCol1Row2Row2.tk.winfo_reqwidth(), (allBoxCol1Row2Row2.tk.winfo_reqheight()*60)/100)
         allBoxInputCol1Row2Row2.tk.pack_propagate(0)
 
-        self.LastNInput = TextBox(allBoxInputCol1Row2Row2, width=70, height=2,  multiline=True)
+        self.LastNInput = TextBox(allBoxInputCol1Row2Row2, width=55, height=2,  multiline=True)
         self.LastNInput.tk.place(x=allBoxInputCol1Row2Row2.tk.winfo_reqwidth()/2, y=allBoxInputCol1Row2Row2.tk.winfo_reqheight()/2, anchor="center")
         self.LastNInput.bg = "white"
 
@@ -96,7 +100,7 @@ class CrudView(View):
         allBoxInputCol1Row2Row3.resize(allBoxCol1Row2Row3.tk.winfo_reqwidth(), (allBoxCol1Row2Row3.tk.winfo_reqheight()*60)/100)
         allBoxInputCol1Row2Row3.tk.pack_propagate(0)
 
-        self.EmailInput = TextBox(allBoxInputCol1Row2Row3, width=70, height=2,  multiline=True)
+        self.EmailInput = TextBox(allBoxInputCol1Row2Row3, width=55, height=2,  multiline=True)
         self.EmailInput.tk.place(x=allBoxInputCol1Row2Row3.tk.winfo_reqwidth()/2, y=allBoxInputCol1Row2Row3.tk.winfo_reqheight()/2, anchor="center")
         self.EmailInput.bg = "white"
 
@@ -116,7 +120,7 @@ class CrudView(View):
         allBoxInputCol1Row2Row4.resize(allBoxCol1Row2Row4.tk.winfo_reqwidth(), (allBoxCol1Row2Row4.tk.winfo_reqheight()*60)/100)
         allBoxInputCol1Row2Row4.tk.pack_propagate(0)
 
-        self.NicknameInput = TextBox(allBoxInputCol1Row2Row4, width=70, height=2,  multiline=True)
+        self.NicknameInput = TextBox(allBoxInputCol1Row2Row4, width=55, height=2,  multiline=True)
         self.NicknameInput.tk.place(x=allBoxInputCol1Row2Row4.tk.winfo_reqwidth()/2, y=allBoxInputCol1Row2Row4.tk.winfo_reqheight()/2, anchor="center")
         self.NicknameInput.bg = "white"
 
@@ -136,7 +140,7 @@ class CrudView(View):
         allBoxInputCol1Row2Row5.resize(allBoxCol1Row2Row5.tk.winfo_reqwidth(), (allBoxCol1Row2Row5.tk.winfo_reqheight()*60)/100)
         allBoxInputCol1Row2Row5.tk.pack_propagate(0)
 
-        self.PasswordInput = TextBox(allBoxInputCol1Row2Row5, width=70, height=2,  multiline=True)
+        self.PasswordInput = TextBox(allBoxInputCol1Row2Row5, width=55, height=2,  multiline=True)
         self.PasswordInput.tk.place(x=allBoxInputCol1Row2Row5.tk.winfo_reqwidth()/2, y=allBoxInputCol1Row2Row5.tk.winfo_reqheight()/2, anchor="center")
         self.PasswordInput.bg = "white"
 
@@ -175,7 +179,7 @@ class CrudView(View):
         allBoxCol2.resize((allBox.tk.winfo_reqwidth()*50)/100, allBox.tk.winfo_reqheight())
         allBoxCol2.tk.pack_propagate(0)
 
-            #INICIO TITULO DE SECCION DE FORMULARIO PARA ELIMINAR O ACTUALIZAR JUGADOR
+        #INICIO TITULO DE SECCION DE FORMULARIO PARA ELIMINAR O ACTUALIZAR JUGADOR
         allBoxCol2Row1 = Box(allBoxCol2, layout="auto")
         allBoxCol2Row1.tk.pack()
         allBoxCol2Row1.tk.pack_propagate(0)
@@ -223,30 +227,26 @@ class CrudView(View):
         self.UpdateBotton.tk.pack_propagate(0)
         self.UpdateBotton.bg = "tan1"
         self.UpdateBotton.text_color = "white"
-
         self.fillListUser()
-
-
-
-            #FINAL TITULO DE SECCION DE FORMULARIO PARA ELIMINAR O ACTUALIZAR JUGADOR
+        #FINAL TITULO DE SECCION DE FORMULARIO PARA ELIMINAR O ACTUALIZAR JUGADOR
              
         
-        
-
-        #metodo utilizado para llenar lista de usuarios registrados.
-    
+    #Método utilizado para llenar lista de usuarios registrados en el sistema.    
     def fillListUser(self):
         self.dataUser = self.gEngine.getAllDataUser()
         for i in self.dataUser:
             self.Listbox.insert(i[0],"{} - {} {} - {}".format(i[0],i[1],i[2],i[3]))            
         
+    """Mediante este métodoo se obtiene la propiedad value de el listbox de información de usuarios
+    asi mismi, de esta se obtiene el id del usuario seleccionado mediante expresiones regulares."""       
     def onClicItem(self):                
         self.select = re.split(' ', self.Listbox.value)[0]          
         self.fillTextboxUser(self.select)
         self.DeleteBotton.enabled = True
         self.UpdateBotton.enabled = True
         self.SubmitBotton.enabled = True
-
+    
+    #Mediante este método se elimina el usuario seleccionado de la lista de usuarios.
     def deleteItem(self):
         self.gEngine.deleteUser(self.select)
         self.Listbox.clear()
@@ -259,7 +259,7 @@ class CrudView(View):
         self.DeleteBotton.enabled = False
         self.UpdateBotton.enabled = False
                 
-    
+    #Mediante el siguiente método se muestran los datos del usuario seleccionado en el formulario.
     def fillTextboxUser(self, idUser):        
         data = self.gEngine.fillTextboxUser(idUser)
         self.userData= json.loads(data[0][0])
@@ -270,6 +270,7 @@ class CrudView(View):
         self.NicknameInput.value = self.userData["nickName"]
         self.PasswordInput.value = self.userData["password"]
         
+    #Mediante el siguiente méodo se obtienen los datos ingresados en el formulio para posteriormente ingresarlos en base de datos.
     def insertUser(self):        
         firsName = re.sub("\s+$", "", self.FirstNInput.value)
         lastName = re.sub("\s+$", "", self.LastNInput.value)
@@ -293,7 +294,9 @@ class CrudView(View):
         else:
             self.app.info("Campos vacios", "debe llenar todos los campos")
             
-        
+            
+    """Mediante el siguiente método se obtienen los datos actualizados del usuario para 
+       posteriormente actualizarlos en base de datos."""
     def updateDataUser(self):
         idUser = self.select
         firsName = re.sub("\s+$", "", self.FirstNInput.value)
@@ -310,21 +313,24 @@ class CrudView(View):
             print("correo o apodo ya registrados")
             self.app.info("Datos no validos", "Correo o apodo ya registrados")
 
+
+    """Mediante el siguiente método se valida que no existan en base de datos el nuevo correo o 
+       nombre de usuario que se pretende ingresar en base de datos"""
     def verifyExistence(self,email, nickName,idUser=None):
         self.dataUser = self.gEngine.getAllDataUser()
         for i in self.dataUser:            
             if idUser != None:
-                idUser = int(idUser)
-                
+                idUser = int(idUser)                
             if idUser is not int(i[0]): 
-                print("{},{}".format(i[0],idUser))
-                print("{},{}".format(i[3],email))
-                print("{},{}".format(i[4],nickName))
+                #print("{},{}".format(i[0],idUser))
+                #print("{},{}".format(i[3],email))
+                #print("{},{}".format(i[4],nickName))
                 if i[3] == email or i[4]==nickName:                                    
-                    return False
-                            
+                    return False                            
         return True  
 
+    #Mediante el siguiente método se regresa a la interfaz principal de administrador.
+    #Este método se llama desde el boton "Regresar".
     def ReturnAdmin(self):
         from .StartAdminView import StartAdminView
         self.app.destroy()

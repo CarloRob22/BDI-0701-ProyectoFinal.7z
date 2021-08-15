@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+"""
+    @author  roberto.duran@unah.hn, mruizq@unah.hn
+    @version 0.1.0
+    @date 2021/08/06
+"""
+
+# --------------Imports----------------
 from guizero import *
 from .View import View
 from random import randint
@@ -6,7 +14,7 @@ import json
 import re
 
 class DestroyDotsView(View):   
-    def __init__(self, gEngine, returning, restart = None, lastTime="", lastMoves=[], title="Destroy de dots", width=45, height=85, layout="auto", bg="white", visible=True):
+    def __init__(self, gEngine, returning, restart = None, lastTime="", lastMoves=[], title="Destroy de dots", width=50, height=90, layout="auto", bg="white", visible=True):
         super().__init__(title,  width, height, layout, bg, visible)
         self.gEngine = gEngine
         self.returning = returning
@@ -32,14 +40,14 @@ class DestroyDotsView(View):
         allBoxRow1 = Box(allBox, layout="auto")
         allBoxRow1.tk.pack()
         allBoxRow1.tk.pack_propagate(0)
-        allBoxRow1.resize(allBox.tk.winfo_reqwidth(), (allBox.tk.winfo_reqheight()*10)/100)
+        allBoxRow1.resize(allBox.tk.winfo_reqwidth(), (allBox.tk.winfo_reqheight()*5)/100)
         allBoxRow1.bg = "IndianRed4"
         title = Text(allBoxRow1, text="Destroy The Dots", size=18, color="white")
         title.tk.place(x=allBoxRow1.tk.winfo_reqwidth()/2, y=allBoxRow1.tk.winfo_reqheight()/2, anchor="center")
         #FINAL SECCION DEL TITULO
 
         allBoxRow2 = Box(allBox, layout="auto")
-        allBoxRow2.resize(allBox.tk.winfo_reqwidth(), (allBox.tk.winfo_reqheight()*20)/100)
+        allBoxRow2.resize(allBox.tk.winfo_reqwidth(), (allBox.tk.winfo_reqheight()*10)/100)
         allBoxRow2.tk.pack_propagate(0)
 
         allBoxRow2Col1 = Box(allBoxRow2, layout="auto", align="left")
@@ -70,7 +78,7 @@ class DestroyDotsView(View):
         self.instructions.tk.place(x=allBoxRow4.tk.winfo_reqwidth()/2, y=allBoxRow4.tk.winfo_reqheight()/2, anchor="center")
 
         self.allBoxRow5 = Box(allBox, layout="auto")
-        self.allBoxRow5.resize(allBox.tk.winfo_reqwidth(), (allBox.tk.winfo_reqheight()*50)/100)
+        self.allBoxRow5.resize(allBox.tk.winfo_reqwidth(), (allBox.tk.winfo_reqheight()*65)/100)
         self.allBoxRow5.tk.pack_propagate(0)
 
         self.board = Waffle(self.allBoxRow5, width=self.GRID_SIZE, height=self.GRID_SIZE, command=self.destroy_dot, dim = 80)              

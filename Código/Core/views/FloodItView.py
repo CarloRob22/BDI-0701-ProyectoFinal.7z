@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+"""
+    @author  mruizq@unah.hn, roberto.duran@unah.hn
+    @version 0.1.0
+    @date 2021/08/13
+"""
+
+# --------------Imports----------------
 from enum import IntFlag
 from genericpath import getatime
 from tkinter.constants import TOP
@@ -9,7 +17,7 @@ import json
 import re
 
 class FloodItView(View):   
-    def __init__(self, gEngine, returning, initBoard=None, restart = None, lastTime="", movesMatch = [], title="Flood it!",  width=60, height=60, layout="auto", bg="white", visible=True):
+    def __init__(self, gEngine, returning, initBoard=None, restart = None, lastTime="", movesMatch = [], title="Flood it!",  width=60, height=80, layout="auto", bg="white", visible=True):
         super().__init__(title, width, height, layout, bg, visible)
         self.gEngine = gEngine        
         self.returning = returning   

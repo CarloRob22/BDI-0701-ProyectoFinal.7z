@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+"""
+    @author  mruizq@unah.hn
+    @version 0.1.0
+    @date 2021/08/13
+"""
+
+# --------------Imports----------------
 from tkinter import Button, Listbox
 from guizero import *
 from .View import View
@@ -56,6 +64,8 @@ class JournalView(View):
         returnButton.tk.pack_propagate(0)
         returnButton.bg = "RoyalBlue4"
 
+    #Mediante el siguiente método el usuario regresa a la interfaz pricipal del usuario administrador.
+    #El llamado de este se realiza desde el botón "Regresar"
     def ReturnAdmin(self):
         from .StartAdminView import StartAdminView
         self.app.destroy()
