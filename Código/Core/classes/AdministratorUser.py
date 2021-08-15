@@ -9,8 +9,7 @@ class AdministratorUser(User):
         return self.id
     
     def getAllDataUser(self):
-        data = self.db.select("select * from vm_getAllDataUser;")
-        print(data)
+        data = self.db.select("select * from vm_getAllDataUser;")        
         return data
     
     def deleteUser(self, idUser):

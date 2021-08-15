@@ -13,6 +13,8 @@ BEGIN
         new.var_nickname INTO nickname
     FROM 
         User
+    WHERE
+        big_id = new.big_id
     ;
 
     INSERT INTO Journal(var_action, big_user_FK) VALUES

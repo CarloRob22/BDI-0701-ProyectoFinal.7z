@@ -10,11 +10,13 @@ BEGIN
     DECLARE nickname VARCHAR(30);    
 
     SELECT 
-        old.var_nickname INTO nickname
+        var_nickname INTO nickname
     FROM 
         User
-    ;
-    
+    WHERE
+        big_id = old.big_id     
+    ;    
+
     INSERT INTO Journal(var_action, big_user_FK) VALUES
         (CONCAT("El administrador eliminó al usuario jugador ", nickname), old.big_id)
     ;
