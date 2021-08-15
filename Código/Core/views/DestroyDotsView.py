@@ -6,7 +6,7 @@ import json
 import re
 
 class DestroyDotsView(View):   
-    def __init__(self, gEngine, returning, restart = None, lastTime="", lastMoves=[], title="Destroy de dots", width=60, height=60, layout="auto", bg="white", visible=True):
+    def __init__(self, gEngine, returning, restart = None, lastTime="", lastMoves=[], title="Destroy de dots", width=45, height=85, layout="auto", bg="white", visible=True):
         super().__init__(title,  width, height, layout, bg, visible)
         self.gEngine = gEngine
         self.returning = returning
@@ -24,17 +24,64 @@ class DestroyDotsView(View):
         self.listMoves = lastMoves
         self.stateMatch = 2 # se utiliza para llevar de manera globar el estado de la partida, su valor por defecto es necesario que sea 2.        
         
-        self.BoxWaff = Box(self.app, layout="auto", align="left")
-        self.instructions = Text(self.BoxWaff, text="Click the dots to destroy them")
-        self.board = Waffle(self.BoxWaff, width=self.GRID_SIZE, height=self.GRID_SIZE, command=self.destroy_dot, dim = 80)                
+        allBox = Box(self.app, layout="auto", width=self.pixel_width, height=self.pixel_height, border=1)
+        allBox.tk.pack()
+        allBox.tk.pack_propagate(0)
+
+        #INICIO SECCION DEL TITULO        
+        allBoxRow1 = Box(allBox, layout="auto")
+        allBoxRow1.tk.pack()
+        allBoxRow1.tk.pack_propagate(0)
+        allBoxRow1.resize(allBox.tk.winfo_reqwidth(), (allBox.tk.winfo_reqheight()*10)/100)
+        allBoxRow1.bg = "IndianRed4"
+        title = Text(allBoxRow1, text="Destroy The Dots", size=18, color="white")
+        title.tk.place(x=allBoxRow1.tk.winfo_reqwidth()/2, y=allBoxRow1.tk.winfo_reqheight()/2, anchor="center")
+        #FINAL SECCION DEL TITULO
+
+        allBoxRow2 = Box(allBox, layout="auto")
+        allBoxRow2.resize(allBox.tk.winfo_reqwidth(), (allBox.tk.winfo_reqheight()*20)/100)
+        allBoxRow2.tk.pack_propagate(0)
+
+        allBoxRow2Col1 = Box(allBoxRow2, layout="auto", align="left")
+        allBoxRow2Col1.resize((allBoxRow2.tk.winfo_reqwidth()*33.333333333)/100, allBoxRow2.tk.winfo_reqheight())
+        allBoxRow2Col1.tk.pack_propagate(0)
+
+        self.pauseGame = PushButton(allBoxRow2Col1, text="Pausa", command=self.pause, width="fill", height="fill")
+
+        allBoxRow2Col2 = Box(allBoxRow2, layout="auto", align="left")
+        allBoxRow2Col2.resize((allBoxRow2.tk.winfo_reqwidth()*33.333333333)/100, allBoxRow2.tk.winfo_reqheight())
+        allBoxRow2Col2.tk.pack_propagate(0)
+
+        self.Defeat = PushButton(allBoxRow2Col2, text="Declarar derrota", command=self.declareDefeat, width="fill", height="fill")
+
+        allBoxRow2Col3 = Box(allBoxRow2, layout="auto", align="left")
+        allBoxRow2Col3.resize((allBoxRow2.tk.winfo_reqwidth()*33.333333333)/100, allBoxRow2.tk.winfo_reqheight())
+        allBoxRow2Col3.tk.pack_propagate(0)
+        allBoxRow2Col3.bg = "IndianRed4"
+
+        self.timer = Text(allBoxRow2Col3, text="", size=14, color="white")
+        self.timer.tk.place(x=allBoxRow2Col3.tk.winfo_reqwidth()/2, y=allBoxRow2Col3.tk.winfo_reqheight()/2, anchor="center")
+
+        allBoxRow4 = Box(allBox, layout="auto")
+        allBoxRow4.resize(allBox.tk.winfo_reqwidth(), (allBox.tk.winfo_reqheight()*10)/100)
+        allBoxRow4.tk.pack_propagate(0)
+
+        self.instructions = Text(allBoxRow4, text="Presione los puntos para destruirlos", size=14)
+        self.instructions.tk.place(x=allBoxRow4.tk.winfo_reqwidth()/2, y=allBoxRow4.tk.winfo_reqheight()/2, anchor="center")
+
+        self.allBoxRow5 = Box(allBox, layout="auto")
+        self.allBoxRow5.resize(allBox.tk.winfo_reqwidth(), (allBox.tk.winfo_reqheight()*50)/100)
+        self.allBoxRow5.tk.pack_propagate(0)
+
+        self.board = Waffle(self.allBoxRow5, width=self.GRID_SIZE, height=self.GRID_SIZE, command=self.destroy_dot, dim = 80)              
         self.board.after(1000, self.add_dot)
-        self.score_display = Text(self.BoxWaff, text="Your score is " + str(self.score))        
-        self.BoxBotton = Box(self.app, layout="auto", align="left", border=True, width="fill", height="fill")
-        self.BoxBottonL =Box(self.BoxBotton, align="left", width="fill", height="fill")
-        self.pauseGame = PushButton(self.BoxBottonL, text="Pause", command=self.pause, width="fill", height="fill")                       
-        self.Defeat = PushButton(self.BoxBottonL, text="Declare Defeat", command=self.declareDefeat, width="fill", height="fill")
-        self.BoxBottonR =Box(self.BoxBotton, align="left", width="fill", height="fill")    
-        self.timer = Text(self.BoxBottonR, text="")
+
+        allBoxRow6 = Box(allBox, layout="auto")
+        allBoxRow6.resize(allBox.tk.winfo_reqwidth(), (allBox.tk.winfo_reqheight()*10)/100)
+        allBoxRow6.tk.pack_propagate(0)
+
+        self.score_display = Text(allBoxRow6, text="Has realizado {} movimientos".format(self.score))
+        self.score_display.tk.place(x=allBoxRow6.tk.winfo_reqwidth()/2, y=allBoxRow6.tk.winfo_reqheight()/2, anchor="center")
         
         self.validateRestart()
         self.fillRestartboard()       
@@ -53,7 +100,7 @@ class DestroyDotsView(View):
                 x, y = randint(0,self.GRID_SIZE-1), randint(0,self.GRID_SIZE-1)
             self.stateTime = True
             self.board[x, y].dotty = True
-            self.board.set_pixel(x, y, "red")
+            self.board.set_pixel(x, y, "IndianRed4")
 
             speed = 2000
 
@@ -68,12 +115,12 @@ class DestroyDotsView(View):
 
             for x in range(self.GRID_SIZE):
                 for y in range(self.GRID_SIZE):
-                    if self.board[x,y].color != "red":
+                    if self.board[x,y].color != "IndianRed4":
                         all_red = False
             if all_red:
                 self.stateMatch=5
                 self.gEngine.updateStateMatch(self.varGameTime, self.stateMatch)
-                self.score_display.value = "You lost! Score: " + str(self.score)
+                self.score_display.value = "Perdistes! Movimientos: " + str(self.score)
                 self.stateTime = False 
                 self.board.disable()
                 self.gEngine.setScore(self.score,2, self.varGameTime)
@@ -93,7 +140,7 @@ class DestroyDotsView(View):
             self.board[x,y].dotty = False
             self.board.set_pixel(x, y, "white")
             self.score += 1
-            self.score_display.value = "Your score is " + str(self.score)
+            self.score_display.value = "Has realizado {} movimientos".format(self.score)
         self.lastMove()
         self.addMoveMatch()
     
@@ -131,17 +178,18 @@ class DestroyDotsView(View):
        Este evento es controlado mediante la variable global de tipo boleana self.stateTime"""
     def pause(self):
         if self.stateTime:  
-            self.board.visible = False   
+            self.board.hide()  
             self.gEngine.updateStateMatch(self.varGameTime,3)
             self.pauseGame.text = "Continue"    
             self.stateTime = False            
         else:
-            self.board.visible = True
+            self.board.show() 
             self.gEngine.updateStateMatch(self.varGameTime,1)
             self.stateTime = True                        
             self.pauseGame.text =  "Pause"
             self.gameTime()
             self.add_dot()
+            
             
     """Mediante el siguiente método se regresa a la interfaz inicial de usuario cuando termina exitosamente o declara 
        como derrota un juego"""
@@ -199,12 +247,12 @@ class DestroyDotsView(View):
             lastmove = self.listMoves[len(self.listMoves)-1]
             for x in range(self.GRID_SIZE):
                 for y in range(self.GRID_SIZE):
-                    if lastmove[y][x] == "red":
-                        self.board.set_pixel(x, y, "red")
+                    if lastmove[y][x] == "IndianRed4":
+                        self.board.set_pixel(x, y, "IndianRed4")
                         self.board[x, y].dotty = True
                         
     #Metidante este método se envia al jugador a la interfaz de tablero personal de puntuaciones.
     def ReturnBackScore(self):
         from .ScoreView import ScoreView                              
-        destroyDots = ScoreView(self.gEngine,"Personal Score Table")        
+        destroyDots = ScoreView(self.gEngine,"Tablero de puntajes personal")        
      
