@@ -93,8 +93,7 @@ class StartAdminView(View):
     #Mediante la siguiente función se inicia el juego Floodit cuando el usuario da click en el boton "Jugar Flood It".
     def startFloodit(self): 
         check = self.gEngine.checkStateMatch()        
-        if check != None:
-            print("check: {}".format(check["gameStateId"]))
+        if check != None:           
             if check["gameStateId"] != 2:                        
                 self.gEngine.startMatch(1)               
                 self.app.destroy()                 
@@ -111,8 +110,7 @@ class StartAdminView(View):
     #Mediante la siguiente función se inicia el juego Destroy The Dots cuando el usuario da click el el boton "Jugar Destroy The Dots".
     def startDestroy(self): 
         check = self.gEngine.checkStateMatch()        
-        if check != None:
-            print("check: {}".format(check["gameStateId"]))
+        if check != None:            
             if check["gameStateId"] != 2:                        
                 self.gEngine.startMatch(2)
                 self.app.destroy()            
@@ -143,9 +141,7 @@ class StartAdminView(View):
                 dataMatch = self.gEngine.restartGameMatchHold()                  
                 lastTime = str(dataMatch[0])
                 movesMatch = dataMatch[1]
-                idGame = dataMatch[2]                
-                print(len(movesMatch))           
-                print(lastTime)
+                idGame = dataMatch[2]    
                 self.app.destroy()  
                 if idGame == 1:               
                     floodIt = FloodItView(self.gEngine, self.returning, None, True,lastTime,movesMatch,"Flood It")               

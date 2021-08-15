@@ -30,11 +30,11 @@ BEGIN
         big_match_FK;
 
     INSERT INTO Journal(var_action, big_user_FK) VALUES
-        (CONCAT("El usuario ", nickname," realizo un movimiento en una partida del juego ", game, " con un tiempo de ", new.tim_timeMovement), userId)
+        (CONCAT("El usuario ", nickname," realizo un movimiento en ", game, " con un tiempo de ", new.tim_timeMovement), userId)
     ;
 
     INSERT INTO Journal(var_action, big_user_FK) VALUES
-        (CONCAT("El usuario ", nickname," lleva un total de ", movementCount," movimientos en el juego ", game), userId)
+        (CONCAT("El usuario ", nickname," lleva un total de ", movementCount - 1," movimientos en el juego ", game), userId)
     ;
 END $$
 

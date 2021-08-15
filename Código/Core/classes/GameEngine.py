@@ -19,10 +19,7 @@ class MyGameEngine:
         self.user.updateStateMatch(lastTime, gameState)   
     
     def checkStateMatch(self):               
-        return self.user.checkStateMatch(self.user.getIdUser())
-    
-    def successfulMatch(self, lastTime, gamestate):
-        self.user.uppSuccessfulMatch(lastTime, gamestate)
+        return self.user.checkStateMatch(self.user.getIdUser())  
         
     def addMovementMatch(self, time, move):
         self.user.addMovementMatch(time,move)

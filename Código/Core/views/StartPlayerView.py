@@ -51,8 +51,7 @@ class StartPlayerView(View):
 
     def newFloodIt(self):            
         check = self.gEngine.checkStateMatch()        
-        if check != None:
-            print("check: {}".format(check["gameStateId"]))
+        if check != None:            
             if check["gameStateId"] != 2:                        
                 self.gEngine.startMatch(1)               
                 self.app.destroy()                 
@@ -68,8 +67,7 @@ class StartPlayerView(View):
         
     def newDestroyDots(self):
         check = self.gEngine.checkStateMatch()        
-        if check != None:
-            print("check: {}".format(check["gameStateId"]))
+        if check != None:            
             if check["gameStateId"] != 2:                        
                 self.gEngine.startMatch(2)
                 self.app.destroy()            
@@ -95,9 +93,7 @@ class StartPlayerView(View):
                 dataMatch = self.gEngine.restartGameMatchHold()                  
                 lastTime = str(dataMatch[0])
                 movesMatch = dataMatch[1]
-                idGame = dataMatch[2]                
-                print(len(movesMatch))           
-                print(lastTime)
+                idGame = dataMatch[2]   
                 self.app.destroy()  
                 if idGame == 1:               
                     floodIt = FloodItView(self.gEngine, self.returning, None, True,lastTime,movesMatch,"Flood It")               

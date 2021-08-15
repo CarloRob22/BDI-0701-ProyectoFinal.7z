@@ -17,8 +17,7 @@ class GameMatch:
         self.db.insert("CALL sp_addMoveMatch('%s','%s', %s, @res);"%(time, move, self.id))
         response = self.db.select("SELECT @res;")
         if response[0][0] is not None:
-            movement = json.loads(response[0][0])
-            print(movement)
+            movement = json.loads(response[0][0])            
         self.movement = Movement(movement["idMove"],movement["time"],movement["move"],movement["idMatch"], self.db)
         self.lastTime = time
     
@@ -29,10 +28,7 @@ class GameMatch:
         return self.movement.getFirstMove(self.id)
         
     def delMovement(self):
-        self.movement.delMovement()
-    
-    def successfulMatch(self, lastTime, gamestate):
-        self.db.update("CALL sp_updateGameMatch(%s,'%s',%s)" % (self.id,lastTime, gamestate))
+        self.movement.delMovement()      
     
     def setScore(self, movesTaken, gameId, time):
         ScoreManager(self.db).set(self.id, gameId, time, movesTaken)

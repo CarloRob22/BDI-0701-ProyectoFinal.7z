@@ -33,11 +33,7 @@ class User:
             dataMatch = json.loads(response[0][0])                   
             return dataMatch
         else:
-            return response[0][0]
-        
-    
-    def uppSuccessfulMatch(self, lastTime, gamestate):
-        self.gameMatch.successfulMatch(lastTime, gamestate)
+            return response[0][0]  
               
         
     def addMovementMatch(self, time, move):

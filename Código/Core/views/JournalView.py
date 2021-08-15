@@ -4,7 +4,7 @@ from .View import View
 
 
 class JournalView(View):
-    def __init__(self, gEngine, title="view", width=1200, height=800, layout="auto", bg="white", visible=True):
+    def __init__(self, gEngine, title="view", width=850, height=600, layout="auto", bg="white", visible=True):
         super().__init__(title, width, height, layout, bg, visible)
         self.gEngine = gEngine
         self.returning = 0
@@ -34,12 +34,12 @@ class JournalView(View):
         for action in actions:
             #print(action)
             list.append("{}:    {}".format(action[1],action[0]))
-            print(action[1])
+           
 
         
 
         listBox = ListBox(allColBox2, scrollbar=True, items=list)
-        listBox.resize((allColBox2.tk.winfo_reqwidth()*85)/100, (allColBox2.tk.winfo_reqheight()*85)/100)
+        listBox.resize((allColBox2.tk.winfo_reqwidth()*90)/100, (allColBox2.tk.winfo_reqheight()*90)/100)
         listBox.tk.place(x=allColBox2.tk.winfo_reqwidth()/2, y=allColBox2.tk.winfo_reqheight()/2, anchor="center")
         listBox.tk.pack_propagate(0)
         listBox.bg = "azure1"

@@ -40,6 +40,11 @@ mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 25_sp_logScoreView.sql
 mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 26_tg_stateMatchJournal.sql
 mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 27_tg_movementJournal.sql
 mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 28_sp_updateJsonMoves.sql
+mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 29_tg_returnMatchJournal.sql
+mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 30_tg_tg_newUserJournal.sql
+mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 31_tg_delUserJournal.sql
+mysql -t -v -u "$MY_DB_USER" -p"$MY_DB_PASS" < 32_tg_updateUserJournal.sql
+
 
 echo ""
 echo "------------------------------------------------------------------------------"
