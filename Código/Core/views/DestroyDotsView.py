@@ -6,7 +6,7 @@ import json
 import re
 
 class DestroyDotsView(View):   
-    def __init__(self, gEngine, returning, restart = None, lastTime="", lastMoves=[], title="Destroy de dots", width=740, height=620, layout="auto", bg="white", visible=True):
+    def __init__(self, gEngine, returning, restart = None, lastTime="", lastMoves=[], title="Destroy de dots", width=60, height=60, layout="auto", bg="white", visible=True):
         super().__init__(title,  width, height, layout, bg, visible)
         self.gEngine = gEngine
         self.returning = returning

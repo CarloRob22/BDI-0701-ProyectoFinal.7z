@@ -8,47 +8,66 @@ import json
 
 
 class StartPlayerView(View):
-    def __init__(self, gEngine, title="view", width=700, height=700, layout="auto", bg="white", visible=True):
+    def __init__(self, gEngine, title="view", width=35, height=65, layout="auto", bg="gray92", visible=True):
         super().__init__(title, width, height, layout, bg, visible)
         self.gEngine = gEngine
         self.returning = 0
+
+        allBox = Box(self.app, layout="auto", width=self.pixel_width, height=self.pixel_height, border=1)
+        allBox.tk.pack()
+        allBox.tk.pack_propagate(0)
         
-        #Estilos para el titulo de la ventana      
-        titleBox = Box(self.app)
-        titleBox.resize(self.width, (15*self.height)/100)
-        title = Text(titleBox, text="Ventana de inicio", height=200, size=20)
+        #INICIO SECCION DE BOTONES DE INTERACCION
+        allBoxRow1 = Box(allBox, layout="auto")
+        allBoxRow1.resize(allBox.tk.winfo_reqwidth(), (allBox.tk.winfo_reqheight()*85)/100)
+        allBoxRow1.tk.pack_propagate(0)
 
-        buttonsBox = Box(self.app)
-        buttonsBox.resize(self.width, (70*self.height)/100)
+        allBoxRow1Row1 = Box(allBoxRow1, layout="auto")
+        allBoxRow1Row1.resize(allBoxRow1.tk.winfo_reqwidth(), (allBoxRow1.tk.winfo_reqheight()*25)/100)
+        allBoxRow1Row1.tk.pack_propagate(0)
 
-        newFloodItBox = Box(buttonsBox)
-        newFloodItBox.resize(self.width, (25*((70*self.height)/100))/100)
-        newFloodItButton = PushButton(newFloodItBox, text="Iniciar juego Flood It", height=4, width=40, command=self.newFloodIt)
+        FloodItButton = PushButton(allBoxRow1Row1, text="Iniciar juego Flood It", width=50, height=5, command=self.newFloodIt)
+        FloodItButton.tk.place(x=allBoxRow1Row1.tk.winfo_reqwidth()/2, y=allBoxRow1Row1.tk.winfo_reqheight()/2, anchor="center")
+        FloodItButton.tk.pack_propagate(0)
+        FloodItButton.bg = '#FBE3B8'
 
-        newDestroyDotsBox = Box(buttonsBox)
-        newDestroyDotsBox.resize(self.width, (25*((70*self.height)/100))/100)
-        newDestroyDotsButton = PushButton(newDestroyDotsBox, text="Iniciar juego Destroy the dots", height=4, width=40, command=self.newDestroyDots)
+        allBoxRow1Row2 = Box(allBoxRow1, layout="auto")
+        allBoxRow1Row2.resize(allBoxRow1.tk.winfo_reqwidth(), (allBoxRow1.tk.winfo_reqheight()*25)/100)
+        allBoxRow1Row2.tk.pack_propagate(0)
 
-        resumeGameBox = Box(buttonsBox)
-        resumeGameBox.resize(self.width, (25*((70*self.height)/100))/100)
-        resumeGameButton = PushButton(resumeGameBox, text="Reanudar Partida", height=4, width=40, command=self.restartGameMatchHold)
+        DestroyDotsButton = PushButton(allBoxRow1Row2, text="Iniciar juego Destroy the Dots", width=50, height=5, command=self.newDestroyDots)
+        DestroyDotsButton.tk.place(x=allBoxRow1Row2.tk.winfo_reqwidth()/2, y=allBoxRow1Row2.tk.winfo_reqheight()/2, anchor="center")
+        DestroyDotsButton.tk.pack_propagate(0)
+        DestroyDotsButton.bg = (79, 168, 187)
 
-        scoreUserBox = Box(buttonsBox)
-        scoreUserBox.resize(self.width, (25*((70*self.height)/100))/100)
-        scoreUserButton = PushButton(scoreUserBox, text="Mostrar tabla de puntuaciones", height=4, width=40, command=self.openScoreTable)
+        allBoxRow1Row3 = Box(allBoxRow1, layout="auto")
+        allBoxRow1Row3.resize(allBoxRow1.tk.winfo_reqwidth(), (allBoxRow1.tk.winfo_reqheight()*25)/100)
+        allBoxRow1Row3.tk.pack_propagate(0)
 
-        sectionExitBox = Box(self.app)
-        sectionExitBox.resize(self.width, (15*self.height)/100)
+        ResumeGameButton = PushButton(allBoxRow1Row3, text="Reanudar Partida", width=50, height=5, command=self.restartGameMatchHold)
+        ResumeGameButton.tk.place(x=allBoxRow1Row3.tk.winfo_reqwidth()/2, y=allBoxRow1Row3.tk.winfo_reqheight()/2, anchor="center")
+        ResumeGameButton.tk.pack_propagate(0)
+        ResumeGameButton.bg = "RoyalBlue2"
+
+        allBoxRow1Row4 = Box(allBoxRow1, layout="auto")
+        allBoxRow1Row4.resize(allBoxRow1.tk.winfo_reqwidth(), (allBoxRow1.tk.winfo_reqheight()*25)/100)
+        allBoxRow1Row4.tk.pack_propagate(0)
+
+        ScoreButton = PushButton(allBoxRow1Row4, text="Mostrar tabla de puntuaciones", width=50, height=5, command=self.openScoreTable)
+        ScoreButton.tk.place(x=allBoxRow1Row4.tk.winfo_reqwidth()/2, y=allBoxRow1Row4.tk.winfo_reqheight()/2, anchor="center")
+        ScoreButton.tk.pack_propagate(0)
+        ScoreButton.bg = "plum"
+
+        #INICIO SECCION DE BOTON DE REGRESO
+        allBoxRow2 = Box(allBox, layout="auto")
+        allBoxRow2.resize(allBox.tk.winfo_reqwidth(), (allBox.tk.winfo_reqheight()*15)/100)
+        allBoxRow2.tk.pack_propagate(0)
+
+        returnButton = PushButton(allBoxRow2, text="Salir", width=30, height=3, command=self.ReturnLogin)
+        returnButton.tk.place(x=allBoxRow2.tk.winfo_reqwidth()/2, y=allBoxRow2.tk.winfo_reqheight()/2, anchor="center")
+        returnButton.tk.pack_propagate(0)
+        returnButton.bg = "indian red"
         
-
-        logoutBox = Box(sectionExitBox)
-        logoutBox.resize((30*self.width)/100, (15*self.height)/100)
-        logoutBox.bg = "red"
-
-        logoutBtn = PushButton(logoutBox, text="Salir de la sesion", width=20, height=2, command=self.app.destroy)
-        logoutBtn.text_color = "white"
-        logoutBtn.text_size = 14 
-
     def newFloodIt(self):            
         check = self.gEngine.checkStateMatch()        
         if check != None:            
@@ -103,9 +122,11 @@ class StartPlayerView(View):
             print("no hay una partidada guardada")
             self.popUpHoldMacht = self.app.info("No hay partida en espera","No tienes una Partida en espera")                
             self.popUpHoldMacht = True
-        
             
-          
+    def ReturnLogin(self):
+        from .LoginView import LoginView
+        self.app.destroy()
+        viewLogin = LoginView(self.gEngine, "Inicio de sesion")
 
 
 

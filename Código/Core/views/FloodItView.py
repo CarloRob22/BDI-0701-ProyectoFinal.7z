@@ -9,7 +9,7 @@ import json
 import re
 
 class FloodItView(View):   
-    def __init__(self, gEngine, returning, initBoard=None, restart = None, lastTime="", movesMatch = [], title="Flood it!",  width=900, height=700, layout="auto", bg="white", visible=True):
+    def __init__(self, gEngine, returning, initBoard=None, restart = None, lastTime="", movesMatch = [], title="Flood it!",  width=60, height=60, layout="auto", bg="white", visible=True):
         super().__init__(title, width, height, layout, bg, visible)
         self.gEngine = gEngine        
         self.returning = returning   

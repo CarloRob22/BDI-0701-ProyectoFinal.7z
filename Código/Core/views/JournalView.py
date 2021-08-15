@@ -4,12 +4,12 @@ from .View import View
 
 
 class JournalView(View):
-    def __init__(self, gEngine, title="view", width=850, height=600, layout="auto", bg="white", visible=True):
+    def __init__(self, gEngine, title="view", width=50, height=60, layout="auto", bg="gray92", visible=True):
         super().__init__(title, width, height, layout, bg, visible)
         self.gEngine = gEngine
         self.returning = 0
 
-        allBox = Box(self.app, layout="auto", width=self.width, height=self.height, border=1)
+        allBox = Box(self.app, layout="auto", width=self.pixel_width, height=self.pixel_height, border=1)
         allBox.tk.pack()
         allBox.tk.pack_propagate(0)
 
@@ -34,7 +34,6 @@ class JournalView(View):
         for action in actions:
             #print(action)
             list.append("{}:    {}".format(action[1],action[0]))
-           
 
         
 
@@ -42,7 +41,7 @@ class JournalView(View):
         listBox.resize((allColBox2.tk.winfo_reqwidth()*90)/100, (allColBox2.tk.winfo_reqheight()*90)/100)
         listBox.tk.place(x=allColBox2.tk.winfo_reqwidth()/2, y=allColBox2.tk.winfo_reqheight()/2, anchor="center")
         listBox.tk.pack_propagate(0)
-        listBox.bg = "azure1"
+        listBox.bg = "white"
         
         #FINAL SECCION DE LA LISTA
         

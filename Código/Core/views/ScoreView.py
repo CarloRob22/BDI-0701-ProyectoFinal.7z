@@ -3,12 +3,12 @@ from .View import View
 
 
 class ScoreView(View):
-    def __init__(self, gEngine, title="view", width=1200, height=900, layout="auto", bg="white", visible=True):
+    def __init__(self, gEngine, title="view", width=70, height=70, layout="auto", bg="gray92", visible=True):
         super().__init__(title, width, height, layout, bg, visible)
         self.gEngine = gEngine
         self.returning = 0
 
-        allBox = Box(self.app, layout="auto", width=self.width, height=self.height, border=1)
+        allBox = Box(self.app, layout="auto", width=self.pixel_width, height=self.pixel_height, border=1)
         allBox.tk.pack()
         allBox.tk.pack_propagate(0)
 
@@ -42,7 +42,7 @@ class ScoreView(View):
         col1RowTableBox1 = Box(rowTableBox1, layout="auto", border=1, align="left")
         col1RowTableBox1.resize((rowTableBox1.tk.winfo_reqwidth()*5)/100, rowTableBox1.tk.winfo_reqheight())
         col1RowTableBox1.tk.pack_propagate(0)
-        textCol1RowTableBox1le = Text(col1RowTableBox1, text="N", size=14)
+        textCol1RowTableBox1le = Text(col1RowTableBox1, text="N", size=14, color="white")
         textCol1RowTableBox1le.tk.place(x=col1RowTableBox1.tk.winfo_reqwidth()/2, y=col1RowTableBox1.tk.winfo_reqheight()/2, anchor="center")
                 #FINAL COLUMNA 1 FILA 1 DE LA TABLA
 
@@ -50,7 +50,7 @@ class ScoreView(View):
         col2RowTableBox1 = Box(rowTableBox1, layout="auto", border=1, align="left")
         col2RowTableBox1.resize((rowTableBox1.tk.winfo_reqwidth()*23.75)/100, rowTableBox1.tk.winfo_reqheight())
         col2RowTableBox1.tk.pack_propagate(0)
-        textCol2RowTableBox1le = Text(col2RowTableBox1, text="Juego", size=14)
+        textCol2RowTableBox1le = Text(col2RowTableBox1, text="Juego", size=14, color="white")
         textCol2RowTableBox1le.tk.place(x=col2RowTableBox1.tk.winfo_reqwidth()/2, y=col2RowTableBox1.tk.winfo_reqheight()/2, anchor="center")
                 #FINAL COLUMNA 2 FILA 1 DE LA TABLA
 
@@ -58,7 +58,7 @@ class ScoreView(View):
         col3RowTableBox1 = Box(rowTableBox1, layout="auto", border=1, align="left")
         col3RowTableBox1.resize((rowTableBox1.tk.winfo_reqwidth()*23.75)/100, rowTableBox1.tk.winfo_reqheight())
         col3RowTableBox1.tk.pack_propagate(0)
-        textCol3RowTableBox1le = Text(col3RowTableBox1, text="Tiempo", size=14)
+        textCol3RowTableBox1le = Text(col3RowTableBox1, text="Tiempo", size=14, color="white")
         textCol3RowTableBox1le.tk.place(x=col3RowTableBox1.tk.winfo_reqwidth()/2, y=col3RowTableBox1.tk.winfo_reqheight()/2, anchor="center")
                 #FINAL COLUMNA 3 FILA 1 DE LA TABLA
 
@@ -66,7 +66,7 @@ class ScoreView(View):
         col4RowTableBox1 = Box(rowTableBox1, layout="auto", border=1, align="left")
         col4RowTableBox1.resize((rowTableBox1.tk.winfo_reqwidth()*23.75)/100, rowTableBox1.tk.winfo_reqheight())
         col4RowTableBox1.tk.pack_propagate(0)
-        textCol4RowTableBox1le = Text(col4RowTableBox1, text="Puntaje", size=14)
+        textCol4RowTableBox1le = Text(col4RowTableBox1, text="Puntaje", size=14, color="white")
         textCol4RowTableBox1le.tk.place(x=col4RowTableBox1.tk.winfo_reqwidth()/2, y=col4RowTableBox1.tk.winfo_reqheight()/2, anchor="center")
                 #FINAL COLUMNA 4 FILA 1 DE LA TABLA
 
@@ -74,7 +74,7 @@ class ScoreView(View):
         col5RowTableBox1 = Box(rowTableBox1, layout="auto", border=1, align="left")
         col5RowTableBox1.resize((rowTableBox1.tk.winfo_reqwidth()*23.75)/100, rowTableBox1.tk.winfo_reqheight())
         col5RowTableBox1.tk.pack_propagate(0)
-        textCol5RowTableBox1le = Text(col5RowTableBox1, text="Fecha", size=14)
+        textCol5RowTableBox1le = Text(col5RowTableBox1, text="Fecha", size=14, color="white")
         textCol5RowTableBox1le.tk.place(x=col5RowTableBox1.tk.winfo_reqwidth()/2, y=col5RowTableBox1.tk.winfo_reqheight()/2, anchor="center")
                 #FINAL COLUMNA 6 FILA 1 DE LA TABLA
         #FINAL FILA 1 DE LA TABLA
@@ -92,6 +92,7 @@ class ScoreView(View):
                 rowTableBox1 = Box(tableBox, layout="auto")
                 rowTableBox1.resize(tableBox.tk.winfo_reqwidth(), (tableBox.tk.winfo_reqheight()*9)/100)
                 rowTableBox1.tk.pack_propagate(0)
+                rowTableBox1.bg = "white"
 
                         #INICIO COLUMNA 1 FILA 1 DE LA TABLA
                 col1RowTableBox1 = Box(rowTableBox1, layout="auto", border=1, align="left")
@@ -153,6 +154,7 @@ class ScoreView(View):
         returnButton.tk.place(x=allColBox3.tk.winfo_reqwidth()/2, y=allColBox3.tk.winfo_reqheight()/2, anchor="center")
         returnButton.tk.pack_propagate(0)
         returnButton.bg = "RoyalBlue4"
+        returnButton.text_color = "white"
 
     def returnMenu(self):
             if self.gEngine.user.role == 1:

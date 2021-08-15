@@ -5,7 +5,7 @@ from .LoginView import LoginView
 
 
 class ScreenSplashView(View):   
-    def __init__(self, gEngine, title="view", width=840, height=620, layout="auto", bg="white", visible=True):
+    def __init__(self, gEngine, title="view", width=40, height=60, layout="auto", bg="white", visible=True):
         super().__init__(title, width, height, layout, bg, visible)
         self.gEngine = gEngine
         
