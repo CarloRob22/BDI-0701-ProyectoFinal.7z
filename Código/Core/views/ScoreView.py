@@ -8,6 +8,7 @@
 # --------------Imports----------------
 from guizero import *
 from .View import View
+import re
 
 class ScoreView(View):
     def __init__(self, gEngine, title="view", width=70, height=70, layout="auto", bg="gray92", visible=True):
@@ -119,7 +120,7 @@ class ScoreView(View):
                 col3RowTableBox1 = Box(rowTableBox1, layout="auto", border=1, align="left")
                 col3RowTableBox1.resize((rowTableBox1.tk.winfo_reqwidth()*23.75)/100, rowTableBox1.tk.winfo_reqheight())
                 col3RowTableBox1.tk.pack_propagate(0)
-                textCol3RowTableBox1le = Text(col3RowTableBox1, text="{}".format(score['time']), size=14)
+                textCol3RowTableBox1le = Text(col3RowTableBox1, text="{}".format(re.split("\.",score['time'])[0]), size=14)
                 textCol3RowTableBox1le.tk.place(x=col3RowTableBox1.tk.winfo_reqwidth()/2, y=col3RowTableBox1.tk.winfo_reqheight()/2, anchor="center")
                         #FINAL COLUMNA 3 FILA 1 DE LA TABLA
 
@@ -135,7 +136,7 @@ class ScoreView(View):
                 col5RowTableBox1 = Box(rowTableBox1, layout="auto", border=1, align="left")
                 col5RowTableBox1.resize((rowTableBox1.tk.winfo_reqwidth()*23.75)/100, rowTableBox1.tk.winfo_reqheight())
                 col5RowTableBox1.tk.pack_propagate(0)
-                textCol5RowTableBox1le = Text(col5RowTableBox1, text="{}".format(score['date']), size=14)
+                textCol5RowTableBox1le = Text(col5RowTableBox1, text="{}".format(re.split("\.",score['date'])[0]), size=14)
                 textCol5RowTableBox1le.tk.place(x=col5RowTableBox1.tk.winfo_reqwidth()/2, y=col5RowTableBox1.tk.winfo_reqheight()/2, anchor="center")
                         #FINAL COLUMNA 6 FILA 1 DE LA TABLA
                 counter = counter + 1
