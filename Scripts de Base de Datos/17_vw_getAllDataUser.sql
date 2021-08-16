@@ -12,4 +12,7 @@ CREATE VIEW vm_getAllDataUser AS
         CONVERT(AES_DECRYPT(var_password,'salt') USING utf8)
     FROM
         User
+    WHERE
+        big_id > 1
+
     ;
