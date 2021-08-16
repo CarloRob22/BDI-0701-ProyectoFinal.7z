@@ -19,7 +19,7 @@ class Movement:
         self.db.select("CALL sp_getFirstMove({}, @res);".format(idMatch))
         response = self.db.select("SELECT @res;")        
         move = json.loads(response[0][0])
-        print("primer move: {}".format(move))
+        #print("primer move: {}".format(move))
         return move
     
     def delMovement(self):

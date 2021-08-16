@@ -142,7 +142,7 @@ class FloodItView(View):
         if self.restart == True:            
             self.get_start_board(self.listMoves[0])
             lastmove = self.listMoves[-1]
-            print(lastmove)
+            #print(lastmove)
             for x in range(self.board_size):
                     for y in range(self.board_size):
                         self.board.set_pixel(x, y, lastmove[y][x])            
