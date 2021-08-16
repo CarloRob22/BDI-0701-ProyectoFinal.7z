@@ -12,7 +12,7 @@ from .View import View
 
 
 class JournalView(View):
-    def __init__(self, gEngine, title="view", width=50, height=60, layout="auto", bg="gray92", visible=True):
+    def __init__(self, gEngine, title="view", width=65, height=75, layout="auto", bg="gray92", visible=True):
         super().__init__(title, width, height, layout, bg, visible)
         self.gEngine = gEngine
         self.returning = 0
