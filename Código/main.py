@@ -3,15 +3,17 @@ from Core.ConfigConnection import ConfigConnection
 from Core.classes.GameEngine import MyGameEngine
 from Core.views.ScreenSplashView import ScreenSplashView
 import configparser
+import os
 
 
-def main():
-
-    filename=r'config.ini'
+def main():    
     config = configparser.ConfigParser()
-    config.read(filename)
+    config.sections()
+    
+    config.read('../config.ini')    
+  
     Host = config['mysql']['host']
-    Port = config['mysql']['port']
+    Port = int(config['mysql']['port'])
     User = config['mysql']['user']
     Pws = config['mysql']['password']
     Dabase = config['mysql']['database']
