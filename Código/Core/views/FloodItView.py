@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    @author  mruizq@unah.hn, roberto.duran@unah.hn
+    @author  roberto.duran@unah.hn, mruizq@unah.hn
     @version 0.1.0
     @date 2021/08/13
 """
@@ -56,7 +56,7 @@ class FloodItView(View):
         self.Defeat.enabled = False
         self.BoxBottonR =Box(self.BoxBotton, align="left", width="fill", height="fill")    
         self.timer = Text(self.BoxBottonR, text="")
-          
+        #print(self.initBoard)             
         self.validateRestart()
         self.fill_board()         
         self.gameTime()        
@@ -134,13 +134,15 @@ class FloodItView(View):
     #Mediante el siguiente método se obtinene el tablero inicial de la partida.
     def get_start_board(self,b_init):
         self.initBoard = b_init
-        self.listMoves.append(b_init)       
+        if self.restart != True:            
+            self.listMoves.append(b_init)       
            
 
     def fill_board(self):
         if self.restart == True:            
             self.get_start_board(self.listMoves[0])
             lastmove = self.listMoves[-1]
+            print(lastmove)
             for x in range(self.board_size):
                     for y in range(self.board_size):
                         self.board.set_pixel(x, y, lastmove[y][x])            
@@ -186,7 +188,7 @@ class FloodItView(View):
             self.secondAux = re.split(':',self.varGameTime)[2]
             self.second = int(re.split('\.',self.secondAux)[0])                         
             self.restart = False        
-    
+            self.initMovement()           
        
         if (self.stateTime):
             sec = time.strftime("%S")
@@ -295,14 +297,14 @@ class FloodItView(View):
                
     #El siguiente método valida si la partida actual es nueva ó es una partida reanudada.
     def validateRestart(self):                  
-        if self.restart == True:     
+        if self.restart == True:                 
             self.gEngine.updateStateMatch(self.varGameTime,1)                     
             self.moves_taken = len(self.listMoves)-1
             if self.moves_taken == 0:
                 self.Rewind.enabled = False   
             self.moves.value = 'Movimientos realizados: ' + str(self.moves_taken)  
             self.Defeat.enabled = True
-            self.initMovement()           
+            
         
     #El siguiente método se utiliza en caso de reanudar partida inicia la instancia de movement.
     def initMovement(self):

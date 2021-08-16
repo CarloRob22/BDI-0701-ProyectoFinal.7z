@@ -10,7 +10,7 @@ CREATE PROCEDURE sp_getFirstMove(
     ) 
 BEGIN      
     SELECT
-        JSON_UNQUOTE(JSON_EXTRACT(jso_move,'$.move')) AS "response" INTO res   
+        JSON_UNQUOTE(JSON_EXTRACT( CAST(AES_DECRYPT(blo_move,'salt') AS CHAR),'$.move')) AS "response" INTO res   
     FROM
         Movement
     WHERE

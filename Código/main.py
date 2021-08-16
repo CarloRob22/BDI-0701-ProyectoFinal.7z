@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+"""
+    @author   roberto.duran@unah.com, mruizq@unah.hn, fernando.murillo@unah.hn
+    @version 0.1.0
+    @date 2021/08/09
+"""
 from Core.MySQLEngine import MySQLEngine
 from Core.ConfigConnection import ConfigConnection
 from Core.classes.GameEngine import MyGameEngine

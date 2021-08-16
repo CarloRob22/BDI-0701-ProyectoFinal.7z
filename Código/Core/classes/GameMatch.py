@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+"""
+    @author   roberto.duran@unah.hn, mruizq@unah.hn
+    @version 0.1.0
+    @date 2021/08/13
+"""
 import json
 from .Movement import Movement
 from .ScoreManager import ScoreManager
@@ -14,8 +20,9 @@ class GameMatch:
         self.db.update("CALL sp_updateGameMatch(%s,'%s',%s)" % (self.id,lastTime, gameState))
         
     def addMovement(self,time,move):
-        self.db.insert("CALL sp_addMoveMatch('%s','%s', %s, @res);"%(time, move, self.id))
+        self.db.insert("CALL sp_addMoveMatch('%s','%s', %s, @res);"%(time, str(move), self.id))
         response = self.db.select("SELECT @res;")
+        print(response)
         if response[0][0] is not None:
             movement = json.loads(response[0][0])            
         self.movement = Movement(movement["idMove"],movement["time"],movement["move"],movement["idMatch"], self.db)

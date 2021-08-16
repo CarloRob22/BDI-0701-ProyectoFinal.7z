@@ -37,7 +37,8 @@ BEGIN
             'idGame', GameMatch.tin_game_FK,
             'idUser', GameMatch.big_user_FK,
             'stateMatch', GameMatch.tin_gameState_FK,        
-            'jsonMove', Movement.jso_move ) AS dataMoves
+            'jsonMove', CAST(CAST(AES_DECRYPT(Movement.blo_move,'salt') AS CHAR) AS JSON)
+            ) AS dataMoves
         FROM
             Movement
         JOIN
@@ -45,6 +46,7 @@ BEGIN
         WHERE 
             GameMatch.big_user_FK = idUser AND
             GameMatch.tin_gameState_FK = 2     
+        
         ;
 
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET state = 1;

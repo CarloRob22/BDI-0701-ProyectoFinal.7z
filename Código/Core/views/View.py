@@ -1,5 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+    @author   roberto.duran@unah.com, mruizq@unah.hn
+    @version 0.1.0
+    @date 2021/08/13
+"""
 from guizero import *
-
 
 class View:
     def __init__(self, title="view", width=50, height=50, layout="auto", bg="light grey", visible=False):

@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+"""
+    @author   roberto.duran@unah.com, mruizq@unah.hn
+    @version 0.1.0
+    @date 2021/08/13
+"""
 #from time import process_time_ns
 from guizero import *
 from .View import View

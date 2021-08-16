@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS Movement(
         COMMENT "Corresponde al identificador de cada movimiento realizado en una partida",
     tim_timeMovement TIME NOT NULL
         COMMENT "Corresponde al tiempo en que tardo el jugador en realizar el movimiento",
-    jso_move  JSON NOT NULL 
+    blo_move  BLOB NOT NULL 
         COMMENT "Este campo guarda el movimiento realizado en un formato json",
     big_match_FK BIGINT UNSIGNED NOT NULL
         COMMENT "Esta llave foranea nos indica en que partida ocurre el movimiento",    

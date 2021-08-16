@@ -9,11 +9,13 @@ CREATE PROCEDURE sp_updateJsonMoves(
     IN idMatch BIGINT,
     IN jsonMove JSON
     )
+
+
     BEGIN
         UPDATE 
             Movement
         SET 
-            jso_move = jsonMove
+            blo_move = AES_ENCRYPT(jsonMove,'salt')
         WHERE 
             big_match_FK = idMatch
         ;
